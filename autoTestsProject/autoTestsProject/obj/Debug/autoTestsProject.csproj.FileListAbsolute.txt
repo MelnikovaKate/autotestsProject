@@ -1,0 +1,20 @@
+/Users/katekuzmich/Documents/4 курс/дп/autoTestsProject/autoTestsProject/bin/Debug/autoTestsProject.dll
+/Users/katekuzmich/Documents/4 курс/дп/autoTestsProject/autoTestsProject/bin/Debug/autoTestsProject.pdb
+/Users/katekuzmich/Documents/4 курс/дп/autoTestsProject/autoTestsProject/bin/Debug/nunit.framework.dll
+/Users/katekuzmich/Documents/4 курс/дп/autoTestsProject/autoTestsProject/bin/Debug/WebDriver.dll
+/Users/katekuzmich/Documents/4 курс/дп/autoTestsProject/autoTestsProject/bin/Debug/nunit.framework.xml
+/Users/katekuzmich/Documents/4 курс/дп/autoTestsProject/autoTestsProject/bin/Debug/WebDriver.xml
+/Users/katekuzmich/Documents/4 курс/дп/autoTestsProject/autoTestsProject/obj/Debug/autoTestsProject.csprojAssemblyReference.cache
+/Users/katekuzmich/Documents/4 курс/дп/autoTestsProject/autoTestsProject/obj/Debug/autoTestsProject.csproj.CopyComplete
+/Users/katekuzmich/Documents/4 курс/дп/autoTestsProject/autoTestsProject/obj/Debug/autoTestsProject.dll
+/Users/katekuzmich/Documents/4 курс/дп/autoTestsProject/autoTestsProject/obj/Debug/autoTestsProject.pdb
+/Users/katekuzmich/Documents/4course/дп/autoTestsProject/autoTestsProject/bin/Debug/autoTestsProject.dll
+/Users/katekuzmich/Documents/4course/дп/autoTestsProject/autoTestsProject/bin/Debug/autoTestsProject.pdb
+/Users/katekuzmich/Documents/4course/дп/autoTestsProject/autoTestsProject/bin/Debug/nunit.framework.dll
+/Users/katekuzmich/Documents/4course/дп/autoTestsProject/autoTestsProject/bin/Debug/WebDriver.dll
+/Users/katekuzmich/Documents/4course/дп/autoTestsProject/autoTestsProject/bin/Debug/nunit.framework.xml
+/Users/katekuzmich/Documents/4course/дп/autoTestsProject/autoTestsProject/bin/Debug/WebDriver.xml
+/Users/katekuzmich/Documents/4course/дп/autoTestsProject/autoTestsProject/obj/Debug/autoTestsProject.csprojAssemblyReference.cache
+/Users/katekuzmich/Documents/4course/дп/autoTestsProject/autoTestsProject/obj/Debug/autoTestsProject.csproj.CopyComplete
+/Users/katekuzmich/Documents/4course/дп/autoTestsProject/autoTestsProject/obj/Debug/autoTestsProject.dll
+/Users/katekuzmich/Documents/4course/дп/autoTestsProject/autoTestsProject/obj/Debug/autoTestsProject.pdb
