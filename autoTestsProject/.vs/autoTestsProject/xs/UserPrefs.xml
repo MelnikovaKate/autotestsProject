@@ -1,14 +1,13 @@
-﻿<Properties StartupConfiguration="{781C3877-FA1C-419C-8C84-4800E246D0C0}|Модульные тесты">
+﻿<Properties>
   <MonoDevelop.Ide.Workbench ActiveDocument="autoTestsProject/Test.cs">
     <Files>
-      <File FileName="autoTestsProject/Test.cs" Line="454" Column="28" />
+      <File FileName="autoTestsProject/Test.cs" Line="565" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="autoTestsProject" expanded="True">
             <Node name="autoTestsProject" expanded="True">
-              <Node name="Packages" expanded="True" />
               <Node name="Test.cs" selected="True" />
             </Node>
           </Node>
@@ -20,7 +19,7 @@
             <Node name="autoTestsProject" expanded="True">
               <Node name="autoTestsProject" expanded="True">
                 <Node name="Test" expanded="True">
-                  <Node name="goodAddQuestion" selected="True" />
+                  <Node name="doingTest" selected="True" />
                 </Node>
               </Node>
             </Node>
@@ -35,9 +34,7 @@
   </MonoDevelop.Ide.DebuggingService.PinnedWatches>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/Test.cs" relfile="autoTestsProject/Test.cs" line="448" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>
