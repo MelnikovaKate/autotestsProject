@@ -29,3 +29,6 @@
 /Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/obj/Debug/autoTestsProject.dll
 /Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/obj/Debug/autoTestsProject.pdb
 /Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/bin/Debug/SeleniumExtras.WaitHelpers.dll
+/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/bin/Debug/WebDriver.Support.dll
+/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/bin/Debug/WebDriver.Support.xml
+/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/bin/Debug/Microsoft.Office.Interop.Excel.dll

@@ -1,7 +1,7 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workbench ActiveDocument="autoTestsProject/Test.cs">
     <Files>
-      <File FileName="autoTestsProject/Test.cs" Line="1426" Column="1" />
+      <File FileName="autoTestsProject/Test.cs" Line="55" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -19,7 +19,7 @@
             <Node name="autoTestsProject" expanded="True">
               <Node name="autoTestsProject" expanded="True">
                 <Node name="Test" expanded="True">
-                  <Node name="goodDownloadFileStudent" selected="True" />
+                  <Node name="goodLoginUser" selected="True" />
                 </Node>
               </Node>
             </Node>
@@ -35,8 +35,8 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/Test.cs" relfile="autoTestsProject/Test.cs" line="1392" column="1" />
-      <Breakpoint file="/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/Test.cs" relfile="autoTestsProject/Test.cs" line="1408" column="1" />
+      <Breakpoint file="/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/Test.cs" relfile="autoTestsProject/Test.cs" line="55" column="1" />
+      <Breakpoint file="/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/Test.cs" relfile="autoTestsProject/Test.cs" line="82" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

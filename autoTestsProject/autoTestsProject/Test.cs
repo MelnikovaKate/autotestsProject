@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Interactions;
 using System;
 using System.Threading;
 using System.Collections.Generic;
@@ -10,10 +9,12 @@ using System.Linq;
 using OpenQA.Selenium.Support.UI;
 using System.IO;
 using System.Net;
+using Excel = Microsoft.Office.Interop.Excel;
+using Actions = OpenQA.Selenium.Interactions.Actions;
 
 namespace autoTestsProject
 {
-    
+
 
     [TestFixture()]
     public class Test
@@ -43,9 +44,17 @@ namespace autoTestsProject
             {
                 driver.Navigate().GoToUrl("http://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
                 driver.Manage().Window.Size = new System.Drawing.Size(1200, 919);
-                Thread.Sleep(4000);
+
+                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+                wait.Until(d => driver.FindElements(By.Id("mat-input-0")).Count > 0);
+                //Thread.Sleep(4000);
                 driver.FindElement(By.Id("mat-input-0")).Click();
                 driver.FindElement(By.Id("mat-input-0")).SendKeys(item[0]);
+
+
+                //var data = ExportExcel();
+                
+
                 driver.FindElement(By.Id("mat-input-1")).Click();
                 {
                     var element = driver.FindElement(By.CssSelector(".loginbtn > .mat-focus-indicator"));
@@ -54,15 +63,43 @@ namespace autoTestsProject
                 }
                 driver.FindElement(By.Id("mat-input-1")).SendKeys(item[1]);
                 driver.FindElement(By.XPath("//button[contains(.,\'Войти в систему\')]")).Click();
-                Thread.Sleep(5000);
+                wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+                wait.Until(d => driver.FindElements(By.XPath("//a[contains(.,\'Предметы\')]")).Count > 0);
+                //Thread.Sleep(5000);
                 var elements = driver.FindElements(By.XPath("//a[contains(.,\'Предметы\')]"));
                 Assert.True(elements.Count > 0);
-                Thread.Sleep(5000);
+                wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+                wait.Until(d => driver.FindElements(By.XPath("//mat-icon[contains(.,\'more_vert\')]")).Count > 0);
+                //Thread.Sleep(5000);
                 driver.FindElement(By.XPath("//mat-icon[contains(.,\'more_vert\')]")).Click();
                 driver.FindElement(By.XPath("//button[contains(.,\'exit_to_appВыйти\')]")).Click();
             }
             driver.Close();
         }
+
+        string[,] list = new string[50, 5];
+
+        // Импорт данных из Excel-файла (не более 5 столбцов и любое количество строк <= 50.
+        //public int ExportExcel()
+        //{
+        //    string filename = @"/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/data.xlsx";
+
+        //    Excel.Application ObjWorkExcel = new Excel.Application();
+        //    Excel.Workbook ObjWorkBook = ObjWorkExcel.Workbooks.Open(filename);
+        //    Excel.Worksheet ObjWorkSheet = (Excel.Worksheet)ObjWorkBook.Sheets[1]; //получить 1-й лист
+        //    var lastCell = ObjWorkSheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell);//последнюю ячейку
+        //                                                                                        // размеры базы
+        //    int lastColumn = (int)lastCell.Column;
+        //    int lastRow = (int)lastCell.Row;
+        //    // Перенос в промежуточный массив класса Form1: string[,] list = new string[50, 5]; 
+        //    for (int j = 0; j < 5; j++) //по всем колонкам
+        //        for (int i = 0; i < lastRow; i++) // по всем строкам
+        //            list[i, j] = ObjWorkSheet.Cells[i + 1, j + 1].ToString(); //считываем данные
+        //    ObjWorkBook.Close(false, Type.Missing, Type.Missing); //закрыть не сохраняя
+        //    ObjWorkExcel.Quit(); // выйти из Excel
+        //    GC.Collect(); // убрать за собой
+        //    return lastRow;
+        //}
 
         [Test]
         public void errorLoginUser()
@@ -99,15 +136,23 @@ namespace autoTestsProject
                 driver.FindElement(By.Id("mat-input-1")).Click();
                 driver.FindElement(By.Id("mat-input-1")).SendKeys("testLecturer1");
                 driver.FindElement(By.XPath("//button[contains(.,\'Войти в систему\')]")).Click();
-                Thread.Sleep(5000);
+                //Thread.Sleep(5000);
+                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+                wait.Until(d => driver.FindElements(By.LinkText("Предметы")).Count > 0);
                 driver.FindElement(By.LinkText("Предметы")).Click();
-                Thread.Sleep(4000);
+                //Thread.Sleep(4000);
+                wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+                wait.Until(d => driver.FindElements(By.XPath("//button[contains(.,\'Управление предметом\')]")).Count > 0);
                 driver.FindElement(By.XPath("//button[contains(.,\'Управление предметом\')]")).Click();
                 driver.SwitchTo().Frame(0);
-                Thread.Sleep(5000);
+                //Thread.Sleep(5000);
+                wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+                wait.Until(d => driver.FindElements(By.CssSelector(".mat-row")).Count > 0);
                 rowsCount = driver.FindElements(By.CssSelector(".mat-row")).Count;
                 driver.FindElement(By.XPath("//button[contains(.,'Добавить предмет')]")).Click();
-                Thread.Sleep(5000);
+                //Thread.Sleep(5000);
+                wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
+                wait.Until(d => driver.FindElements(By.Id("mat-input-0")).Count > 0);
                 driver.FindElement(By.Id("mat-input-0")).Click();
                 driver.FindElement(By.Id("mat-input-0")).SendKeys(item[0]);
                 driver.FindElement(By.Id("mat-input-1")).Click();
@@ -122,20 +167,28 @@ namespace autoTestsProject
                 driver.FindElement(By.CssSelector(".color-picker:nth-child(2)")).Click();
                 driver.FindElement(By.CssSelector(".saturation-lightness")).Click();
                 driver.FindElement(By.CssSelector(".mat-select-arrow-wrapper")).Click();
-                Thread.Sleep(4000);
+                //Thread.Sleep(4000);
+                wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+                wait.Until(d => driver.FindElements(By.CssSelector("#mat-option-128 > .mat-option-pseudo-checkbox")).Count > 0);
                 driver.FindElement(By.CssSelector("#mat-option-128 > .mat-option-pseudo-checkbox")).Click();
                 driver.FindElement(By.CssSelector(".cdk-overlay-transparent-backdrop")).Click();
                 Assert.That(driver.FindElement(By.XPath("//mat-dialog-container[@id=\'mat-dialog-0\']/app-news-popover/div/div[2]/button[2]")).Text, Is.EqualTo("Сохранить"));
                 driver.FindElement(By.XPath("//button[contains(.,\'Сохранить\')]")).Click();
                 driver.SwitchTo().DefaultContent();
-                Thread.Sleep(2000);
+                //Thread.Sleep(2000);
+                wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+                wait.Until(d => driver.FindElements(By.XPath("//div/div/div/div[contains(.,\' Предмет успешно добавлен \')]")).Count > 0);
                 var message = driver.FindElements(By.XPath("//div/div/div/div[contains(.,\' Предмет успешно добавлен \')]"));
                 Assert.True(message.Count > 0);
-                Thread.Sleep(4000);
+                //Thread.Sleep(4000);
+                wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+                wait.Until(d => driver.FindElements(By.XPath("//a[contains(.,\'Предметы\')]")).Count > 0);
                 var elements = driver.FindElements(By.XPath("//a[contains(.,\'Предметы\')]"));
                 Assert.True(elements.Count > 0);
-                Thread.Sleep(5000);
+                //Thread.Sleep(5000);
                 driver.SwitchTo().Frame(0);
+                wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+                wait.Until(d => driver.FindElements(By.CssSelector(".mat-row")).Count > 0);
                 Assert.True(driver.FindElements(By.CssSelector(".mat-row")).Count != rowsCount);
                 var els = driver.FindElements(By.XPath($"//td[contains(.,\'{item[0]}\')]"));
                 Assert.True(els.Count > 0);
@@ -1645,6 +1698,8 @@ namespace autoTestsProject
             }
             return result.ToString();
         }
+
+        
 
     }
 }
