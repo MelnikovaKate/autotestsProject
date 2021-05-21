@@ -9,8 +9,8 @@ using System.Linq;
 using OpenQA.Selenium.Support.UI;
 using System.IO;
 using System.Net;
-using Excel = Microsoft.Office.Interop.Excel;
 using Actions = OpenQA.Selenium.Interactions.Actions;
+using OfficeOpenXml;
 
 namespace autoTestsProject
 {
@@ -37,7 +37,8 @@ namespace autoTestsProject
         }
 
         [Test]
-        public void goodLoginUser()
+        [TestCase("kate")]
+        public void goodLoginUser(string name)
         {
             List<string[]> dataArray = new List<string[]>() { new string[] { "kate", "10039396" }, new string[] { "danilyuk", "kostya2478_KEY" } };
             foreach (var item in dataArray)
@@ -45,15 +46,14 @@ namespace autoTestsProject
                 driver.Navigate().GoToUrl("http://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
                 driver.Manage().Window.Size = new System.Drawing.Size(1200, 919);
 
-                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-                wait.Until(d => driver.FindElements(By.Id("mat-input-0")).Count > 0);
+                //var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+                //wait.Until(d => driver.FindElements(By.Id("mat-input-0")).Count > 0);
                 //Thread.Sleep(4000);
+                Wait(By.Id("mat-input-0"));
                 driver.FindElement(By.Id("mat-input-0")).Click();
                 driver.FindElement(By.Id("mat-input-0")).SendKeys(item[0]);
 
-
-                //var data = ExportExcel();
-                
+                var data = GetDataFromExcel();
 
                 driver.FindElement(By.Id("mat-input-1")).Click();
                 {
@@ -63,13 +63,15 @@ namespace autoTestsProject
                 }
                 driver.FindElement(By.Id("mat-input-1")).SendKeys(item[1]);
                 driver.FindElement(By.XPath("//button[contains(.,\'Войти в систему\')]")).Click();
-                wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-                wait.Until(d => driver.FindElements(By.XPath("//a[contains(.,\'Предметы\')]")).Count > 0);
+                Wait(By.XPath("//a[contains(.,\'Предметы\')]"));
+                //wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+                //wait.Until(d => driver.FindElements(By.XPath("//a[contains(.,\'Предметы\')]")).Count > 0);
                 //Thread.Sleep(5000);
                 var elements = driver.FindElements(By.XPath("//a[contains(.,\'Предметы\')]"));
                 Assert.True(elements.Count > 0);
-                wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-                wait.Until(d => driver.FindElements(By.XPath("//mat-icon[contains(.,\'more_vert\')]")).Count > 0);
+                Wait(By.XPath("//mat-icon[contains(.,\'more_vert\')]"));
+                //wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+                //wait.Until(d => driver.FindElements(By.XPath("//mat-icon[contains(.,\'more_vert\')]")).Count > 0);
                 //Thread.Sleep(5000);
                 driver.FindElement(By.XPath("//mat-icon[contains(.,\'more_vert\')]")).Click();
                 driver.FindElement(By.XPath("//button[contains(.,\'exit_to_appВыйти\')]")).Click();
@@ -77,29 +79,32 @@ namespace autoTestsProject
             driver.Close();
         }
 
-        string[,] list = new string[50, 5];
+        public void Wait(By param)
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(50));
+            wait.Until(d => driver.FindElements(param).Count > 0);
+        }
 
-        // Импорт данных из Excel-файла (не более 5 столбцов и любое количество строк <= 50.
-        //public int ExportExcel()
-        //{
-        //    string filename = @"/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/data.xlsx";
+        private IDictionary<string, string> GetDataFromExcel()
+        {
+            string filename = @"/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/data.xlsx";
 
-        //    Excel.Application ObjWorkExcel = new Excel.Application();
-        //    Excel.Workbook ObjWorkBook = ObjWorkExcel.Workbooks.Open(filename);
-        //    Excel.Worksheet ObjWorkSheet = (Excel.Worksheet)ObjWorkBook.Sheets[1]; //получить 1-й лист
-        //    var lastCell = ObjWorkSheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell);//последнюю ячейку
-        //                                                                                        // размеры базы
-        //    int lastColumn = (int)lastCell.Column;
-        //    int lastRow = (int)lastCell.Row;
-        //    // Перенос в промежуточный массив класса Form1: string[,] list = new string[50, 5]; 
-        //    for (int j = 0; j < 5; j++) //по всем колонкам
-        //        for (int i = 0; i < lastRow; i++) // по всем строкам
-        //            list[i, j] = ObjWorkSheet.Cells[i + 1, j + 1].ToString(); //считываем данные
-        //    ObjWorkBook.Close(false, Type.Missing, Type.Missing); //закрыть не сохраняя
-        //    ObjWorkExcel.Quit(); // выйти из Excel
-        //    GC.Collect(); // убрать за собой
-        //    return lastRow;
-        //}
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            var values = new Dictionary<string, string>();
+
+            using (var package = new ExcelPackage(new FileInfo(filename)))
+            {
+                var worksheet = package.Workbook.Worksheets[0];
+
+                for (int i = 1; i <= worksheet.Dimension.Rows; i++)
+                {
+                    values.Add(worksheet.Cells[$"A{i}"].Text, worksheet.Cells[$"B{i}"].Text);
+                }
+            }
+
+            return values;
+        }
 
         [Test]
         public void errorLoginUser()
@@ -212,26 +217,35 @@ namespace autoTestsProject
                 driver.FindElement(By.Id("mat-input-1")).Click();
                 driver.FindElement(By.Id("mat-input-1")).SendKeys("testLecturer1");
                 driver.FindElement(By.XPath("//button[contains(.,\'Войти в систему\')]")).Click();
-                Thread.Sleep(4000);
+                //Thread.Sleep(4000);
+                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+                wait.Until(d => driver.FindElements(By.LinkText("Предметы")).Count > 0);
                 driver.FindElement(By.LinkText("Предметы")).Click();
-                Thread.Sleep(3000);
+                //Thread.Sleep(3000);
+                wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+                wait.Until(d => driver.FindElements(By.XPath("//button[contains(.,\'Управление предметом\')]")).Count > 0);
                 driver.FindElement(By.XPath("//button[contains(.,\'Управление предметом\')]")).Click();
                 driver.SwitchTo().Frame(0);
-                Thread.Sleep(3000);
+                //Thread.Sleep(3000);
+                wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+                wait.Until(d => driver.FindElements(By.XPath("//button[@mattooltip=\'Редактировать предмет\']")).Count > 0);
                 var elements = driver.FindElements(By.XPath("//button[@mattooltip=\'Редактировать предмет\']"));
                 Assert.True(elements.Count > 0);
                 var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
                 var elem = elemsForFind.FirstOrDefault(x => x.Text.StartsWith(item[0], StringComparison.Ordinal));
                 var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-
                 driver.FindElement(By.XPath($"//tr[{idRowOfElem + 1}]/td[3]/button[@mattooltip=\'Редактировать предмет\']")).Click();
-                Thread.Sleep(3000);
+                //Thread.Sleep(3000);
+                wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+                wait.Until(d => driver.FindElements(By.Id("mat-input-0")).Count > 0);
                 driver.FindElement(By.Id("mat-input-0")).Click();
                 {
                     string value = driver.FindElement(By.Id("mat-input-0")).GetAttribute("value");
                     Assert.That(value, Is.EqualTo(item[0]));
                 }
-                Thread.Sleep(3000);
+                //Thread.Sleep(3000);
+                wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+                wait.Until(d => driver.FindElements(By.Id("mat-input-0")).Count > 0);
                 driver.FindElement(By.Id("mat-input-0")).Clear();
                 driver.FindElement(By.Id("mat-input-0")).SendKeys(item[1]);
                 {
@@ -241,14 +255,20 @@ namespace autoTestsProject
                 driver.FindElement(By.Id("mat-input-1")).Click();
                 driver.FindElement(By.Id("mat-input-1")).Clear();
                 driver.FindElement(By.Id("mat-input-1")).SendKeys(item[2]);
-                Thread.Sleep(4000);
+                //Thread.Sleep(4000);
+                wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+                wait.Until(d => driver.FindElements(By.XPath("//button[contains(.,\'Сохранить\')]")).Count > 0);
                 driver.FindElement(By.XPath("//button[contains(.,\'Сохранить\')]")).Click();
                 driver.SwitchTo().DefaultContent();
-                Thread.Sleep(2000);
+                //Thread.Sleep(2000);
+                wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+                wait.Until(d => driver.FindElements(By.XPath("//div/div/div/div[contains(.,\' Предмет успешно отредактирован \')]")).Count > 0);
                 var message = driver.FindElements(By.XPath("//div/div/div/div[contains(.,\' Предмет успешно отредактирован \')]"));
                 Assert.True(message.Count > 0);
                 driver.SwitchTo().Frame(0);
-                Thread.Sleep(4000);
+                //Thread.Sleep(4000);
+                wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+                wait.Until(d => driver.FindElements(By.XPath($"//td[contains(.,\'{item[1]}\')]")).Count > 0);
                 var els = driver.FindElements(By.XPath($"//td[contains(.,\'{item[1]}\')]"));
                 Assert.True(els.Count > 0);
                 driver.SwitchTo().DefaultContent();
@@ -300,14 +320,14 @@ namespace autoTestsProject
         [Test]
         public void goodRegisterUser()
         {
-            List<string[]> dataArray = new List<string[]>() { new string[] { "TestStudentUser5", "User123", "User123", "Kate", "Kate", "Kate", "test" } };
+            List<string[]> dataArray = new List<string[]>() { new string[] { "TestStudentUser9", "User123", "User123", "Kate", "Kate", "Kate", "test" } };
             foreach (var item in dataArray)
             {
                 driver.Navigate().GoToUrl("http://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
                 driver.Manage().Window.Size = new System.Drawing.Size(1680, 1050);
                 driver.FindElement(By.XPath("//a[contains(.,\'Регистрация\')]")).Click();
                 driver.SwitchTo().Frame(0);
-                Thread.Sleep(3000);
+                Wait(By.Id("mat-input-0"));
                 driver.FindElement(By.Id("mat-input-0")).Click();
                 driver.FindElement(By.Id("mat-input-0")).SendKeys(item[0]); // login
                 driver.FindElement(By.CssSelector(".ng-tns-c5-1 .mat-form-field-infix")).Click();
@@ -321,9 +341,10 @@ namespace autoTestsProject
                 driver.FindElement(By.Id("mat-input-5")).Click();
                 driver.FindElement(By.Id("mat-input-5")).SendKeys(item[5]); // father n
                 driver.FindElement(By.CssSelector(".mat-select-value > .ng-tns-c6-7")).Click();
+                Wait(By.XPath("//mat-option/span[contains(.,\' Тестовая \')]"));
                 Thread.Sleep(3000);
                 driver.FindElement(By.XPath("//mat-option/span[contains(.,\' Тестовая \')]")).Click();
-                Thread.Sleep(3000);
+                Wait(By.CssSelector(".mat-select-placeholder"));
                 driver.FindElement(By.CssSelector(".mat-select-placeholder")).Click();
                 driver.FindElement(By.XPath("//mat-option/span[contains(.,\' Кличка любимого животного? \')]")).Click();
                 driver.FindElement(By.Id("mat-input-6")).Click();
@@ -361,7 +382,7 @@ namespace autoTestsProject
                 var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(item[0]));
                 //var elem = elemsForFind.FirstOrDefault(x => x.Text.StartsWith(item[0], StringComparison.Ordinal)); //
                 var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-                if(driver.FindElements(By.XPath($"//tr[{idRowOfElem + 1}]/td[3]/mat-icon[contains(.,\'clear\')]")).Count > 0)
+                if (driver.FindElements(By.XPath($"//tr[{idRowOfElem + 1}]/td[3]/mat-icon[contains(.,\'clear\')]")).Count > 0)
                 {
                     driver.FindElement(By.XPath($"//tr[{idRowOfElem + 1}]/td[3]/mat-icon")).Click();
                     Thread.Sleep(10000);
@@ -380,7 +401,12 @@ namespace autoTestsProject
         }
 
         [Test]
-        public void goodAddNewTest()
+        [TestCase(" Тест для контроля знаний ", "SuperTest", "Тесты для контроля знаний", 1)]
+        [TestCase(" Тест для самоконтроля ", "SuperTest2", "Тесты для самоконтроля", 2)]
+        [TestCase(" Предтест для обучения в ЭУМК ", "SuperTest3", "Предтесты для обучения в ЭУМК", 3)]
+        [TestCase(" Тест для обучения в ЭУМК ", "SuperTest4", "Тесты для обучения в ЭУМК", 4)]
+        [TestCase(" Тест для обучения с искусственной нейронной сетью ", "SuperTest5", "Тесты для обучения с искусстве", 5)]
+        public void goodAddNewTest(string testType, string testName, string titleTest, int numberDiv)
         {
             driver.Navigate().GoToUrl("https://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
             driver.Manage().Window.Size = new System.Drawing.Size(1680, 1050);
@@ -389,19 +415,20 @@ namespace autoTestsProject
             driver.FindElement(By.Id("mat-input-1")).Click();
             driver.FindElement(By.Id("mat-input-1")).SendKeys("testLecturer1");
             driver.FindElement(By.XPath("//button[contains(.,\'Войти в систему\')]")).Click();
-            Thread.Sleep(4000);
+            Wait(By.XPath("//a[contains(.,\'Предметы\')]"));
             driver.FindElement(By.XPath("//a[contains(.,\'Предметы\')]")).Click();
-            Thread.Sleep(3000);
-            driver.FindElement(By.XPath("//h2[contains(.,\'Выберете предмет\')]")).Click();
+            Wait(By.XPath("//button/span/h2[contains(.,\'Выберите предмет\')]"));
+            driver.FindElement(By.XPath("//button/span/h2[contains(.,\'Выберите предмет\')]")).Click();
+            Wait(By.XPath("//a[contains(.,\'TestSubject\')]"));
             Thread.Sleep(3000);
             driver.FindElement(By.XPath("//a[contains(.,\'TestSubject\')]")).Click();
-            Thread.Sleep(3000);
+            Wait(By.XPath("//a[contains(.,\'Тестирование знаний\')]"));
             driver.FindElement(By.XPath("//a[contains(.,\'Тестирование знаний\')]")).Click();
             driver.SwitchTo().Frame(0);
             driver.FindElement(By.XPath("//button[contains(.,\'Добавить тест\')]")).Click();
             driver.FindElement(By.Id("mat-input-0")).Click();
             driver.FindElement(By.Id("mat-input-0")).Clear();
-            driver.FindElement(By.Id("mat-input-0")).SendKeys("TestT");
+            driver.FindElement(By.Id("mat-input-0")).SendKeys(testName);
             driver.FindElement(By.Id("mat-input-1")).Click();
             driver.FindElement(By.Id("mat-input-1")).Clear();
             driver.FindElement(By.Id("mat-input-1")).SendKeys("Test");
@@ -411,9 +438,69 @@ namespace autoTestsProject
             driver.FindElement(By.Id("mat-input-3")).Click();
             driver.FindElement(By.Id("mat-input-3")).Clear();
             driver.FindElement(By.Id("mat-input-3")).SendKeys("12");
-            driver.FindElement(By.XPath("//mat-radio-button[@id=\'mat-radio-2\']/label/div[2]")).Click();
+            Wait(By.XPath($"//div[@class=\'mat-radio-label-content\'][contains(.,\'{testType}\')]"));
+            var div = driver.FindElement(By.XPath($"//div[@class=\'mat-radio-label-content\'][contains(.,\'{testType}\')]"));
+            var label = div.FindElement(By.XPath(".."));
+            label.FindElement(By.ClassName("mat-radio-label-content")).Click();
             driver.FindElement(By.XPath("//span[contains(.,\'Сохранить\')]")).Click();
-            Thread.Sleep(2000);
+            Wait(By.XPath("//simple-snack-bar[contains(.,\'Тест создан\')]"));
+            driver.FindElement(By.XPath("//simple-snack-bar[contains(.,\'Тест создан\')]")).Click();
+            Wait(By.XPath($"//div[{numberDiv}]/app-main-table-tests[@ng-reflect-title=\'{titleTest}\']/div[2]/mat-table/mat-row/mat-cell[contains(.,\'{testName}\')]"));
+            var elements = driver.FindElements(By.XPath($"//div[{numberDiv}]/app-main-table-tests[@ng-reflect-title=\'{titleTest}\']/div[2]/mat-table/mat-row/mat-cell[contains(.,\'{testName}\')]"));
+            Assert.True(elements.Count > 0);
+            driver.SwitchTo().DefaultContent();
+            driver.FindElement(By.XPath("//mat-icon[contains(.,\'more_vert\')]")).Click();
+            driver.FindElement(By.XPath("//button[contains(.,\'exit_to_appВыйти\')]")).Click();
+            driver.Close();
+        }
+
+        [Test]
+        [TestCase(" Тест для контроля знаний ")]
+        [TestCase(" Тест для самоконтроля ")]
+        [TestCase(" Предтест для обучения в ЭУМК ")]
+        [TestCase(" Тест для обучения в ЭУМК ")]
+        [TestCase(" Тест для обучения с искусственной нейронной сетью ")]
+        public void errorAddNewTestWithIdenticalName(string testType)
+        {
+            driver.Navigate().GoToUrl("https://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
+            driver.Manage().Window.Size = new System.Drawing.Size(1680, 1050);
+            driver.FindElement(By.Id("mat-input-0")).Click();
+            driver.FindElement(By.Id("mat-input-0")).SendKeys("testLecturer1");
+            driver.FindElement(By.Id("mat-input-1")).Click();
+            driver.FindElement(By.Id("mat-input-1")).SendKeys("testLecturer1");
+            driver.FindElement(By.XPath("//button[contains(.,\'Войти в систему\')]")).Click();
+            //Thread.Sleep(4000);
+            Wait(By.XPath("//a[contains(.,\'Предметы\')]"));
+            driver.FindElement(By.XPath("//a[contains(.,\'Предметы\')]")).Click();
+            //Thread.Sleep(3000);
+            Wait(By.XPath("//button/span/h2[contains(.,\'Выберите предмет\')]"));
+            driver.FindElement(By.XPath("//button/span/h2[contains(.,\'Выберите предмет\')]")).Click();
+            //Thread.Sleep(3000);
+            Wait(By.XPath("//a[contains(.,\'TestSubject\')]"));
+            driver.FindElement(By.XPath("//a[contains(.,\'TestSubject\')]")).Click();
+            //Thread.Sleep(3000);
+            Wait(By.XPath("//a[contains(.,\'Тестирование знаний\')]"));
+            driver.FindElement(By.XPath("//a[contains(.,\'Тестирование знаний\')]")).Click();
+            driver.SwitchTo().Frame(0);
+            driver.FindElement(By.XPath("//button[contains(.,\'Добавить тест\')]")).Click();
+            driver.FindElement(By.Id("mat-input-0")).Click();
+            driver.FindElement(By.Id("mat-input-0")).Clear();
+            driver.FindElement(By.Id("mat-input-0")).SendKeys("BadNameTest");
+            driver.FindElement(By.Id("mat-input-1")).Click();
+            driver.FindElement(By.Id("mat-input-1")).Clear();
+            driver.FindElement(By.Id("mat-input-1")).SendKeys("Test");
+            driver.FindElement(By.Id("mat-input-2")).Click();
+            driver.FindElement(By.Id("mat-input-2")).Clear();
+            driver.FindElement(By.Id("mat-input-2")).SendKeys("6");
+            driver.FindElement(By.Id("mat-input-3")).Click();
+            driver.FindElement(By.Id("mat-input-3")).Clear();
+            driver.FindElement(By.Id("mat-input-3")).SendKeys("12");
+            Wait(By.XPath($"//div[@class=\'mat-radio-label-content\'][contains(.,\'{testType}\')]"));
+            var div = driver.FindElement(By.XPath($"//div[@class=\'mat-radio-label-content\'][contains(.,\'{testType}\')]"));
+            var label = div.FindElement(By.XPath(".."));
+            label.FindElement(By.ClassName("mat-radio-label-content")).Click();
+            driver.FindElement(By.XPath("//span[contains(.,\'Сохранить\')]")).Click();
+            Wait(By.XPath("//simple-snack-bar[contains(.,\'Тест создан\')]"));
             driver.FindElement(By.XPath("//simple-snack-bar[contains(.,\'Тест создан\')]")).Click();
             driver.SwitchTo().DefaultContent();
             driver.FindElement(By.XPath("//mat-icon[contains(.,\'more_vert\')]")).Click();
@@ -422,7 +509,12 @@ namespace autoTestsProject
         }
 
         [Test]
-        public void goodEditTest()
+        [TestCase("Тесты для контроля знаний", 1, " Тест для самоконтроля ", "SuperTest", "NewSuperTest")]
+        [TestCase("Тесты для самоконтроля", 2, " Предтест для обучения в ЭУМК ", "SuperTest2", "NewSuperTest2")]
+        [TestCase("Предтесты для обучения в ЭУМК", 3, " Тест для обучения в ЭУМК ", "SuperTest3", "NewSuperTest3")]
+        [TestCase("Тесты для обучения в ЭУМК", 4, " Тест для обучения с искусственной нейронной сетью ", "SuperTest4", "NewSuperTest4")]
+        [TestCase("Тесты для обучения с искусстве", 5, " Тест для контроля знаний ", "SuperTest5", "NewSuperTest5")]
+        public void goodEditTestName(string titleTest, int numberDiv, string delete, string oldTestName, string newTestName)
         {
             driver.Navigate().GoToUrl("https://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
             driver.Manage().Window.Size = new System.Drawing.Size(1680, 1050);
@@ -431,29 +523,84 @@ namespace autoTestsProject
             driver.FindElement(By.Id("mat-input-1")).Click();
             driver.FindElement(By.Id("mat-input-1")).SendKeys("testLecturer1");
             driver.FindElement(By.XPath("//button[contains(.,\'Войти в систему\')]")).Click();
-            Thread.Sleep(4000);
+            Wait(By.XPath("//a[contains(.,\'Предметы\')]"));
             driver.FindElement(By.XPath("//a[contains(.,\'Предметы\')]")).Click();
-            Thread.Sleep(3000);
-            driver.FindElement(By.XPath("//h2[contains(.,\'Выберете предмет\')]")).Click();
-            Thread.Sleep(3000);
-            driver.FindElement(By.XPath("//a[contains(.,\'TestSubject\')]")).Click();
-            Thread.Sleep(3000);
+            Wait(By.XPath("//h2[contains(.,\'Выберите предмет\')]"));
+            driver.FindElement(By.XPath("//h2[contains(.,\'Выберите предмет\')]")).Click();
+            Wait(By.XPath("//a[contains(.,\'TestSubject\')]"));
+            Thread.Sleep(5000);
+            driver.FindElement(By.XPath("//a[contains(.,\'TestSubject\')]"))?.Click();
+            Wait(By.XPath("//a[contains(.,\'Тестирование знаний\')]"));
             driver.FindElement(By.XPath("//a[contains(.,\'Тестирование знаний\')]")).Click();
             driver.SwitchTo().Frame(0);
-            Thread.Sleep(2000);
-            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("NewTestTe"));
-            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            Thread.Sleep(3000);
-            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem+1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]")).Click();
-            Thread.Sleep(2000);
+            var oldElements = driver.FindElements(By.XPath($"//div[{numberDiv}]/app-main-table-tests[@ng-reflect-title=\'{titleTest}\']/div[2]/mat-table/mat-row/mat-cell[contains(.,\'{oldTestName}\')]"));
+            Assert.True(oldElements.Count > 0);
+            var el = driver.FindElement(By.XPath($"//mat-table/mat-row[contains(.,\'{oldTestName}\')]/mat-cell[3]/mat-icon[contains(.,\'edit \')]"));
+            el.Click();
+            Wait(By.Id("mat-input-0"));
             driver.FindElement(By.Id("mat-input-0")).Click();
             driver.FindElement(By.Id("mat-dialog-0")).Click();
             driver.FindElement(By.Id("mat-input-0")).Clear();
-            driver.FindElement(By.Id("mat-input-0")).SendKeys("NewTestTest");
+            driver.FindElement(By.Id("mat-input-0")).SendKeys(newTestName);
             driver.FindElement(By.XPath("//button[contains(.,\'Сохранить\')]")).Click();
-            Thread.Sleep(2000);
-            driver.FindElement(By.XPath("//simple-snack-bar[contains(.,\'Тест изменен\')]")).Click();
+            Wait(By.XPath("//simple-snack-bar[contains(.,\'Тест изменен\')]"));
+            var message = driver.FindElements(By.XPath("//simple-snack-bar[contains(.,\'Тест изменен\')]"));
+            Assert.True(message.Count > 0);
+            var newElements = driver.FindElements(By.XPath($"//div[{numberDiv}]/app-main-table-tests[@ng-reflect-title=\'{titleTest}\']/div[2]/mat-table/mat-row/mat-cell[contains(.,\'{newTestName}\')]"));
+            Assert.True(newElements.Count > 0);
+            driver.SwitchTo().DefaultContent();
+            driver.FindElement(By.XPath("//mat-icon[contains(.,\'more_vert\')]")).Click();
+            driver.FindElement(By.XPath("//button[contains(.,\'exit_to_appВыйти\')]")).Click();
+            driver.Close();
+        }
+
+
+        [Test]
+        [TestCase("Тесты для контроля знаний", 1, " Тест для самоконтроля ", "NewSuperTest", "Тесты для самоконтроля", 2)]
+        [TestCase("Тесты для самоконтроля", 2, " Предтест для обучения в ЭУМК ", "NewSuperTest2", "Предтесты для обучения в ЭУМК", 3)]
+        [TestCase("Предтесты для обучения в ЭУМК", 3, " Тест для обучения в ЭУМК ", "NewSuperTest3", "Тесты для обучения в ЭУМК", 4)]
+        [TestCase("Тесты для обучения в ЭУМК", 4, " Тест для обучения с искусственной нейронной сетью ", "NewSuperTest4", "Тесты для обучения с искусстве", 5)]
+        [TestCase("Тесты для обучения с искусстве", 5, " Тест для контроля знаний ", "NewSuperTest5", "Тесты для контроля знаний", 1)]
+        public void goodEditTestType(string oldTestType, int oldNumberDiv, string newTestType, string testName, string newTitleTest, int NewNumberDiv)
+        {
+            driver.Navigate().GoToUrl("https://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
+            driver.Manage().Window.Size = new System.Drawing.Size(1680, 1050);
+            driver.FindElement(By.Id("mat-input-0")).Click();
+            driver.FindElement(By.Id("mat-input-0")).SendKeys("testLecturer1");
+            driver.FindElement(By.Id("mat-input-1")).Click();
+            driver.FindElement(By.Id("mat-input-1")).SendKeys("testLecturer1");
+            driver.FindElement(By.XPath("//button[contains(.,\'Войти в систему\')]")).Click();
+            Wait(By.XPath("//a[contains(.,\'Предметы\')]"));
+            driver.FindElement(By.XPath("//a[contains(.,\'Предметы\')]")).Click();
+            Wait(By.XPath("//h2[contains(.,\'Выберите предмет\')]"));
+            driver.FindElement(By.XPath("//h2[contains(.,\'Выберите предмет\')]")).Click();
+            Wait(By.XPath("//a[contains(.,\'TestSubject\')]"));
+            Thread.Sleep(5000);
+            driver.FindElement(By.XPath("//a[contains(.,\'TestSubject\')]"))?.Click();
+            Wait(By.XPath("//a[contains(.,\'Тестирование знаний\')]"));
+            driver.FindElement(By.XPath("//a[contains(.,\'Тестирование знаний\')]")).Click();
+            driver.SwitchTo().Frame(0);
+            var oldElements = driver.FindElements(By.XPath($"//div[{oldNumberDiv}]/app-main-table-tests[@ng-reflect-title=\'{oldTestType}\']/div[2]/mat-table/mat-row/mat-cell[contains(.,\'{testName}\')]"));
+            Assert.True(oldElements.Count > 0);
+            //Wait(By.CssSelector(".mat-row"));
+            //var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+            //var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains($"{testName}"));
+            //var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+            var el = driver.FindElement(By.XPath($"//mat-table/mat-row[contains(.,\'{testName}\')]/mat-cell[3]/mat-icon[contains(.,\'edit \')]"));
+            el.Click();
+            Wait(By.Id("mat-input-0"));
+            driver.FindElement(By.Id("mat-input-0")).Click();
+            driver.FindElement(By.Id("mat-dialog-0")).Click();
+            Wait(By.XPath($"//div[@class=\'mat-radio-label-content\'][contains(.,\'{newTestType}\')]"));
+            var div = driver.FindElement(By.XPath($"//div[@class=\'mat-radio-label-content\'][contains(.,\'{newTestType}\')]"));
+            var label = div.FindElement(By.XPath(".."));
+            label.FindElement(By.ClassName("mat-radio-label-content")).Click();
+            driver.FindElement(By.XPath("//button[contains(.,\'Сохранить\')]")).Click();
+            Wait(By.XPath("//simple-snack-bar[contains(.,\'Тест изменен\')]"));
+            var message = driver.FindElements(By.XPath("//simple-snack-bar[contains(.,\'Тест изменен\')]"));
+            Assert.True(message.Count > 0);
+            var elements = driver.FindElements(By.XPath($"//div[{NewNumberDiv}]/app-main-table-tests[@ng-reflect-title=\'{newTitleTest}\']/div[2]/mat-table/mat-row/mat-cell[contains(.,\'{testName}\')]"));
+            Assert.True(elements.Count > 0);
             driver.SwitchTo().DefaultContent();
             driver.FindElement(By.XPath("//mat-icon[contains(.,\'more_vert\')]")).Click();
             driver.FindElement(By.XPath("//button[contains(.,\'exit_to_appВыйти\')]")).Click();
@@ -461,7 +608,8 @@ namespace autoTestsProject
         }
 
         [Test]
-        public void goodAddQuestion()
+        [TestCase(" С одним вариантом ", "Как дела?", "Хорошо", "Плохо", "Никак")]
+        public void goodAddQuestionWithOneAnswer(string typeQuestion, string textQuestion, string firstAnswer, string secondAnswer, string thirdAnswer)
         {
             driver.Navigate().GoToUrl("https://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
             driver.Manage().Window.Size = new System.Drawing.Size(1680, 1050);
@@ -470,46 +618,226 @@ namespace autoTestsProject
             driver.FindElement(By.Id("mat-input-1")).Click();
             driver.FindElement(By.Id("mat-input-1")).SendKeys("testLecturer1");
             driver.FindElement(By.XPath("//button[contains(.,\'Войти в систему\')]")).Click();
-            Thread.Sleep(4000);
+            Wait(By.XPath("//a[contains(.,\'Предметы\')]"));
             driver.FindElement(By.XPath("//a[contains(.,\'Предметы\')]")).Click();
-            Thread.Sleep(3000);
-            driver.FindElement(By.XPath("//h2[contains(.,\'Выберете предмет\')]")).Click();
-            Thread.Sleep(3000);
-            driver.FindElement(By.XPath("//a[contains(.,\'TestSubject\')]")).Click();
-            Thread.Sleep(3000);
+            Wait(By.XPath("//h2[contains(.,\'Выберите предмет\')]"));
+            driver.FindElement(By.XPath("//h2[contains(.,\'Выберите предмет\')]")).Click();
+            Wait(By.XPath("//a[contains(.,\'TestSubject\')]"));
+            Thread.Sleep(5000);
+            driver.FindElement(By.XPath("//a[contains(.,\'TestSubject\')]"))?.Click();
+            Wait(By.XPath("//a[contains(.,\'Тестирование знаний\')]"));
             driver.FindElement(By.XPath("//a[contains(.,\'Тестирование знаний\')]")).Click();
             driver.SwitchTo().Frame(0);
+            Wait(By.CssSelector(".mat-row"));
             var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("NewTestTest"));
+            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("TestTest"));
             var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            Thread.Sleep(4000);
-            //driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem}]/mat-cell[3]/mat-icon[contains(.,\'help \')]")).Click();                                                          
+            Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']"));
             driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']")).Click();
-            Thread.Sleep(2000);
+            Wait(By.XPath("//button[contains(.,\'Добавить вопрос\')]"));
             driver.FindElement(By.XPath("//button[contains(.,\'Добавить вопрос\')]")).Click();
+            Wait(By.Id("mat-input-0"));
             driver.FindElement(By.Id("mat-input-0")).Click();
-            driver.FindElement(By.Id("mat-input-0")).SendKeys("Сколько будет 2+2?");
+            driver.FindElement(By.Id("mat-input-0")).SendKeys(textQuestion);
             driver.FindElement(By.Id("mat-input-2")).Click();
-            driver.FindElement(By.Id("mat-input-2")).SendKeys("5");
+            driver.FindElement(By.Id("mat-input-2")).SendKeys(firstAnswer);
+            driver.FindElement(By.XPath("//span[contains(.,\'Добавить ответ\')]")).Click();
             driver.FindElement(By.XPath("//span[contains(.,\'Добавить ответ\')]")).Click();
             driver.FindElement(By.Id("mat-input-3")).Click();
-            driver.FindElement(By.Id("mat-input-3")).SendKeys("4");
+            driver.FindElement(By.Id("mat-input-3")).SendKeys(secondAnswer);
+            driver.FindElement(By.Id("mat-input-4")).Click();
+            driver.FindElement(By.Id("mat-input-4")).SendKeys(thirdAnswer);
             Thread.Sleep(4000);
+
             var label = driver
-               .FindElement(By.XPath("//mat-radio-button/label/div/input[@ng-reflect-model=\'4\']"))
-               .FindElement(By.XPath(".."))
-               .FindElement(By.XPath(".."));
+           .FindElement(By.XPath($"//mat-radio-button/label/div/input[@ng-reflect-model=\'{firstAnswer}\']"))
+           .FindElement(By.XPath(".."))
+           .FindElement(By.XPath(".."));
             var div = label.FindElement(By.ClassName("mat-radio-container"));
             IJavaScriptExecutor executor1 = (IJavaScriptExecutor)driver;
             executor1.ExecuteScript("arguments[0].click()", div);
 
-            //WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            //wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//mat-radio-button/label/div/input[@ng-reflect-model=\'Все хорошо\']/../..//div/input[@class=\'mat-radio-input\']"))).Click();
-
-            Thread.Sleep(2000);
+            Wait(By.XPath("//button[contains(.,\'Сохранить\')]"));
             driver.FindElement(By.XPath("//button[contains(.,\'Сохранить\')]")).Click(); // идет щелчок по надписи, а надо по точке, где подсвечивается курсор ладошкой
-            Thread.Sleep(2000);
+            Wait(By.XPath("//simple-snack-bar[contains(.,\'Вопрос создан\')]"));
             driver.FindElement(By.XPath("//simple-snack-bar[contains(.,\'Вопрос создан\')]")).Click();
+            driver.SwitchTo().DefaultContent();
+            driver.FindElement(By.XPath("//mat-icon[contains(.,\'more_vert\')]")).Click();
+            driver.FindElement(By.XPath("//button[contains(.,\'exit_to_appВыйти\')]")).Click();
+            driver.Close();
+        }
+
+        [Test]
+        [TestCase(" С несколькими вариантами ", "Что ты любишь?", "Холодник", "Бананы", "Дыня")]
+        public void goodAddQuestionWithMoreAnswers(string typeQuestion, string textQuestion, string firstAnswer, string secondAnswer, string thirdAnswer)
+        {
+            driver.Navigate().GoToUrl("https://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
+            driver.Manage().Window.Size = new System.Drawing.Size(1680, 1050);
+            driver.FindElement(By.Id("mat-input-0")).Click();
+            driver.FindElement(By.Id("mat-input-0")).SendKeys("testLecturer1");
+            driver.FindElement(By.Id("mat-input-1")).Click();
+            driver.FindElement(By.Id("mat-input-1")).SendKeys("testLecturer1");
+            driver.FindElement(By.XPath("//button[contains(.,\'Войти в систему\')]")).Click();
+            Wait(By.XPath("//a[contains(.,\'Предметы\')]"));
+            driver.FindElement(By.XPath("//a[contains(.,\'Предметы\')]")).Click();
+            Wait(By.XPath("//h2[contains(.,\'Выберите предмет\')]"));
+            driver.FindElement(By.XPath("//h2[contains(.,\'Выберите предмет\')]")).Click();
+            Wait(By.XPath("//a[contains(.,\'TestSubject\')]"));
+            Thread.Sleep(5000);
+            driver.FindElement(By.XPath("//a[contains(.,\'TestSubject\')]"))?.Click();
+            Wait(By.XPath("//a[contains(.,\'Тестирование знаний\')]"));
+            driver.FindElement(By.XPath("//a[contains(.,\'Тестирование знаний\')]")).Click();
+            driver.SwitchTo().Frame(0);
+            Wait(By.CssSelector(".mat-row"));
+            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("TestTest"));
+            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+            Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']"));
+            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']")).Click();
+            Wait(By.XPath("//button[contains(.,\'Добавить вопрос\')]"));
+            driver.FindElement(By.XPath("//button[contains(.,\'Добавить вопрос\')]")).Click();
+            Wait(By.Id("mat-input-0"));
+            driver.FindElement(By.Id("mat-input-0")).Click();
+            driver.FindElement(By.Id("mat-input-0")).SendKeys(textQuestion);
+
+            Wait(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div"));
+            driver.FindElement(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div")).Click();
+            Wait(By.XPath($"//span[contains(.,\'{typeQuestion}\')]"));
+            driver.FindElement(By.XPath($"//span[contains(.,\'{typeQuestion}\')]")).Click();
+
+            driver.FindElement(By.Id("mat-input-3")).Click();
+            driver.FindElement(By.Id("mat-input-3")).Clear();
+            driver.FindElement(By.Id("mat-input-3")).SendKeys(firstAnswer);
+            driver.FindElement(By.XPath("//span[contains(.,\'Добавить ответ\')]")).Click();
+            driver.FindElement(By.XPath("//span[contains(.,\'Добавить ответ\')]")).Click();
+            driver.FindElement(By.Id("mat-input-4")).Click();
+            driver.FindElement(By.Id("mat-input-4")).SendKeys(secondAnswer);
+            driver.FindElement(By.Id("mat-input-5")).Click();
+            driver.FindElement(By.Id("mat-input-5")).SendKeys(thirdAnswer);
+            var label = driver
+               .FindElement(By.XPath($"//mat-checkbox/label/span/input[@ng-reflect-model=\'{firstAnswer}\']"))
+               .FindElement(By.XPath(".."))
+               .FindElement(By.XPath(".."));
+            var div = label.FindElement(By.ClassName("mat-checkbox-inner-container"));
+            IJavaScriptExecutor executor1 = (IJavaScriptExecutor)driver;
+            executor1.ExecuteScript("arguments[0].click()", div);
+            label = driver
+               .FindElement(By.XPath($"//mat-checkbox/label/span/input[@ng-reflect-model=\'{secondAnswer}\']"))
+               .FindElement(By.XPath(".."))
+               .FindElement(By.XPath(".."));
+            div = label.FindElement(By.ClassName("mat-checkbox-inner-container"));
+            executor1 = (IJavaScriptExecutor)driver;
+            executor1.ExecuteScript("arguments[0].click()", div);
+            Wait(By.XPath("//button[contains(.,\'Сохранить\')]"));
+            driver.FindElement(By.XPath("//button[contains(.,\'Сохранить\')]")).Click(); // идет щелчок по надписи, а надо по точке, где подсвечивается курсор ладошкой
+            Wait(By.XPath("//simple-snack-bar[contains(.,\'Вопрос создан\')]"));
+            driver.FindElement(By.XPath("//simple-snack-bar[contains(.,\'Вопрос создан\')]")).Click();
+            driver.SwitchTo().DefaultContent();
+            driver.FindElement(By.XPath("//mat-icon[contains(.,\'more_vert\')]")).Click();
+            driver.FindElement(By.XPath("//button[contains(.,\'exit_to_appВыйти\')]")).Click();
+            driver.Close();
+        }
+
+        [Test]
+        [TestCase(" Ввод с клавиатуры ", "Спутник Земли?", "Луна")]
+        public void goodAddQuestionWithEnterAnswer(string typeQuestion, string textQuestion, string firstAnswer)
+        {
+            driver.Navigate().GoToUrl("https://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
+            driver.Manage().Window.Size = new System.Drawing.Size(1680, 1050);
+            driver.FindElement(By.Id("mat-input-0")).Click();
+            driver.FindElement(By.Id("mat-input-0")).SendKeys("testLecturer1");
+            driver.FindElement(By.Id("mat-input-1")).Click();
+            driver.FindElement(By.Id("mat-input-1")).SendKeys("testLecturer1");
+            driver.FindElement(By.XPath("//button[contains(.,\'Войти в систему\')]")).Click();
+            Wait(By.XPath("//a[contains(.,\'Предметы\')]"));
+            driver.FindElement(By.XPath("//a[contains(.,\'Предметы\')]")).Click();
+            Wait(By.XPath("//h2[contains(.,\'Выберите предмет\')]"));
+            driver.FindElement(By.XPath("//h2[contains(.,\'Выберите предмет\')]")).Click();
+            Wait(By.XPath("//a[contains(.,\'TestSubject\')]"));
+            Thread.Sleep(5000);
+            driver.FindElement(By.XPath("//a[contains(.,\'TestSubject\')]"))?.Click();
+            Wait(By.XPath("//a[contains(.,\'Тестирование знаний\')]"));
+            driver.FindElement(By.XPath("//a[contains(.,\'Тестирование знаний\')]")).Click();
+            driver.SwitchTo().Frame(0);
+            Wait(By.CssSelector(".mat-row"));
+            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("TestTest"));
+            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+            Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']"));
+            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']")).Click();
+            Wait(By.XPath("//button[contains(.,\'Добавить вопрос\')]"));
+            driver.FindElement(By.XPath("//button[contains(.,\'Добавить вопрос\')]")).Click();
+            Wait(By.Id("mat-input-0"));
+            driver.FindElement(By.Id("mat-input-0")).Click();
+            driver.FindElement(By.Id("mat-input-0")).SendKeys(textQuestion);
+
+            Wait(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div"));
+            driver.FindElement(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div")).Click();
+            Wait(By.XPath($"//span[contains(.,\'{typeQuestion}\')]"));
+            driver.FindElement(By.XPath($"//span[contains(.,\'{typeQuestion}\')]")).Click();
+            driver.FindElement(By.Id("mat-input-3")).Click();
+            driver.FindElement(By.Id("mat-input-3")).SendKeys(firstAnswer);
+            Wait(By.XPath("//button[contains(.,\'Сохранить\')]"));
+            driver.FindElement(By.XPath("//button[contains(.,\'Сохранить\')]")).Click(); // идет щелчок по надписи, а надо по точке, где подсвечивается курсор ладошкой
+            Wait(By.XPath("//simple-snack-bar[contains(.,\'Вопрос создан\')]"));
+            var message = driver.FindElements(By.XPath("//simple-snack-bar[contains(.,\'Вопрос создан\')]"));
+            Assert.True(message.Count > 0);
+            driver.SwitchTo().DefaultContent();
+            driver.FindElement(By.XPath("//mat-icon[contains(.,\'more_vert\')]")).Click();
+            driver.FindElement(By.XPath("//button[contains(.,\'exit_to_appВыйти\')]")).Click();
+            driver.Close();
+        }
+
+        [Test]
+        [TestCase(" Последовательность элементов ", "Поставить в порядке убывания...", "1", "2", "3")]
+        public void goodAddQuestionWithOrderedAnswers(string typeQuestion, string textQuestion, string firstAnswer, string secondAnswer, string thirdAnswer)
+        {
+            driver.Navigate().GoToUrl("https://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
+            driver.Manage().Window.Size = new System.Drawing.Size(1680, 1050);
+            driver.FindElement(By.Id("mat-input-0")).Click();
+            driver.FindElement(By.Id("mat-input-0")).SendKeys("testLecturer1");
+            driver.FindElement(By.Id("mat-input-1")).Click();
+            driver.FindElement(By.Id("mat-input-1")).SendKeys("testLecturer1");
+            driver.FindElement(By.XPath("//button[contains(.,\'Войти в систему\')]")).Click();
+            Wait(By.XPath("//a[contains(.,\'Предметы\')]"));
+            driver.FindElement(By.XPath("//a[contains(.,\'Предметы\')]")).Click();
+            Wait(By.XPath("//h2[contains(.,\'Выберите предмет\')]"));
+            driver.FindElement(By.XPath("//h2[contains(.,\'Выберите предмет\')]")).Click();
+            Wait(By.XPath("//a[contains(.,\'TestSubject\')]"));
+            Thread.Sleep(5000);
+            driver.FindElement(By.XPath("//a[contains(.,\'TestSubject\')]"))?.Click();
+            Wait(By.XPath("//a[contains(.,\'Тестирование знаний\')]"));
+            driver.FindElement(By.XPath("//a[contains(.,\'Тестирование знаний\')]")).Click();
+            driver.SwitchTo().Frame(0);
+            Wait(By.CssSelector(".mat-row"));
+            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("TestTest"));
+            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+            Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']"));
+            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']")).Click();
+            Wait(By.XPath("//button[contains(.,\'Добавить вопрос\')]"));
+            driver.FindElement(By.XPath("//button[contains(.,\'Добавить вопрос\')]")).Click();
+            Wait(By.Id("mat-input-0"));
+            driver.FindElement(By.Id("mat-input-0")).Click();
+            driver.FindElement(By.Id("mat-input-0")).SendKeys(textQuestion);
+
+            Wait(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div"));
+            driver.FindElement(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div")).Click();
+            Wait(By.XPath($"//span[contains(.,\'{typeQuestion}\')]"));
+            driver.FindElement(By.XPath($"//span[contains(.,\'{typeQuestion}\')]")).Click();
+            driver.FindElement(By.Id("mat-input-3")).Click();
+            driver.FindElement(By.Id("mat-input-3")).SendKeys(firstAnswer);
+            driver.FindElement(By.XPath("//span[contains(.,\'Добавить ответ\')]")).Click();
+            driver.FindElement(By.XPath("//span[contains(.,\'Добавить ответ\')]")).Click();
+            driver.FindElement(By.Id("mat-input-4")).Click();
+            driver.FindElement(By.Id("mat-input-4")).SendKeys(secondAnswer);
+            driver.FindElement(By.Id("mat-input-5")).Click();
+            driver.FindElement(By.Id("mat-input-5")).SendKeys(thirdAnswer);
+            Wait(By.XPath("//button[contains(.,\'Сохранить\')]"));
+            driver.FindElement(By.XPath("//button[contains(.,\'Сохранить\')]")).Click(); // идет щелчок по надписи, а надо по точке, где подсвечивается курсор ладошкой
+            Wait(By.XPath("//simple-snack-bar[contains(.,\'Вопрос создан\')]"));
+            var message = driver.FindElements(By.XPath("//simple-snack-bar[contains(.,\'Вопрос создан\')]"));
+            Assert.True(message.Count > 0);
             driver.SwitchTo().DefaultContent();
             driver.FindElement(By.XPath("//mat-icon[contains(.,\'more_vert\')]")).Click();
             driver.FindElement(By.XPath("//button[contains(.,\'exit_to_appВыйти\')]")).Click();
@@ -544,7 +872,7 @@ namespace autoTestsProject
             var questionsForFind = driver.FindElements(By.CssSelector(".mat-row"));
             var question = questionsForFind.FirstOrDefault(x => x.Text.Contains("Тест")); // название вопроса
             var idRowOfQuestion = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(question);
-            Thread.Sleep(4000);                                                        
+            Thread.Sleep(4000);
             //driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Редактировать вопрос\']")).Click();
             driver.FindElement(By.XPath($"//mat-table/mat-row[{idRowOfQuestion + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]")).Click();
             Thread.Sleep(2000);
@@ -562,6 +890,73 @@ namespace autoTestsProject
             driver.Close();
         }
 
+        //[Test]
+        //public void doingTest()
+        //{
+        //    driver.Navigate().GoToUrl("https://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
+        //    driver.Manage().Window.Size = new System.Drawing.Size(1680, 1050);
+        //    driver.FindElement(By.Id("mat-input-0")).Click();
+        //    driver.FindElement(By.Id("mat-input-0")).SendKeys("testLecturer1");
+        //    driver.FindElement(By.Id("mat-input-1")).Click();
+        //    driver.FindElement(By.Id("mat-input-1")).SendKeys("testLecturer1");
+        //    driver.FindElement(By.XPath("//button[contains(.,\'Войти в систему\')]")).Click();
+        //    Thread.Sleep(4000);
+        //    driver.FindElement(By.XPath("//a[contains(.,\'Предметы\')]")).Click();
+        //    Thread.Sleep(3000);
+        //    driver.FindElement(By.XPath("//h2[contains(.,\'Выберете предмет\')]")).Click();
+        //    Thread.Sleep(3000);
+        //    driver.FindElement(By.XPath("//a[contains(.,\'TestSubject\')]")).Click();
+        //    Thread.Sleep(3000);
+        //    driver.FindElement(By.XPath("//a[contains(.,\'Тестирование знаний\')]")).Click();
+        //    driver.SwitchTo().Frame(0);
+        //    Thread.Sleep(3000);
+        //    var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+        //    var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("NewTestTest")); // название теста
+        //    var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+        //    Thread.Sleep(5000);
+        //    driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Редактировать тест\']")).Click();
+        //    Thread.Sleep(2000);
+        //    var inputQuestion = driver.FindElement(By.Id("mat-input-2"));
+        //    var value = inputQuestion.GetAttribute("ng-reflect-value");
+        //    driver.FindElement(By.XPath("//button[contains(.,\'Закрыть\')]")).Click();
+        //    Thread.Sleep(5000);
+        //    driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Пройти тест\']")).Click();
+        //    Thread.Sleep(2000);
+
+        //    driver.FindElement(By.XPath("//button[contains(.,\'Далее\')]")).Click();
+
+        //    Dictionary<string, string> questions = new Dictionary<string, string>
+        //    {
+        //        {"Как твои дела? Новый", "Все хорошо"},
+        //        {"Как твои дела?2", "Все хорошо"},
+        //        {"ааа", "аа"},
+        //        {"Как твои дела? New", "Тест"},
+        //        {"Как твои дела?3", "Все хорошо"},
+        //        {"mlmlml", "lmlmlm"},
+        //        {"Сколько будет 2+2?", "4"},
+        //    };
+
+        //    for (int i = 1; i <= int.Parse(value); i++)
+        //    {
+        //            Thread.Sleep(3000);
+        //            var divTextQuestion = driver.FindElement(By.ClassName("question-question-text"));
+        //            var textQuestion = divTextQuestion.Text;
+        //            var answer = questions[textQuestion];
+        //            Thread.Sleep(2000);
+        //            var div = driver.FindElement(By.XPath($"//div[@class=\'mat-radio-label-content\'][contains(.,\'{answer}\')]"));
+        //            var label = div.FindElement(By.XPath(".."));
+        //            label.FindElement(By.ClassName("mat-radio-label-content")).Click();
+        //            driver.FindElement(By.XPath("//button[contains(.,\'done_outline Ответить\')]")).Click();
+        //    }
+        //    Thread.Sleep(2000);
+        //    var str = "Тест на тему «NewTestTest» завершен";
+        //    Assert.That(driver.FindElement(By.XPath($"//app-test-result/div/div[contains(.,\'{str}\')]")).Text, Is.EqualTo("Тест на тему «NewTestTest» завершен"));
+        //    driver.SwitchTo().DefaultContent();
+        //    driver.FindElement(By.XPath("//mat-icon[contains(.,\'more_vert\')]")).Click();
+        //    driver.FindElement(By.XPath("//button[contains(.,\'exit_to_appВыйти\')]")).Click();
+        //    driver.Close();
+        //}
+
         [Test]
         public void doingTest()
         {
@@ -575,7 +970,7 @@ namespace autoTestsProject
             Thread.Sleep(4000);
             driver.FindElement(By.XPath("//a[contains(.,\'Предметы\')]")).Click();
             Thread.Sleep(3000);
-            driver.FindElement(By.XPath("//h2[contains(.,\'Выберете предмет\')]")).Click();
+            driver.FindElement(By.XPath("//h2[contains(.,\'Выберите предмет\')]")).Click();
             Thread.Sleep(3000);
             driver.FindElement(By.XPath("//a[contains(.,\'TestSubject\')]")).Click();
             Thread.Sleep(3000);
@@ -583,7 +978,7 @@ namespace autoTestsProject
             driver.SwitchTo().Frame(0);
             Thread.Sleep(3000);
             var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("NewTestTest")); // название теста
+            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("TestTest")); // название теста
             var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
             Thread.Sleep(5000);
             driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Редактировать тест\']")).Click();
@@ -597,36 +992,69 @@ namespace autoTestsProject
 
             driver.FindElement(By.XPath("//button[contains(.,\'Далее\')]")).Click();
 
-            Dictionary<string, string> questions = new Dictionary<string, string>
-            {
-                {"Как твои дела? Новый", "Все хорошо"},
-                {"Как твои дела?2", "Все хорошо"},
-                {"ааа", "аа"},
-                {"Как твои дела? New", "Тест"},
-                {"Как твои дела?3", "Все хорошо"},
-                {"mlmlml", "lmlmlm"},
-                {"Сколько будет 2+2?", "4"},
-            };
-
             for (int i = 1; i <= int.Parse(value); i++)
             {
-                    Thread.Sleep(3000);
-                    var divTextQuestion = driver.FindElement(By.ClassName("question-question-text"));
-                    var textQuestion = divTextQuestion.Text;
-                    var answer = questions[textQuestion];
-                    Thread.Sleep(2000);
-                    var div = driver.FindElement(By.XPath($"//div[@class=\'mat-radio-label-content\'][contains(.,\'{answer}\')]"));
-                    var label = div.FindElement(By.XPath(".."));
-                    label.FindElement(By.ClassName("mat-radio-label-content")).Click();
-                    driver.FindElement(By.XPath("//button[contains(.,\'done_outline Ответить\')]")).Click();
+                Thread.Sleep(3000);
+                var questionAnswersBlockContainer = driver.FindElement(By.ClassName("question-answers-block-container"));
+
+                var questionType = DefineQuestionType(questionAnswersBlockContainer);
+
+                switch (questionType)
+                {
+                    case QuestionTypeEnum.Input:
+                        driver.FindElement(By.ClassName("mat-input-element")).SendKeys("test");
+                        break;
+                    case QuestionTypeEnum.DropList:
+                        break;
+                    case QuestionTypeEnum.Checkbox:
+                        driver.FindElement(By.ClassName("mat-checkbox")).Click();
+                        break;
+                    case QuestionTypeEnum.RadioButton:
+                        driver.FindElement(By.ClassName("mat-radio-container")).Click();
+                        break;
+                }
+                driver.FindElement(By.XPath("//button[contains(.,\'done_outline Ответить\')]")).Click();
             }
-            Thread.Sleep(2000);
-            var str = "Тест на тему «NewTestTest» завершен";
-            Assert.That(driver.FindElement(By.XPath($"//app-test-result/div/div[contains(.,\'{str}\')]")).Text, Is.EqualTo("Тест на тему «NewTestTest» завершен"));
+            var str = "Тест на тему «TestTest» завершен";
+            Assert.That(driver.FindElement(By.XPath($"//app-test-result/div/div[contains(.,\'{str}\')]")).Text, Is.EqualTo("Тест на тему «TestTest» завершен"));
             driver.SwitchTo().DefaultContent();
             driver.FindElement(By.XPath("//mat-icon[contains(.,\'more_vert\')]")).Click();
             driver.FindElement(By.XPath("//button[contains(.,\'exit_to_appВыйти\')]")).Click();
             driver.Close();
+        }
+
+        public enum QuestionTypeEnum
+        {
+            NoType = 0,
+            Input = 1,
+            DropList = 2,
+            Checkbox = 3,
+            RadioButton = 4
+        }
+
+        public IDictionary<string, QuestionTypeEnum> QuestionTypes = new Dictionary<string, QuestionTypeEnum>()
+        {
+            { "mat-input-element", QuestionTypeEnum.Input },
+            { "cdk-drop-list", QuestionTypeEnum.DropList },
+            { "question-answers-block-container-checkboxes", QuestionTypeEnum.Checkbox },
+            { "mat-radio-group", QuestionTypeEnum.RadioButton },
+        };
+
+        public QuestionTypeEnum DefineQuestionType(IWebElement element)
+        {
+            QuestionTypeEnum questionType = QuestionTypeEnum.NoType;
+
+            foreach(var questionTypePair in QuestionTypes)
+            {
+                var elements = element.FindElements(By.ClassName(questionTypePair.Key));
+
+                if(elements.Count != 0)
+                {
+                    questionType = questionTypePair.Value;
+                }
+            }
+
+            return questionType;
         }
 
         [Test]
@@ -1686,6 +2114,32 @@ namespace autoTestsProject
             driver.FindElement(By.XPath("//mat-icon[contains(.,\'more_vert\')]")).Click();
             driver.FindElement(By.XPath("//button[contains(.,\'exit_to_appВыйти\')]")).Click();
             driver.Close();
+        }
+
+        [Test]
+        public void forgetPassword()
+        {
+            driver.Navigate().GoToUrl("https://educats.by/login");
+            driver.Manage().Window.Size = new System.Drawing.Size(1680, 949);
+            driver.FindElement(By.XPath("//a[contains(.,\'Забыли пароль?\')]")).Click();
+            driver.SwitchTo().Frame(0);
+            driver.FindElement(By.Id("mat-input-0")).SendKeys("TestStudentUser7");
+            driver.FindElement(By.XPath("//span[contains(.,\'Секретный вопрос\')]")).Click();
+            driver.FindElement(By.XPath("//span[contains(.,\'Кличка любимого животного?\')]")).Click();
+            driver.FindElement(By.Id("mat-input-1")).Click();
+            driver.FindElement(By.Id("mat-input-1")).SendKeys("test");
+            driver.FindElement(By.XPath("//button[contains(.,\'Сбросить\')]")).Click();
+            driver.FindElement(By.XPath("//mat-dialog-container[contains(.,\' Сменить пароль \')]")).Click();
+            driver.FindElement(By.Id("mat-input-2")).Click();
+            driver.FindElement(By.Id("mat-input-2")).SendKeys("new123N");
+            driver.FindElement(By.Id("mat-input-3")).Click();
+            driver.FindElement(By.Id("mat-input-3")).SendKeys("new123N");
+            driver.FindElement(By.XPath("//button[contains(.,\'Сменить\')]")).Click();
+            var elements = driver.FindElements(By.XPath("//mat-dialog-container[contains(.,\'Пароль успешно изменен.\')]"));
+            Assert.True(elements.Count > 0);
+            driver.FindElement(By.Id("mat-dialog-1")).Click();
+            driver.FindElement(By.Id("mat-dialog-1")).Click();
+            driver.FindElement(By.Id("mat-dialog-1")).Click();
         }
 
         string DuplicateWord(string word, int countOfRepeats)
