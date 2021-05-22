@@ -1,17 +1,21 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workbench ActiveDocument="autoTestsProject/Test.cs">
     <Files>
-      <File FileName="autoTestsProject/Test.cs" Line="1005" Column="1" />
+      <File FileName="autoTestsProject/Test.cs" Line="779" Column="61" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="autoTestsProject" expanded="True">
             <Node name="autoTestsProject" expanded="True">
+              <Node name="Enums" expanded="True" />
               <Node name="Test.cs" selected="True" />
             </Node>
           </Node>
         </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
       </Pad>
       <Pad Id="MonoDevelop.UnitTesting.TestPad">
         <State name="__root__">
@@ -19,7 +23,9 @@
             <Node name="autoTestsProject" expanded="True">
               <Node name="autoTestsProject" expanded="True">
                 <Node name="Test" expanded="True">
-                  <Node name="doingTest" selected="True" />
+                  <Node name="accessForStudentForDifferentTestType" expanded="True">
+                    <Node name="accessForStudentForDifferentTestType(&quot;Предтесты для обучения в ЭУМК&quot;,3,&quot;lock &quot;)" selected="True" />
+                  </Node>
                 </Node>
               </Node>
             </Node>
@@ -36,7 +42,8 @@
   </Debugger.DebugSourceFolders>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/Test.cs" relfile="autoTestsProject/Test.cs" line="1002" column="1" />
+      <Breakpoint file="/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/Test.cs" relfile="autoTestsProject/Test.cs" line="2942" column="1" />
+      <Breakpoint file="/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/Test.cs" relfile="autoTestsProject/Test.cs" line="789" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
