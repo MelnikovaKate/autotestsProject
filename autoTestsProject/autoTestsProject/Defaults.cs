@@ -10,5 +10,7 @@ namespace autoTestsProject
         public static readonly string StudentPassword = "10039396";
         public static readonly string LecturerLogin = "testLecturer1";
         public static readonly string LecturerPassword = "testLecturer1";
+        public static readonly string subjectName = "TestSubject";
+        public static readonly string modulusName = "Тестирование знаний";
     }
 }

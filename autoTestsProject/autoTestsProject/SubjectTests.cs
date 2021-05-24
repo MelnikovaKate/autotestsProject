@@ -93,7 +93,7 @@ namespace autoTestsProject
         [TestCase("TestSubject1", "NewTestSubject1", "NTS1")]
         [TestCase("TestSubject2", "NewTestSubject2", "NTS2")]
         [TestCase("TestSubject3", "NewTestSubject3", "NTS3")]
-        public void GoodEditSubjectLecturer(string oldFullSubjectName, string newFullSubjectName, string newShortSubjectName)
+        public void GoodEditSubjectNameLecturer(string oldFullSubjectName, string newFullSubjectName, string newShortSubjectName)
         {
             driver.Login(Defaults.LecturerLogin, Defaults.LecturerPassword);
 
@@ -145,7 +145,7 @@ namespace autoTestsProject
         [TestCase("Курсовые проекты/работы")]
         [TestCase("ЭУМК")]
         [TestCase("Интерактивный учебник")]
-        public void GoodEditSubjectChangeModulus(string modulus)
+        public void GoodEditSubjectChangeModulusThroughSetting(string modulus)
         {
             driver.Login(Defaults.LecturerLogin, Defaults.LecturerPassword);
 
@@ -159,32 +159,21 @@ namespace autoTestsProject
             driver.Wait(By.XPath($"//a[contains(.,\'{modulus}\')]"));
             var elements = driver.FindElements(By.XPath($"//a[contains(.,\'{modulus}\')]"));
             Assert.True(elements.Count > 0);
-            Thread.Sleep(1500);
+            Thread.Sleep(2000);
             driver.Wait(By.XPath("//a[contains(.,\'Настройки\')]"));
             driver.FindElement(By.XPath("//a[contains(.,\'Настройки\')]")).Click();
             driver.SwitchTo().Frame(0);
             driver.Wait(By.XPath("//mat-grid-tile/figure/div[contains(.,\'Редактирование предмета\')]"));
             driver.FindElement(By.XPath("//mat-grid-tile/figure/div[contains(.,\'Редактирование предмета\')]")).Click();
             driver.Wait(By.XPath($"//div/mat-checkbox/label/span[contains(.,\'{modulus}\')]"));
-            driver.FindElement(By.XPath($"//div/mat-checkbox/label/span[contains(.,\'{modulus}\')]")).Click(); // div[3]
+            driver.FindElement(By.XPath($"//div/mat-checkbox/label/span[contains(.,\'{modulus}\')]")).Click();
+            driver.Wait(By.XPath("//button[contains(.,\'Сохранить\')]"));
             driver.FindElement(By.XPath("//button[contains(.,\'Сохранить\')]")).Click();
-
-            //driver.Wait(By.XPath("//div[@id=\'toast-container\']/app-toast/div[contains(.,\'Предмет успешно отредактирован\')]"));
-            //elements = driver.FindElements(By.XPath("//div[@id=\'toast-container\']/app-toast/div[contains(.,\'Предмет успешно отредактирован\')]"));
-            //Assert.True(elements.Count > 0);
-
-            //driver.SwitchTo().DefaultContent();
-            //driver.Wait(By.XPath("//a[contains(@href, \'/web/viewer\')]"));
-            //driver.FindElement(By.XPath("//a[contains(@href, \'/web/viewer\')]")).Click();
-            //driver.Wait(By.XPath("//h2[contains(.,\'Выберите предмет\')]"));
-            //driver.FindElement(By.XPath("//h2[contains(.,\'Выберите предмет\')]")).Click();
-            //driver.Wait(By.XPath("//a[contains(.,\'TestSubject\')]"));
-            //Thread.Sleep(5000);
-            //driver.FindElement(By.XPath("//a[contains(.,\'TestSubject\')]")).Click();
+            Thread.Sleep(1000);
             driver.Navigate().Refresh();
-            //driver.Wait(By.XPath($"//a[contains(.,\'{modulus}\')]"));
-            elements = driver.FindElements(By.XPath($"//a[contains(.,\'{modulus}\')]"));
-            Assert.True(elements.Count == 0);
+            Thread.Sleep(1500);
+            var notFindElements = driver.FindElements(By.XPath($"//a[contains(.,\'{modulus}\')]"));
+            Assert.True(notFindElements.Count == 0);
             driver.Wait(By.XPath("//a[contains(.,\'Настройки\')]"));
             driver.FindElement(By.XPath("//a[contains(.,\'Настройки\')]")).Click();
             driver.SwitchTo().Frame(0);
@@ -193,6 +182,50 @@ namespace autoTestsProject
             driver.Wait(By.XPath($"//div/mat-checkbox/label/span[contains(.,\'{modulus}\')]"));
             driver.FindElement(By.XPath($"//div/mat-checkbox/label/span[contains(.,\'{modulus}\')]")).Click();
             driver.FindElement(By.XPath("//button[contains(.,\'Сохранить\')]")).Click();
+            driver.LogOut();
+        }
+
+        // тест будет ломаться на последнем Assert, т.к. кнопка "Отмена" не закрывает форму
+        [Test]
+        [TestCase("NewTestSubject1", "NTS1", "Лекции")]
+        public void GoodCancelEditSubjectThroughSetting(string newFullSubjectName, string newShortSubjectName, string modulus)
+        {
+            driver.Login(Defaults.LecturerLogin, Defaults.LecturerPassword);
+
+            driver.GoToSubjects();
+
+            driver.Wait(By.XPath("//h2[contains(.,\'Выберите предмет\')]"));
+            driver.FindElement(By.XPath("//h2[contains(.,\'Выберите предмет\')]")).Click();
+            driver.Wait(By.XPath("//a[contains(.,\'TestSubject\')]"));
+            Thread.Sleep(5000);
+            driver.FindElement(By.XPath("//a[contains(.,\'TestSubject\')]")).Click();
+            Thread.Sleep(2000);
+            driver.Wait(By.XPath("//a[contains(.,\'Настройки\')]"));
+            driver.FindElement(By.XPath("//a[contains(.,\'Настройки\')]")).Click();
+            driver.SwitchTo().Frame(0);
+            driver.Wait(By.XPath("//mat-grid-tile/figure/div[contains(.,\'Редактирование предмета\')]"));
+            driver.FindElement(By.XPath("//mat-grid-tile/figure/div[contains(.,\'Редактирование предмета\')]")).Click();
+
+            driver.Wait(By.XPath($"//div/input[@name=\'name\']"));
+            driver.FindElement(By.XPath($"//div/input[@name=\'name\']")).Click();
+            driver.FindElement(By.XPath($"//div/input[@name=\'name\']")).Clear();
+            driver.FindElement(By.XPath($"//div/input[@name=\'name\']")).SendKeys(newFullSubjectName);
+
+            driver.Wait(By.XPath($"//div/input[@name=\'abbreviation\']"));
+            driver.FindElement(By.XPath($"//div/input[@name=\'abbreviation\']")).Click();
+            driver.FindElement(By.XPath($"//div/input[@name=\'abbreviation\']")).Clear();
+            driver.FindElement(By.XPath($"//div/input[@name=\'abbreviation\']")).SendKeys(newShortSubjectName);
+
+            driver.Wait(By.XPath($"//div/mat-checkbox/label/span[contains(.,\'{modulus}\')]"));
+            driver.Wait(By.XPath($"//div/mat-checkbox/label/span[contains(.,\'{modulus}\')]"));
+            driver.FindElement(By.XPath($"//div/mat-checkbox/label/span[contains(.,\'{modulus}\')]")).Click();
+            driver.Wait(By.XPath("//span[contains(.,\'Отмена\')]"));
+            driver.FindElement(By.XPath("//span[contains(.,\'Отмена\')]")).Click();
+
+            Thread.Sleep(1000);
+            var notFindElements = driver.FindElements(By.XPath($"//mat-dialog-container/app-subject-management[contains(.,\' Создание предмета \')]"));
+            Assert.True(notFindElements.Count == 0);
+            driver.SwitchTo().DefaultContent();
             driver.LogOut();
         }
 

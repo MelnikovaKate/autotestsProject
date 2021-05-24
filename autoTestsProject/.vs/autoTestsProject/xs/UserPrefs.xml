@@ -1,32 +1,27 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="autoTestsProject/SubjectTests.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="autoTestsProject/QuestionTests.cs">
     <Files>
-      <File FileName="autoTestsProject/Test.cs" Line="574" Column="1" />
-      <File FileName="autoTestsProject/Defaults.cs" />
-      <File FileName="autoTestsProject/SubjectTests.cs" Line="165" Column="40" />
+      <File FileName="autoTestsProject/Test.cs" Line="133" Column="109" />
+      <File FileName="autoTestsProject/SubjectTests.cs" />
       <File FileName="autoTestsProject/TestHelper.cs" />
+      <File FileName="autoTestsProject/QuestionTests.cs" Line="34" Column="16" />
+      <File FileName="autoTestsProject/Defaults.cs" />
+      <File FileName="autoTestsProject/TestingTests.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="autoTestsProject" expanded="True">
             <Node name="autoTestsProject" expanded="True">
-              <Node name="SubjectTests.cs" selected="True" />
+              <Node name="Enums" expanded="True" />
+              <Node name="QuestionTests.cs" selected="True" />
             </Node>
           </Node>
         </State>
       </Pad>
       <Pad Id="MonoDevelop.UnitTesting.TestPad">
         <State name="__root__">
-          <Node name="autoTestsProject" expanded="True">
-            <Node name="autoTestsProject" expanded="True">
-              <Node name="autoTestsProject" expanded="True">
-                <Node name="SubjectTests" expanded="True">
-                  <Node name="GoodEditSubjectChangeModulus" expanded="True" selected="True" />
-                </Node>
-              </Node>
-            </Node>
-          </Node>
+          <Node name="autoTestsProject" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>
@@ -38,10 +33,7 @@
     <String>/Users/katekuzmich/Library/Caches/VisualStudio/8.0/Symbols/mono/mono/8c552e98bd60bcbc47f8cafbc8c34a9433516ac8</String>
   </Debugger.DebugSourceFolders>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/SubjectTests.cs" relfile="autoTestsProject/SubjectTests.cs" line="196" column="1" />
-      <Breakpoint file="/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/SubjectTests.cs" relfile="autoTestsProject/SubjectTests.cs" line="165" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>
