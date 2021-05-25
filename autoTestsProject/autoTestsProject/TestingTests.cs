@@ -743,41 +743,7 @@ namespace autoTestsProject
             driver.LogOut();
         }
 
-        [Test]
-        [TestCase("Question", "NewQuestion")]
-        public void goodEditTextQuestion(string oldTextQuestion, string newTextQuestion)
-        {
-            driver.GoToSubjects();
-            driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusName);
-
-            driver.SwitchTo().Frame(0);
-            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("TestTest")); // название теста
-            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']"));
-            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']")).Click();
-            driver.Wait(By.CssSelector(".mat-row"));
-            var questionsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var question = questionsForFind.FirstOrDefault(x => x.Text.Contains(oldTextQuestion)); // название вопроса
-            var idRowOfQuestion = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(question);
-            driver.Wait(By.XPath($"//mat-table/mat-row[{idRowOfQuestion + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]"));
-            driver.FindElement(By.XPath($"//mat-table/mat-row[{idRowOfQuestion + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]")).Click();
-            Thread.Sleep(2000);
-            driver.Wait(By.Id("mat-input-0"));
-            driver.FindElement(By.Id("mat-input-0")).Click();
-            driver.FindElement(By.Id("mat-input-0")).Clear();
-            driver.FindElement(By.Id("mat-input-0")).SendKeys(newTextQuestion);  // новое название вопроса
-            driver.FindElement(By.XPath("//button[contains(.,\'Сохранить\')]")).Click();
-            Thread.Sleep(2000);
-            driver.Wait(By.XPath("//simple-snack-bar[contains(.,\'Вопрос изменен\')]"));
-            var message = driver.FindElements(By.XPath("//simple-snack-bar[contains(.,\'Вопрос изменен\')]"));
-            Assert.True(message.Count > 0);
-            Assert.That(driver.FindElement(By.XPath($"//mat-cell[contains(.,\'{newTextQuestion}\')]")).Text, Is.EqualTo(newTextQuestion));
-            driver.SwitchTo().DefaultContent();
-            driver.LogOut(); ;
-        }
+        
 
         [Test]
         [TestCase("NewTestTest", " Тестовая ", "Cat")]

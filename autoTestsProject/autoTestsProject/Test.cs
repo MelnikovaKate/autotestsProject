@@ -166,6 +166,44 @@ namespace autoTestsProject
         }
 
         [Test]
+        public void errorRegisterUser() //
+        {
+            List<string[]> dataArray = new List<string[]>() { new string[] { "TestStudentUserKata", "User123", "User123", "Kata", "Kata", "Kata", "test" } };
+            foreach (var item in dataArray)
+            {
+                driver.Navigate().GoToUrl("http://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
+                driver.Manage().Window.Size = new System.Drawing.Size(1680, 1050);
+                driver.FindElement(By.XPath("//a[contains(.,\'Регистрация\')]")).Click();
+                driver.SwitchTo().Frame(0);
+                Wait(By.Id("mat-input-0"));
+                driver.FindElement(By.Id("mat-input-0")).Click();
+                driver.FindElement(By.Id("mat-input-0")).SendKeys(item[0]); // login
+                driver.FindElement(By.CssSelector(".ng-tns-c5-1 .mat-form-field-infix")).Click();
+                driver.FindElement(By.Id("mat-input-1")).SendKeys(item[1]); // password
+                driver.FindElement(By.Id("mat-input-2")).Click();
+                driver.FindElement(By.Id("mat-input-2")).SendKeys(item[2]);
+                driver.FindElement(By.Id("mat-input-3")).Click();
+                driver.FindElement(By.Id("mat-input-3")).SendKeys(item[3]); // last n
+                driver.FindElement(By.Id("mat-input-4")).Click();
+                driver.FindElement(By.Id("mat-input-4")).SendKeys(item[4]); // first n
+                driver.FindElement(By.Id("mat-input-5")).Click();
+                driver.FindElement(By.Id("mat-input-5")).SendKeys(item[5]); // father n
+                driver.FindElement(By.CssSelector(".mat-select-value > .ng-tns-c6-7")).Click();
+                Wait(By.XPath("//mat-option/span[contains(.,\' Тестовая \')]"));
+                Thread.Sleep(3000);
+                driver.FindElement(By.XPath("//mat-option/span[contains(.,\' Тестовая \')]")).Click();
+                Wait(By.CssSelector(".mat-select-placeholder"));
+                driver.FindElement(By.CssSelector(".mat-select-placeholder")).Click();
+                driver.FindElement(By.XPath("//mat-option/span[contains(.,\' Кличка любимого животного? \')]")).Click();
+                driver.FindElement(By.Id("mat-input-6")).Click();
+                driver.FindElement(By.Id("mat-input-6")).SendKeys(item[6]);
+                driver.FindElement(By.XPath("//button[contains(.,\'Зарегистрироваться\')]")).Click();
+                driver.FindElement(By.XPath("//button[contains(.,\'Зарегистрироваться\')]")).Click();
+            }
+            driver.Close();
+        }
+
+        [Test]
         public void addNewStudentInDB()
         {
             List<string[]> dataArray = new List<string[]>() { new string[] { "Cat", "Cat", "Cat" } };
@@ -1006,16 +1044,7 @@ namespace autoTestsProject
 
        
 
-        string DuplicateWord(string word, int countOfRepeats)
-        {
-            var result = new StringBuilder();
-
-            for (int i = 0; i < countOfRepeats; i++)
-            {
-                result.Append(word);
-            }
-            return result.ToString();
-        }
+        
 
         
 

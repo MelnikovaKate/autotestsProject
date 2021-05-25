@@ -1,12 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="autoTestsProject/QuestionTests.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="autoTestsProject/SubjectTests.cs">
     <Files>
-      <File FileName="autoTestsProject/Test.cs" Line="133" Column="109" />
-      <File FileName="autoTestsProject/SubjectTests.cs" />
-      <File FileName="autoTestsProject/TestHelper.cs" />
-      <File FileName="autoTestsProject/QuestionTests.cs" Line="34" Column="16" />
-      <File FileName="autoTestsProject/Defaults.cs" />
-      <File FileName="autoTestsProject/TestingTests.cs" />
+      <File FileName="autoTestsProject/Test.cs" Line="1047" Column="9" />
+      <File FileName="autoTestsProject/SubjectTests.cs" Line="774" Column="22" />
+      <File FileName="autoTestsProject/Defaults.cs" Line="9" Column="31" />
+      <File FileName="autoTestsProject/TestHelper.cs" Line="78" Column="10" />
+      <File FileName="autoTestsProject/QuestionTests.cs" Line="490" Column="15" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -14,14 +13,25 @@
           <Node name="autoTestsProject" expanded="True">
             <Node name="autoTestsProject" expanded="True">
               <Node name="Enums" expanded="True" />
-              <Node name="QuestionTests.cs" selected="True" />
+              <Node name="SubjectTests.cs" selected="True" />
             </Node>
           </Node>
         </State>
       </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
       <Pad Id="MonoDevelop.UnitTesting.TestPad">
         <State name="__root__">
-          <Node name="autoTestsProject" expanded="True" selected="True" />
+          <Node name="autoTestsProject" expanded="True">
+            <Node name="autoTestsProject" expanded="True">
+              <Node name="autoTestsProject" expanded="True">
+                <Node name="SubjectTests" expanded="True">
+                  <Node name="ErrorEditSubjectWithoutRequaredData" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
         </State>
       </Pad>
     </Pads>
@@ -33,7 +43,9 @@
     <String>/Users/katekuzmich/Library/Caches/VisualStudio/8.0/Symbols/mono/mono/8c552e98bd60bcbc47f8cafbc8c34a9433516ac8</String>
   </Debugger.DebugSourceFolders>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/SubjectTests.cs" relfile="autoTestsProject/SubjectTests.cs" line="804" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

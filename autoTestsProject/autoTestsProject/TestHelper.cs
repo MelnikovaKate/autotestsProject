@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
@@ -63,6 +64,17 @@ namespace autoTestsProject
         {
             driver.Wait(By.XPath($"//a[contains(.,\'{modulusName}\')]"));
             driver.FindElement(By.XPath($"//a[contains(.,\'{modulusName}\')]")).Click();
+        }
+
+        public static string DuplicateWord(string word, int countOfRepeats)
+        {
+            var result = new StringBuilder();
+
+            for (int i = 0; i < countOfRepeats; i++)
+            {
+                result.Append(word);
+            }
+            return result.ToString();
         }
     }
 }
