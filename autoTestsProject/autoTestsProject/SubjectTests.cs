@@ -735,7 +735,7 @@ namespace autoTestsProject
             driver.LogOut();
         }
 
-        [Test] // ??
+        [Test] // !!!!
         [TestCase("1TestSubject", "1TS")]
         [TestCase("2TestSubject", "2TS")]
         [TestCase("3TestSubject", "3TS")]
@@ -748,14 +748,25 @@ namespace autoTestsProject
             driver.Wait(By.XPath("//button[contains(.,'Добавить предмет')]"));
             driver.FindElement(By.XPath("//button[contains(.,'Добавить предмет')]")).Click();
             driver.Wait(By.XPath("//input[@name=\'name\']"));
-            driver.FindElement(By.XPath("//input[@name=\'name\']")).Click();
+            //driver.FindElement(By.XPath("//input[@name=\'name\']")).Click();
             driver.FindElement(By.XPath("//input[@name=\'name\']")).SendKeys(fullSubjectName);
             driver.FindElement(By.XPath("//input[@name=\'abbreviation\']")).Click();
             driver.FindElement(By.XPath("//input[@name=\'abbreviation\']")).SendKeys(shotSubjectName);
             driver.FindElement(By.XPath("//button[contains(.,\'Сохранить\')]")).Click();
+            driver.SwitchTo().DefaultContent();
+            //Thread.Sleep(1000);
 
-            var errorMessage = driver.FindElements(By.XPath("//div/div/div/div[contains(.,\' Предмет c таким именем уже существует \')]"));
-            Assert.True(errorMessage.Count == 0);
+
+            driver.Wait(By.XPath("//div/div/div/div[contains(.,\' Предмет c таким именем уже существует \')]")); // не ищет
+            var message = driver.FindElements(By.XPath("//div/div/div/div[contains(.,\' Предмет c таким именем уже существует \')]"));
+            Assert.True(message.Count > 0);
+
+            //driver.Wait(By.XPath("//div[@class=\'toast-bottom-right toast-container\'][contains(.,\' Предмет c таким именем уже существует \')]"));
+            //var errorMessage = driver.FindElements(By.XPath("//div[@class=\'toast-bottom-right toast-container\'][contains(.,\' Предмет c таким именем уже существует \')]"));
+            //driver.Wait(By.XPath("//div[contains(.,\' Предмет c таким именем уже существует \')]"));
+            //var errorMessage = driver.FindElements(By.XPath("//div[contains(.,\' Предмет c таким именем уже существует \')]"));
+
+            //Assert.True(errorMessage.Count > 0);
             //var stateButton = button.GetAttribute("disabled");
             //Assert.True(!string.IsNullOrEmpty(stateButton));
             //var inputTestname = driver.FindElement(By.XPath("//input[@name=\'name\']")).GetAttribute("aria-invalid");
@@ -766,12 +777,12 @@ namespace autoTestsProject
             //Assert.True(errorrMessage.Count > 0);
             //var message = driver.FindElements(By.XPath("//mat-error[contains(.,\' Предмет с такой аббревиатурой уже существует \')]"));
             //Assert.True(message.Count > 0);
-            driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
-            driver.SwitchTo().DefaultContent();
+            //driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
+            //driver.SwitchTo().DefaultContent();
             driver.LogOut();
         }
 
-        [Test] // tyt
+        [Test] 
         [TestCase("1TestSubject","","")]
         public void ErrorEditSubjectWithoutRequaredData(string fullSubjectName, string newFullSubjectName, string newShotSubjectName)
         {
@@ -828,8 +839,13 @@ namespace autoTestsProject
             driver.GoToManagementSubject();
 
             driver.SwitchTo().Frame(0);
-            driver.Wait(By.XPath("//button[contains(.,'Добавить предмет')]"));
-            driver.FindElement(By.XPath("//button[contains(.,'Добавить предмет')]")).Click();
+            driver.Wait(By.CssSelector(".mat-row"));
+            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+            var elem = elemsForFind.FirstOrDefault(x => x.Text.StartsWith(fullSubjectName, StringComparison.Ordinal));
+            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+
+            driver.Wait(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Редактировать предмет\']"));
+            driver.FindElement(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Редактировать предмет\']")).Click();
             driver.Wait(By.XPath("//input[@name=\'name\']"));
             driver.FindElement(By.XPath("//input[@name=\'name\']")).Click();
             driver.FindElement(By.XPath("//input[@name=\'name\']")).Clear();
@@ -841,10 +857,16 @@ namespace autoTestsProject
             var button = driver.FindElement(By.XPath("//button[contains(.,\' Сохранить \')]"));
             var stateButton = button.GetAttribute("disabled");
             Assert.True(!string.IsNullOrEmpty(stateButton));
-            var inputTestname = driver.FindElement(By.XPath("//input[@name=\'name\']")).GetAttribute("aria-invalid");
-            Assert.True(true, inputTestname);
-            var inputTestabbreviation = driver.FindElement(By.XPath("//input[@name=\'abbreviation\']")).GetAttribute("aria-invalid");
-            Assert.True(true, inputTestabbreviation);
+            if(fullSubjectName.Length == 0 || fullSubjectName.Length > 256)
+            {
+                var inputTestname = driver.FindElement(By.XPath("//input[@name=\'name\']")).GetAttribute("aria-invalid");
+                Assert.True(true, inputTestname);
+            }
+            if (shotSubjectName.Length == 0 || fullSubjectName.Length > 10)
+            {
+                var inputTestabbreviation = driver.FindElement(By.XPath("//input[@name=\'abbreviation\']")).GetAttribute("aria-invalid");
+                Assert.True(true, inputTestabbreviation);
+            }           
             var message = driver.FindElements(By.XPath("//div/div/div/div[contains(.,\' Предмет успешно добавлен \')]"));
             Assert.True(message.Count == 0);
             driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
@@ -852,7 +874,7 @@ namespace autoTestsProject
             driver.LogOut();
         }
 
-        [Test] // ??
+        [Test] // !!!!
         [TestCase("1TestSubject", "1TS")]
         [TestCase("2TestSubject", "2TS")]
         [TestCase("3TestSubject", "3TS")]
@@ -862,17 +884,24 @@ namespace autoTestsProject
             driver.GoToManagementSubject();
 
             driver.SwitchTo().Frame(0);
-            driver.Wait(By.XPath("//button[contains(.,'Добавить предмет')]"));
-            driver.FindElement(By.XPath("//button[contains(.,'Добавить предмет')]")).Click();
+            driver.Wait(By.CssSelector(".mat-row"));
+            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+            var elem = elemsForFind.FirstOrDefault(x => x.Text.StartsWith(fullSubjectName, StringComparison.Ordinal));
+            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+
+            driver.Wait(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Редактировать предмет\']"));
+            driver.FindElement(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Редактировать предмет\']")).Click();
             driver.Wait(By.XPath("//input[@name=\'name\']"));
             driver.FindElement(By.XPath("//input[@name=\'name\']")).Click();
+            driver.FindElement(By.XPath("//input[@name=\'name\']")).Clear();
             driver.FindElement(By.XPath("//input[@name=\'name\']")).SendKeys(fullSubjectName);
             driver.FindElement(By.XPath("//input[@name=\'abbreviation\']")).Click();
+            driver.FindElement(By.XPath("//input[@name=\'abbreviation\']")).Clear();
             driver.FindElement(By.XPath("//input[@name=\'abbreviation\']")).SendKeys(shotSubjectName);
             driver.FindElement(By.XPath("//button[contains(.,\'Сохранить\')]")).Click();
 
             var errorMessage = driver.FindElements(By.XPath("//div/div/div/div[contains(.,\' Предмет c таким именем уже существует \')]"));
-            Assert.True(errorMessage.Count == 0);
+            Assert.True(errorMessage.Count > 0);
             //var stateButton = button.GetAttribute("disabled");
             //Assert.True(!string.IsNullOrEmpty(stateButton));
             //var inputTestname = driver.FindElement(By.XPath("//input[@name=\'name\']")).GetAttribute("aria-invalid");
@@ -887,44 +916,5 @@ namespace autoTestsProject
             driver.SwitchTo().DefaultContent();
             driver.LogOut();
         }
-
-        [Test]
-        public void ErrorEditSubjectLecturer()
-        {
-            driver.Login(Defaults.LecturerLogin, Defaults.LecturerPassword);
-
-            driver.GoToSubjects();
-            driver.GoToManagementSubject();
-
-            driver.SwitchTo().Frame(0);
-            Thread.Sleep(3000);
-            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.StartsWith("TestSubject", StringComparison.Ordinal));
-            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            driver.FindElement(By.XPath($"//tr[{idRowOfElem + 1}]/td[3]/button[@mattooltip=\'Редактировать предмет\']")).Click();
-            Thread.Sleep(3000);
-            driver.FindElement(By.XPath("//input[@name=\'name\']")).Click();
-            driver.FindElement(By.XPath("//input[@name=\'name\']")).Clear();
-            driver.FindElement(By.XPath("//input[@name=\'name\']")).SendKeys("");
-            driver.FindElement(By.XPath("//input[@name=\'abbreviation\']")).Click();
-            driver.FindElement(By.XPath("//input[@name=\'abbreviation\']")).Clear();
-            driver.FindElement(By.XPath("//input[@name=\'abbreviation\']")).SendKeys("");
-            driver.FindElement(By.XPath("//button[contains(.,\'Сохранить\')]")).Click();
-            var button = driver.FindElement(By.XPath("//button[contains(.,\' Сохранить \')]"));
-            var stateButton = button.GetAttribute("disabled");
-            Assert.True(!string.IsNullOrEmpty(stateButton));
-            var inputTestname = driver.FindElement(By.XPath("//input[@name=\'name\']")).GetAttribute("aria-invalid");
-            Assert.True(true, inputTestname);
-            var inputTestabbreviation = driver.FindElement(By.XPath("//input[@name=\'abbreviation\']")).GetAttribute("aria-invalid");
-            Assert.True(true, inputTestabbreviation);
-            Thread.Sleep(1000);
-            var message = driver.FindElements(By.XPath("//div/div/div/div[contains(.,\' Предмет успешно отредактирован \')]"));
-            Assert.True(message.Count == 0);
-            driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
-            driver.SwitchTo().DefaultContent();
-            driver.LogOut();
-        }
-
-
     }
 }

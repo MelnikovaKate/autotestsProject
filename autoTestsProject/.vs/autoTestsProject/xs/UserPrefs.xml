@@ -1,11 +1,10 @@
-﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="autoTestsProject/SubjectTests.cs">
+﻿<Properties StartupConfiguration="{781C3877-FA1C-419C-8C84-4800E246D0C0}|Модульные тесты">
+  <MonoDevelop.Ide.Workbench ActiveDocument="autoTestsProject/Test.cs">
     <Files>
-      <File FileName="autoTestsProject/Test.cs" Line="1047" Column="9" />
-      <File FileName="autoTestsProject/SubjectTests.cs" Line="774" Column="22" />
-      <File FileName="autoTestsProject/Defaults.cs" Line="9" Column="31" />
-      <File FileName="autoTestsProject/TestHelper.cs" Line="78" Column="10" />
-      <File FileName="autoTestsProject/QuestionTests.cs" Line="490" Column="15" />
+      <File FileName="autoTestsProject/Test.cs" Line="383" Column="1" />
+      <File FileName="autoTestsProject/SubjectTests.cs" />
+      <File FileName="autoTestsProject/Defaults.cs" />
+      <File FileName="autoTestsProject/LabWorksStudentTests.cs" Line="145" Column="32" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -13,7 +12,7 @@
           <Node name="autoTestsProject" expanded="True">
             <Node name="autoTestsProject" expanded="True">
               <Node name="Enums" expanded="True" />
-              <Node name="SubjectTests.cs" selected="True" />
+              <Node name="Test.cs" selected="True" />
             </Node>
           </Node>
         </State>
@@ -26,9 +25,7 @@
           <Node name="autoTestsProject" expanded="True">
             <Node name="autoTestsProject" expanded="True">
               <Node name="autoTestsProject" expanded="True">
-                <Node name="SubjectTests" expanded="True">
-                  <Node name="ErrorEditSubjectWithoutRequaredData" selected="True" />
-                </Node>
+                <Node name="Test" expanded="True" />
               </Node>
             </Node>
           </Node>
@@ -43,9 +40,7 @@
     <String>/Users/katekuzmich/Library/Caches/VisualStudio/8.0/Symbols/mono/mono/8c552e98bd60bcbc47f8cafbc8c34a9433516ac8</String>
   </Debugger.DebugSourceFolders>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/SubjectTests.cs" relfile="autoTestsProject/SubjectTests.cs" line="804" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

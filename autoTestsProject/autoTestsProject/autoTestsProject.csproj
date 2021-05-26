@@ -67,6 +67,7 @@
     <Compile Include="Defaults.cs" />
     <Compile Include="TestingTests.cs" />
     <Compile Include="QuestionTests.cs" />
+    <Compile Include="LabWorksStudentTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
