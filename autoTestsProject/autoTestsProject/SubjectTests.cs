@@ -22,6 +22,7 @@ namespace autoTestsProject
         public IDictionary<string, object> vars { get; private set; }
         private IJavaScriptExecutor js;
 
+        
         [SetUp]
         public void SetUp()
         {
