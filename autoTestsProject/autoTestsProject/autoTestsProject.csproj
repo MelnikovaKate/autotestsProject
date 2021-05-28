@@ -60,20 +60,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Test.cs" />
     <Compile Include="Enums\QuestionTypeEnum.cs" />
-    <Compile Include="SubjectTests.cs" />
-    <Compile Include="TestHelper.cs" />
+    <Compile Include="DriverHelper.cs" />
     <Compile Include="Defaults.cs" />
-    <Compile Include="TestingTests.cs" />
-    <Compile Include="QuestionTests.cs" />
-    <Compile Include="LabWorksStudentTests.cs" />
+    <Compile Include="Tests\Lecturer\NegativeTests\QuestionTests.cs" />
+    <Compile Include="Tests\Lecturer\PositiveTests\QuestionTests.cs" />
+    <Compile Include="Tests\Lecturer\NegativeTests\TestingTests.cs" />
+    <Compile Include="Tests\Lecturer\PositiveTests\TestingTests.cs" />
+    <Compile Include="Tests\Lecturer\NegativeTests\SubjectTests.cs" />
+    <Compile Include="Tests\Lecturer\PositiveTests\SubjectTests.cs" />
+    <Compile Include="Tests\Student\NegativeTests\LabWorksTests.cs" />
+    <Compile Include="Tests\Student\PositiveTests\LabWorksTests.cs" />
+    <Compile Include="Tests\Student\NegativeTests\TestingTests.cs" />
+    <Compile Include="Tests\Student\PositiveTests\TestingTests.cs" />
+    <Compile Include="Tests\Student\NegativeTests\FilesTests.cs" />
+    <Compile Include="Tests\Student\PositiveTests\FilesTests.cs" />
+    <Compile Include="Tests\Student\NegativeTests\AccountTests.cs" />
+    <Compile Include="Tests\Student\PositiveTests\AccountTests.cs" />
+    <Compile Include="Tests\Lecturer\NegativeTests\StudentsTests.cs" />
+    <Compile Include="Tests\Lecturer\PositiveTests\StudentsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Enums\" />
+    <Folder Include="Tests\" />
+    <Folder Include="Tests\Lecturer\" />
+    <Folder Include="Tests\Student\" />
+    <Folder Include="Tests\Lecturer\PositiveTests\" />
+    <Folder Include="Tests\Lecturer\NegativeTests\" />
+    <Folder Include="Tests\Student\PositiveTests\" />
+    <Folder Include="Tests\Student\NegativeTests\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Selenium.WebDriver.ChromeDriver.90.0.4430.2400\build\Selenium.WebDriver.ChromeDriver.targets" Condition="Exists('..\packages\Selenium.WebDriver.ChromeDriver.90.0.4430.2400\build\Selenium.WebDriver.ChromeDriver.targets')" />

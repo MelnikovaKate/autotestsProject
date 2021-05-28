@@ -24,8 +24,12 @@ namespace autoTestsProject
         {
             driver.Wait(By.XPath("//mat-icon[contains(.,\'more_vert\')]"));
             driver.FindElement(By.XPath("//mat-icon[contains(.,\'more_vert\')]")).Click();
-            driver.Wait(By.XPath("//button[contains(.,\'exit_to_appВыйти\')]"));
-            driver.FindElement(By.XPath("//button[contains(.,\'exit_to_appВыйти\')]")).Click();
+            driver.Wait(By.XPath("//button/mat-icon[contains(.,\'exit_to_app\')]"));
+
+            IJavaScriptExecutor executor1 = (IJavaScriptExecutor)driver;
+            executor1.ExecuteScript("arguments[0].click()", driver.FindElement(By.XPath("//button/mat-icon[contains(.,\'exit_to_app\')]")));
+
+            //driver.FindElement(By.XPath("//button/mat-icon[contains(.,\'exit_to_app\')]")).Click(); // \'exit_to_appВыйти\'
             driver.Close();
         }
 
@@ -77,4 +81,5 @@ namespace autoTestsProject
             return result.ToString();
         }
     }
+
 }

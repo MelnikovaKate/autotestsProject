@@ -36,4 +36,3 @@
 /Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/obj/Debug/autoTestsProject.csproj.CopyComplete
 /Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/obj/Debug/autoTestsProject.dll
 /Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/obj/Debug/autoTestsProject.pdb
-/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/obj/Debug/autoTestsProject.csprojAssemblyReference.cache
