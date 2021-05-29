@@ -1,22 +1,28 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="autoTestsProject/Tests/Lecturer/NegativeTests/SubjectTests.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="autoTestsProject/Defaults.cs">
     <Files>
-      <File FileName="autoTestsProject/DriverHelper.cs" Line="19" Column="73" />
-      <File FileName="autoTestsProject/Tests/Lecturer/NegativeTests/SubjectTests.cs" Line="40" Column="1" />
+      <File FileName="autoTestsProject/DriverHelper.cs" Line="76" Column="1" />
+      <File FileName="autoTestsProject/Tests/Lecturer/NegativeTests/SubjectTests.cs" Line="45" Column="49" />
+      <File FileName="autoTestsProject/Enums/QuestionTypeEnum.cs" Line="1" Column="1" />
+      <File FileName="autoTestsProject/Defaults.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="autoTestsProject" expanded="True">
             <Node name="autoTestsProject" expanded="True">
+              <Node name="Enums" expanded="True" />
               <Node name="Tests" expanded="True">
                 <Node name="Lecturer" expanded="True">
-                  <Node name="NegativeTests" expanded="True">
-                    <Node name="SubjectTests.cs" selected="True" />
-                  </Node>
+                  <Node name="NegativeTests" expanded="True" />
+                  <Node name="PositiveTests" expanded="True" />
+                </Node>
+                <Node name="Student" expanded="True">
+                  <Node name="NegativeTests" expanded="True" />
                   <Node name="PositiveTests" expanded="True" />
                 </Node>
               </Node>
+              <Node name="Defaults.cs" selected="True" />
             </Node>
           </Node>
         </State>
@@ -30,7 +36,7 @@
             <Node name="autoTestsProject" expanded="True">
               <Node name="autoTestsProject.Tests.Lecturer.NegativeTests" expanded="True">
                 <Node name="SubjectTests" expanded="True">
-                  <Node name="ErrorAddSubjectWithExistingData" selected="True" />
+                  <Node name="ErrorEditSubjectWithExistingData" expanded="True" selected="True" />
                 </Node>
               </Node>
             </Node>
@@ -48,9 +54,6 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/Tests/Lecturer/PositiveTests/SubjectTests.cs" relfile="autoTestsProject/Tests/Lecturer/PositiveTests/SubjectTests.cs" line="62" column="1" />
-      <Breakpoint file="/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/Tests/Lecturer/NegativeTests/SubjectTests.cs" relfile="autoTestsProject/Tests/Lecturer/NegativeTests/SubjectTests.cs" line="66" column="1" />
-      <Breakpoint file="/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/Tests/Lecturer/NegativeTests/SubjectTests.cs" relfile="autoTestsProject/Tests/Lecturer/NegativeTests/SubjectTests.cs" line="89" column="1" />
-      <Breakpoint file="/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/Tests/Lecturer/NegativeTests/SubjectTests.cs" relfile="autoTestsProject/Tests/Lecturer/NegativeTests/SubjectTests.cs" line="203" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
