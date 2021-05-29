@@ -70,6 +70,12 @@ namespace autoTestsProject
             driver.FindElement(By.XPath($"//a[contains(.,\'{modulusName}\')]")).Click();
         }
 
+        public static void ClickJS(this IWebDriver driver, By param)
+        {
+            IJavaScriptExecutor executor1 = (IJavaScriptExecutor)driver;
+            executor1.ExecuteScript("arguments[0].click()", driver.FindElement(param));
+        }
+
         public static string DuplicateWord(string word, int countOfRepeats)
         {
             var result = new StringBuilder();

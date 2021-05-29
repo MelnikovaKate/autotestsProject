@@ -1,8 +1,8 @@
-﻿<Properties StartupConfiguration="{781C3877-FA1C-419C-8C84-4800E246D0C0}|Модульные тесты">
+﻿<Properties>
   <MonoDevelop.Ide.Workbench ActiveDocument="autoTestsProject/Tests/Lecturer/NegativeTests/SubjectTests.cs">
     <Files>
       <File FileName="autoTestsProject/DriverHelper.cs" Line="19" Column="73" />
-      <File FileName="autoTestsProject/Tests/Lecturer/NegativeTests/SubjectTests.cs" Line="197" Column="63" />
+      <File FileName="autoTestsProject/Tests/Lecturer/NegativeTests/SubjectTests.cs" Line="40" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -50,6 +50,7 @@
       <Breakpoint file="/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/Tests/Lecturer/PositiveTests/SubjectTests.cs" relfile="autoTestsProject/Tests/Lecturer/PositiveTests/SubjectTests.cs" line="62" column="1" />
       <Breakpoint file="/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/Tests/Lecturer/NegativeTests/SubjectTests.cs" relfile="autoTestsProject/Tests/Lecturer/NegativeTests/SubjectTests.cs" line="66" column="1" />
       <Breakpoint file="/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/Tests/Lecturer/NegativeTests/SubjectTests.cs" relfile="autoTestsProject/Tests/Lecturer/NegativeTests/SubjectTests.cs" line="89" column="1" />
+      <Breakpoint file="/Users/katekuzmich/Documents/4course/autotestsProject/autoTestsProject/autoTestsProject/Tests/Lecturer/NegativeTests/SubjectTests.cs" relfile="autoTestsProject/Tests/Lecturer/NegativeTests/SubjectTests.cs" line="203" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
