@@ -37,7 +37,7 @@ namespace autoTestsProject.Tests.Student.PositiveTests
 
         //подумать на счет количества вопросов
         [Test]
-        public void GoodDoingTestStudent()
+        public void DoingTestStudent()
         {
             driver.Navigate().GoToUrl("https://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
             driver.Manage().Window.Size = new System.Drawing.Size(1680, 1050);

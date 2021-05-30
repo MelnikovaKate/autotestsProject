@@ -28,6 +28,7 @@ namespace autoTestsProject.Tests.Student.NegativeTests
             driver = new ChromeDriver();
             js = (IJavaScriptExecutor)driver;
             vars = new Dictionary<string, object>();
+            driver.Login(Defaults.StudentLogin, Defaults.StudentPassword);
         }
         [TearDown]
         protected void TearDown()
@@ -35,24 +36,14 @@ namespace autoTestsProject.Tests.Student.NegativeTests
             driver.Quit();
         }
 
-        [Test]
-        public void ErrorAddLabworkStudentWithoutFile()
+        [Test, Order(1)]
+        public void ErrorAddLabworkWithoutFile()
         {
-            driver.Navigate().GoToUrl("https://educats.by/web/dashboard");
-            driver.Manage().Window.Size = new System.Drawing.Size(1680, 1050);
-            driver.FindElement(By.Id("mat-input-0")).Click();
-            driver.FindElement(By.Id("mat-input-0")).SendKeys("kate");
-            driver.FindElement(By.Id("mat-input-1")).Click();
-            driver.FindElement(By.Id("mat-input-1")).SendKeys("10039396");
-            driver.FindElement(By.XPath("//button[contains(.,\'Войти в систему\')]")).Click();
-            Thread.Sleep(5000);
-            driver.FindElement(By.XPath("//a[contains(.,\'Предметы\')]")).Click();
-            Thread.Sleep(5000);
-            driver.FindElement(By.XPath("//button[contains(.,\'Выберите предмет\')]")).Click();
-            Thread.Sleep(3000);
-            driver.FindElement(By.XPath("//a[contains(.,\'TestSubject\')]")).Click();
-            Thread.Sleep(4000);
-            driver.FindElement(By.XPath("//a[contains(.,\'Лабораторные работы\')]")).Click();
+            driver.GoToSubjects();
+            driver.GoToChooseSubject();
+            driver.GoToChoosenSubject(Defaults.subjectName);
+            driver.GoToModulus(Defaults.modulusLabWorks);
+
             driver.SwitchTo().Frame(0);
             Thread.Sleep(4000);
             driver.FindElement(By.XPath("//button[5]/span[3]")).Click();
@@ -75,24 +66,14 @@ namespace autoTestsProject.Tests.Student.NegativeTests
             driver.Close();
         }
 
-        [Test]
+        [Test, Order(2)]
         public void ErrorAddLabworkWithoutNamelabwork()
         {
-            driver.Navigate().GoToUrl("https://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
-            driver.Manage().Window.Size = new System.Drawing.Size(1680, 1050);
-            driver.FindElement(By.Id("mat-input-0")).Click();
-            driver.FindElement(By.Id("mat-input-0")).SendKeys("kate");
-            driver.FindElement(By.Id("mat-input-1")).Click();
-            driver.FindElement(By.Id("mat-input-1")).SendKeys("10039396");
-            driver.FindElement(By.XPath("//button[contains(.,\'Войти в систему\')]")).Click();
-            Thread.Sleep(5000);
-            driver.FindElement(By.XPath("//a[contains(.,\'Предметы\')]")).Click();
-            Thread.Sleep(5000);
-            driver.FindElement(By.XPath("//button[contains(.,\'Выберите предмет\')]")).Click();
-            Thread.Sleep(3000);
-            driver.FindElement(By.XPath("//a[contains(.,\'TestSubject\')]")).Click();
-            Thread.Sleep(4000);
-            driver.FindElement(By.XPath("//a[contains(.,\'Лабораторные работы\')]")).Click();
+            driver.GoToSubjects();
+            driver.GoToChooseSubject();
+            driver.GoToChoosenSubject(Defaults.subjectName);
+            driver.GoToModulus(Defaults.modulusLabWorks);
+
             driver.SwitchTo().Frame(0);
             Thread.Sleep(4000);
             driver.FindElement(By.XPath("//button[5]/span[3]")).Click();
@@ -112,24 +93,14 @@ namespace autoTestsProject.Tests.Student.NegativeTests
             driver.Close();
         }
 
-        [Test]
-        public void ErrorEditLabworkStudentWithoutFile()
+        [Test, Order(3)]
+        public void ErrorEditLabworkWithoutFile()
         {
-            driver.Navigate().GoToUrl("https://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
-            driver.Manage().Window.Size = new System.Drawing.Size(1680, 1050);
-            driver.FindElement(By.Id("mat-input-0")).Click();
-            driver.FindElement(By.Id("mat-input-0")).SendKeys("kate");
-            driver.FindElement(By.Id("mat-input-1")).Click();
-            driver.FindElement(By.Id("mat-input-1")).SendKeys("10039396");
-            driver.FindElement(By.XPath("//button[contains(.,\'Войти в систему\')]")).Click();
-            Thread.Sleep(5000);
-            driver.FindElement(By.XPath("//a[contains(.,\'Предметы\')]")).Click();
-            Thread.Sleep(5000);
-            driver.FindElement(By.XPath("//button[contains(.,\'Выберите предмет\')]")).Click();
-            Thread.Sleep(3000);
-            driver.FindElement(By.XPath("//a[contains(.,\'TestSubject\')]")).Click();
-            Thread.Sleep(4000);
-            driver.FindElement(By.XPath("//a[contains(.,\'Лабораторные работы\')]")).Click();
+            driver.GoToSubjects();
+            driver.GoToChooseSubject();
+            driver.GoToChoosenSubject(Defaults.subjectName);
+            driver.GoToModulus(Defaults.modulusLabWorks);
+
             driver.SwitchTo().Frame(0);
             Thread.Sleep(4000);
             driver.FindElement(By.XPath("//button[5]/span[3]")).Click();

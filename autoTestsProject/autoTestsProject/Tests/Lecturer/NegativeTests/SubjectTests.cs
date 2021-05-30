@@ -15,7 +15,7 @@ using autoTestsProject.Enums;
 
 namespace autoTestsProject.Tests.Lecturer.NegativeTests
 {
-    [TestFixture()]
+    [TestFixture(), Order(1)]
     public class SubjectTests
     {
         private IWebDriver driver;
@@ -99,45 +99,7 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
             driver.LogOut();
         }
 
-
         [Test, Order(2)]
-        [TestCase("", "АТП")]
-        [TestCase("Тестовый предмет, который не будет создан", "")]
-        //[TestCase("Тестовый предмет с очень-очень длинным названием тестовый предмет с очень-очень длинным " +
-        //          "названием тестовый предмет с очень-очень длинным названием тестовый предмет с очень-очень " +
-        //          "длинным названием тестовый предмет с очень-очень длинным названием тестовый пре", "ТПСООДН")]
-        //[TestCase("Тестовый предмет с некорректной аббревиатурой", "ТПСООДН2021")]
-        public void ErrorAddSubjectWithoutOneRequaredData(string fullSubjectName, string shotSubjectName)
-        {
-            driver.GoToSubjects();
-            driver.GoToManagementSubject();
-
-            driver.SwitchTo().Frame(0);
-            driver.Wait(By.XPath("//button[contains(.,'Добавить предмет')]"));
-            driver.FindElement(By.XPath("//button[contains(.,'Добавить предмет')]")).Click();
-            driver.Wait(By.XPath("//input[@name=\'name\']"));
-            driver.FindElement(By.XPath("//input[@name=\'name\']")).Click();
-            driver.FindElement(By.XPath("//input[@name=\'name\']")).Clear();
-            driver.FindElement(By.XPath("//input[@name=\'name\']")).SendKeys(fullSubjectName);
-            driver.FindElement(By.XPath("//input[@name=\'abbreviation\']")).Click();
-            driver.FindElement(By.XPath("//input[@name=\'abbreviation\']")).Clear();
-            driver.FindElement(By.XPath("//input[@name=\'abbreviation\']")).SendKeys(shotSubjectName);
-            driver.FindElement(By.XPath("//button[contains(.,\'Сохранить\')]")).Click();
-            var button = driver.FindElement(By.XPath("//button[contains(.,\' Сохранить \')]"));
-            var stateButton = button.GetAttribute("disabled");
-            Assert.True(!string.IsNullOrEmpty(stateButton));
-            var inputTestname = driver.FindElement(By.XPath("//input[@name=\'name\']")).GetAttribute("aria-invalid");
-            Assert.True(true, inputTestname);
-            var inputTestabbreviation = driver.FindElement(By.XPath("//input[@name=\'abbreviation\']")).GetAttribute("aria-invalid");
-            Assert.True(true, inputTestabbreviation);
-            var message = driver.FindElements(By.XPath("//div/div/div/div[contains(.,\' Предмет успешно добавлен \')]"));
-            Assert.True(message.Count == 0);
-            driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
-            driver.SwitchTo().DefaultContent();
-            driver.LogOut();
-        }
-
-        [Test, Order(3)]
         [TestCase("Новый предмет для ошибки", "НПДО", "", "")]
         public void ErrorEditSubjectWithoutRequaredData(string oldfFullSubjectName, string oldShotSubjectName, string newFullSubjectName, string newShotSubjectName)
         {
@@ -176,6 +138,44 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
             var inputTestabbreviation = driver.FindElement(By.XPath("//input[@name=\'abbreviation\']")).GetAttribute("aria-invalid");
             Assert.AreEqual("true", inputTestabbreviation);
             var message = driver.FindElements(By.XPath("//div/div/div/div[contains(.,\' Предмет успешно изменен \')]"));
+            Assert.True(message.Count == 0);
+            driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
+            driver.SwitchTo().DefaultContent();
+            driver.LogOut();
+        }
+
+
+        [Test, Order(3)]
+        [TestCase("", "АТП")]
+        [TestCase("Тестовый предмет, который не будет создан", "")]
+        //[TestCase("Тестовый предмет с очень-очень длинным названием тестовый предмет с очень-очень длинным " +
+        //          "названием тестовый предмет с очень-очень длинным названием тестовый предмет с очень-очень " +
+        //          "длинным названием тестовый предмет с очень-очень длинным названием тестовый пре", "ТПСООДН")]
+        //[TestCase("Тестовый предмет с некорректной аббревиатурой", "ТПСООДН2021")]
+        public void ErrorAddSubjectWithoutOneRequaredData(string fullSubjectName, string shotSubjectName)
+        {
+            driver.GoToSubjects();
+            driver.GoToManagementSubject();
+
+            driver.SwitchTo().Frame(0);
+            driver.Wait(By.XPath("//button[contains(.,'Добавить предмет')]"));
+            driver.FindElement(By.XPath("//button[contains(.,'Добавить предмет')]")).Click();
+            driver.Wait(By.XPath("//input[@name=\'name\']"));
+            driver.FindElement(By.XPath("//input[@name=\'name\']")).Click();
+            driver.FindElement(By.XPath("//input[@name=\'name\']")).Clear();
+            driver.FindElement(By.XPath("//input[@name=\'name\']")).SendKeys(fullSubjectName);
+            driver.FindElement(By.XPath("//input[@name=\'abbreviation\']")).Click();
+            driver.FindElement(By.XPath("//input[@name=\'abbreviation\']")).Clear();
+            driver.FindElement(By.XPath("//input[@name=\'abbreviation\']")).SendKeys(shotSubjectName);
+            driver.FindElement(By.XPath("//button[contains(.,\'Сохранить\')]")).Click();
+            var button = driver.FindElement(By.XPath("//button[contains(.,\' Сохранить \')]"));
+            var stateButton = button.GetAttribute("disabled");
+            Assert.True(!string.IsNullOrEmpty(stateButton));
+            var inputTestname = driver.FindElement(By.XPath("//input[@name=\'name\']")).GetAttribute("aria-invalid");
+            Assert.True(true, inputTestname);
+            var inputTestabbreviation = driver.FindElement(By.XPath("//input[@name=\'abbreviation\']")).GetAttribute("aria-invalid");
+            Assert.True(true, inputTestabbreviation);
+            var message = driver.FindElements(By.XPath("//div/div/div/div[contains(.,\' Предмет успешно добавлен \')]"));
             Assert.True(message.Count == 0);
             driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
             driver.SwitchTo().DefaultContent();

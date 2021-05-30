@@ -14,7 +14,7 @@ using OfficeOpenXml;
 using autoTestsProject.Enums;
 namespace autoTestsProject.Tests.Lecturer.NegativeTests
 {
-    [TestFixture()]
+    [TestFixture(), Order(3)]
     public class QuestionTests
     {
         private IWebDriver driver;
@@ -43,37 +43,237 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
             driver.Quit();
         }
 
-        [Test]
-        public void ErrorEditQuestionsWithDifferentTestType(string testName, string questionText)
+        //[Test]
+        //public void ErrorEditQuestionsWithDifferentTestType(string testName, string questionText)
+        //{
+        //    driver.GoToSubjects();
+        //    driver.GoToChooseSubject();
+        //    driver.GoToChoosenSubject(Defaults.subjectName);
+        //    driver.GoToModulus(Defaults.modulusName);
+
+        //    driver.Wait(By.CssSelector(".mat-row"));
+        //    var elementsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+        //    var element = elementsForFind.FirstOrDefault(x => x.Text.Contains(testName));
+        //    var idRowOfElement = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(element);
+        //    driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElement + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']"));
+        //    driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElement + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']")).Click();
+
+        //    driver.Wait(By.CssSelector(".mat-row"));
+        //    var questionsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+        //    var question = questionsForFind.FirstOrDefault(x => x.Text.Contains(questionText)); // название вопроса
+        //    var idRowOfQuestion = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(question);
+        //    driver.Wait(By.XPath($"//mat-table/mat-row[{idRowOfQuestion + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]"));
+        //    driver.FindElement(By.XPath($"//mat-table/mat-row[{idRowOfQuestion + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]")).Click();
+
+
+
+        //    driver.Wait(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div"));
+        //    driver.FindElement(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div")).Click();
+        //    //driver.Wait(By.XPath($"//span[contains(.,\'{typeQuestion}\')]"));
+        //    //driver.FindElement(By.XPath($"//span[contains(.,\'{typeQuestion}\')]")).Click();
+        //}
+
+        [Test, Order(1)]
+        [TestCase("")]
+        public void ErrorAddQuestionWithoutAllData(string textQuestion)
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
             driver.GoToChoosenSubject(Defaults.subjectName);
             driver.GoToModulus(Defaults.modulusName);
 
+            driver.SwitchTo().Frame(0);
             driver.Wait(By.CssSelector(".mat-row"));
-            var elementsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var element = elementsForFind.FirstOrDefault(x => x.Text.Contains(testName));
-            var idRowOfElement = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(element);
-            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElement + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']"));
-            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElement + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']")).Click();
+            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("NewTestTest"));
+            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']"));
+            //driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem}]/mat-cell[3]/mat-icon[contains(.,\'help \')]")).Click();                                                          
+            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']")).Click();
+            driver.Wait(By.XPath("//span[contains(.,\'Добавить вопрос\')]"));
+            driver.FindElement(By.XPath("//span[contains(.,\'Добавить вопрос\')]")).Click();
+            driver.Wait(By.XPath("//textarea[@placeholder=\'Текст вопроса\']"));
+            driver.FindElement(By.XPath("//textarea[@placeholder=\'Текст вопроса\']")).Click();
+            driver.FindElement(By.XPath("//textarea[@placeholder=\'Текст вопроса\']")).SendKeys(textQuestion);
+            driver.FindElement(By.XPath("//input[@placeholder=\'Уровень сложности\']")).Click();
+            driver.FindElement(By.XPath("//input[@placeholder=\'Уровень сложности\']")).SendKeys(Keys.Backspace);
+            driver.FindElement(By.XPath("//input[@placeholder=\'Уровень сложности\']")).SendKeys(Keys.Enter);
+            driver.FindElement(By.XPath("//textarea[@placeholder=\'Текст вопроса\']")).Click();
+            var errorMessage = driver.FindElements(By.XPath("//mat-error[contains(.,\' Введите название вопроса \')]"));
+            Assert.True(errorMessage.Count > 0);
+            errorMessage = driver.FindElements(By.XPath("//mat-error[contains(.,\' Введите сложность \')]"));
+            Assert.True(errorMessage.Count > 0);
+            driver.FindElement(By.XPath("//button[contains(.,\'Сохранить\')]")).Click();
+            var elements = driver.FindElements(By.XPath("//simple-snack-bar[contains(.,\'Вопрос создан\')]"));
+            Assert.True(elements.Count == 0);
+            driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
+            driver.SwitchTo().DefaultContent();
+            driver.LogOut();
+        }
+
+        [Test, Order(2)]
+        [TestCase("Новый вопрос")]
+        public void ErrorAddQuestionWithoutAnswers(string textQuestion)
+        {
+            driver.GoToSubjects();
+            driver.GoToChooseSubject();
+            driver.GoToChoosenSubject(Defaults.subjectName);
+            driver.GoToModulus(Defaults.modulusName);
+
+            driver.SwitchTo().Frame(0);
 
             driver.Wait(By.CssSelector(".mat-row"));
+            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("NewTestTest"));
+            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']"));
+            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']")).Click();
+            driver.Wait(By.XPath("//span[contains(.,\'Добавить вопрос\')]"));
+            driver.FindElement(By.XPath("//span[contains(.,\'Добавить вопрос\')]")).Click();
+            driver.Wait(By.XPath("//textarea[@placeholder=\'Текст вопроса\']"));
+            driver.FindElement(By.XPath("//textarea[@placeholder=\'Текст вопроса\']")).Click();
+            driver.FindElement(By.XPath("//textarea[@placeholder=\'Текст вопроса\']")).SendKeys(textQuestion);
+            driver.FindElement(By.XPath("//button[contains(.,\'Сохранить\')]")).Click();
+            driver.Wait(By.XPath("//span[contains(.,\'Проверьте варианты ответов. Они не должны быть пустыми\')]"));
+            var errorMessage = driver.FindElements(By.XPath("//span[contains(.,\'Проверьте варианты ответов. Они не должны быть пустыми\')]"));
+            Assert.True(errorMessage.Count > 0);
+            var elements = driver.FindElements(By.XPath("//simple-snack-bar[contains(.,\'Вопрос создан\')]"));
+            Assert.True(elements.Count == 0);
+            //driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
+            driver.SwitchTo().DefaultContent();
+            driver.LogOut();
+        }
+
+        [Test, Order(3)]
+        // ErrorAddQuestionWithOneAnswer
+        [TestCase("С одним вариантом", "Вопрос должен иметь хотя бы 2 варианта", "")]
+        // ErrorAddQuestionWithMoreAnswer
+        [TestCase("С несколькими вариантами", "Вопрос должен иметь хотя бы 3 варианта", "fghjk")]
+        // ErrorAddQuestionWithOrderedAnswers
+        [TestCase("Последовательность элементов", "Последовательность должна состоять хотя бы из 2 элементов", "")]
+        // ErrorAddQuestionWithEnterAnswer
+        [TestCase("Ввод с клавиатуры", "Вопрос содержит пустые варианты ответа", "")]
+        public void ErrorAddQuestionWithOneAnswer(string questionType,
+            string expectedErrorText,
+            string ngReflectModelValue)
+        {
+            var testName = "NewTestTest";
+            var questionText = "Question text";
+            var questionAnswer = "Question answer";
+            var questionTextPlaceholder = "Текст вопроса";
+
+            driver.GoToSubjects();
+            driver.GoToChooseSubject();
+            driver.GoToChoosenSubject(Defaults.subjectName);
+            driver.GoToModulus(Defaults.modulusName);
+
+            driver.SwitchTo().Frame(0);
+
+            driver.Wait(By.CssSelector(".mat-row"));
+            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(testName));
+            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']"));
+            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']")).Click();
+            Thread.Sleep(1000);
+            driver.Wait(By.XPath("//span[contains(.,\'Добавить вопрос\')]"));
+            driver.FindElement(By.XPath("//span[contains(.,\'Добавить вопрос\')]")).Click();
+
+            var questionTextArea = By.XPath($"//textarea[@placeholder='{questionTextPlaceholder}']");
+            driver.Wait(questionTextArea);
+            driver.FindElement(questionTextArea).Click();
+            driver.FindElement(questionTextArea).SendKeys(questionText);
+
+            var matSelect = By.XPath("//mat-label[text()=\'Тип вопроса\']/../../../mat-select/div/div");
+            driver.Wait(matSelect);
+            driver.FindElement(matSelect).Click();
+            var matSpan = By.XPath($"//span[@class='mat-option-text'and contains(.,\'{questionType}\')]");
+            driver.Wait(matSpan);
+            driver.FindElement(matSpan).Click();
+
+            var questionAnswerInput = By.XPath($"//input[@ng-reflect-model=\'{ngReflectModelValue}\']");
+            var questionAnswerInputDiv = driver.FindElement(questionAnswerInput);
+
+            switch (questionType)
+            {
+                case "С одним вариантом":
+                case "С несколькими вариантами":
+                    var divClass = questionType == "С одним вариантом" ?
+                        "mat-radio-inner-circle" :
+                        "mat-checkbox-inner-container";
+
+                    driver.Wait(questionAnswerInput);
+                    driver.FindElement(questionAnswerInput).Click();
+                    driver.FindElement(questionAnswerInput).SendKeys(questionAnswer);
+
+                    var label = questionAnswerInputDiv
+                        .FindElement(By.XPath(".."))
+                        .FindElement(By.XPath(".."));
+                    var div = label.FindElement(By.ClassName(divClass));
+                    IJavaScriptExecutor executor1 = (IJavaScriptExecutor)driver;
+                    executor1.ExecuteScript("arguments[0].click()", div);
+                    break;
+                case "Последовательность элементов":
+                    driver.Wait(questionAnswerInput);
+                    driver.FindElement(questionAnswerInput).Click();
+                    driver.FindElement(questionAnswerInput).SendKeys(questionAnswer);
+                    break;
+            }
+
+            var saveButton = By.XPath("//span[@class='mat-button-wrapper' and contains(.,'Сохранить')]/../../button[@color='primary']");
+            driver.FindElement(saveButton).Click();
+
+            var expectedError = By.XPath($"//span[contains(.,'{expectedErrorText}')]");
+            driver.Wait(expectedError);
+            var results = driver.FindElements(expectedError);
+            Assert.True(results.Any());
+            driver.LogOut();
+        }
+
+        [Test, Order(4)]
+        [TestCase("TestTest", "Test", "")]
+        public void ErrorEditQuestionWithBadTextQuestion(string testName, string textQuestion, string badTextQuestion)
+        {
+            driver.GoToSubjects();
+            driver.GoToChooseSubject();
+            driver.GoToChoosenSubject(Defaults.subjectName);
+            driver.GoToModulus(Defaults.modulusName);
+
+            driver.SwitchTo().Frame(0);
+            driver.Wait(By.CssSelector(".mat-row"));
+            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(testName));
+            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']"));
+            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']")).Click();
+            driver.Wait(By.CssSelector(".mat-row"));
             var questionsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var question = questionsForFind.FirstOrDefault(x => x.Text.Contains(questionText)); // название вопроса
+            var question = questionsForFind.FirstOrDefault(x => x.Text.Contains(textQuestion)); // название вопроса
             var idRowOfQuestion = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(question);
             driver.Wait(By.XPath($"//mat-table/mat-row[{idRowOfQuestion + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]"));
             driver.FindElement(By.XPath($"//mat-table/mat-row[{idRowOfQuestion + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]")).Click();
-
-
-
-            driver.Wait(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div"));
-            driver.FindElement(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div")).Click();
-            //driver.Wait(By.XPath($"//span[contains(.,\'{typeQuestion}\')]"));
-            //driver.FindElement(By.XPath($"//span[contains(.,\'{typeQuestion}\')]")).Click();
+            driver.Wait(By.XPath("//textarea[@placeholder=\'Текст вопроса\']"));
+            driver.FindElement(By.XPath("//textarea[@placeholder=\'Текст вопроса\']")).Click();
+            driver.FindElement(By.XPath("//textarea[@placeholder=\'Текст вопроса\']")).Clear();
+            driver.FindElement(By.XPath("//textarea[@placeholder=\'Текст вопроса\']")).SendKeys("t");
+            driver.FindElement(By.XPath("//textarea[@placeholder=\'Текст вопроса\']")).SendKeys(Keys.Backspace);
+            //driver.FindElement(By.XPath("//textarea[@placeholder=\'Текст вопроса\']")).SendKeys(badTextQuestion);
+            var errorMessage = driver.FindElements(By.XPath("//mat-error[contains(.,\' Введите название вопроса \')]"));
+            Assert.True(errorMessage.Count > 0);
+            var fieldNameTestValue = driver.FindElement(By.XPath("//textarea[@placeholder=\'Текст вопроса\']")).GetAttribute("ng-reflect-value");
+            Assert.IsEmpty(fieldNameTestValue);
+            driver.FindElement(By.XPath("//button[contains(.,\'Сохранить \')]")).Click();
+            //driver.Wait(By.XPath("//simple-snack-bar[contains(.,\'Название вопроса не должно быть пустым\')]"));
+            //var elements = driver.FindElements(By.XPath("//simple-snack-bar[contains(.,\'Название вопроса не должно быть пустым\')]"));
+            //Assert.True(elements.Count > 0);
+            var elements = driver.FindElements(By.XPath("//simple-snack-bar[contains(.,\'Вопрос изменен\')]"));
+            Assert.True(elements.Count == 0);
+            driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
+            driver.SwitchTo().DefaultContent();
+            driver.LogOut();
         }
 
-        [Test]
+        [Test, Order(5)]
         [TestCase("0")]
         [TestCase("-11")]
         [TestCase("11")]
@@ -129,51 +329,7 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
             driver.LogOut();
         }
 
-
-        [Test]
-        [TestCase("TestTest", "Test", "")]
-        public void ErrorEditQuestionWithBadTextQuestion(string testName, string textQuestion, string badTextQuestion)
-        {
-            driver.GoToSubjects();
-            driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusName);
-
-            driver.SwitchTo().Frame(0);
-            driver.Wait(By.CssSelector(".mat-row"));
-            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(testName));
-            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']"));
-            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']")).Click();
-            driver.Wait(By.CssSelector(".mat-row"));
-            var questionsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var question = questionsForFind.FirstOrDefault(x => x.Text.Contains(textQuestion)); // название вопроса
-            var idRowOfQuestion = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(question);
-            driver.Wait(By.XPath($"//mat-table/mat-row[{idRowOfQuestion + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]"));
-            driver.FindElement(By.XPath($"//mat-table/mat-row[{idRowOfQuestion + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]")).Click();
-            driver.Wait(By.XPath("//textarea[@placeholder=\'Текст вопроса\']"));
-            driver.FindElement(By.XPath("//textarea[@placeholder=\'Текст вопроса\']")).Click();
-            driver.FindElement(By.XPath("//textarea[@placeholder=\'Текст вопроса\']")).Clear();
-            driver.FindElement(By.XPath("//textarea[@placeholder=\'Текст вопроса\']")).SendKeys("t");
-            driver.FindElement(By.XPath("//textarea[@placeholder=\'Текст вопроса\']")).SendKeys(Keys.Backspace);
-            //driver.FindElement(By.XPath("//textarea[@placeholder=\'Текст вопроса\']")).SendKeys(badTextQuestion);
-            var errorMessage = driver.FindElements(By.XPath("//mat-error[contains(.,\' Введите название вопроса \')]"));
-            Assert.True(errorMessage.Count > 0);
-            var fieldNameTestValue = driver.FindElement(By.XPath("//textarea[@placeholder=\'Текст вопроса\']")).GetAttribute("ng-reflect-value");
-            Assert.IsEmpty(fieldNameTestValue);
-            driver.FindElement(By.XPath("//button[contains(.,\'Сохранить \')]")).Click();
-            //driver.Wait(By.XPath("//simple-snack-bar[contains(.,\'Название вопроса не должно быть пустым\')]"));
-            //var elements = driver.FindElements(By.XPath("//simple-snack-bar[contains(.,\'Название вопроса не должно быть пустым\')]"));
-            //Assert.True(elements.Count > 0);
-            var elements = driver.FindElements(By.XPath("//simple-snack-bar[contains(.,\'Вопрос изменен\')]"));
-            Assert.True(elements.Count == 0);
-            driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
-            driver.SwitchTo().DefaultContent();
-            driver.LogOut();
-        }
-
-        [Test]
+        [Test, Order(6)]
         public void ErrorDeleteQuestion()
         {
             driver.GoToSubjects();
@@ -199,78 +355,6 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
             driver.Wait(By.XPath("//simple-snack-bar[contains(.,\'Не удалось удалить вопрос\')]"));
             var elements = driver.FindElements(By.XPath("//simple-snack-bar[contains(.,\'Не удалось удалить вопрос\')]"));
             Assert.True(elements.Count > 0);
-            driver.SwitchTo().DefaultContent();
-            driver.LogOut();
-        }
-
-        [Test]
-        [TestCase("Новый вопрос")]
-        public void ErrorAddQuestionWithoutAnswers(string textQuestion)
-        {
-            driver.GoToSubjects();
-            driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusName);
-
-            driver.SwitchTo().Frame(0);
-
-            driver.Wait(By.CssSelector(".mat-row"));
-            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("NewTestTest"));
-            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']"));
-            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']")).Click();
-            driver.Wait(By.XPath("//span[contains(.,\'Добавить вопрос\')]"));
-            driver.FindElement(By.XPath("//span[contains(.,\'Добавить вопрос\')]")).Click();
-            driver.Wait(By.XPath("//textarea[@placeholder=\'Текст вопроса\']"));
-            driver.FindElement(By.XPath("//textarea[@placeholder=\'Текст вопроса\']")).Click();
-            driver.FindElement(By.XPath("//textarea[@placeholder=\'Текст вопроса\']")).SendKeys(textQuestion);
-            driver.FindElement(By.XPath("//button[contains(.,\'Сохранить\')]")).Click();
-            driver.Wait(By.XPath("//span[contains(.,\'Проверьте варианты ответов. Они не должны быть пустыми\')]"));
-            var errorMessage = driver.FindElements(By.XPath("//span[contains(.,\'Проверьте варианты ответов. Они не должны быть пустыми\')]"));
-            Assert.True(errorMessage.Count > 0);
-            var elements = driver.FindElements(By.XPath("//simple-snack-bar[contains(.,\'Вопрос создан\')]"));
-            Assert.True(elements.Count == 0);
-            //driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
-            driver.SwitchTo().DefaultContent();
-            driver.LogOut();
-        }
-
-
-        [Test]
-        [TestCase("")]
-        public void ErrorAddQuestionWithoutAllData(string textQuestion)
-        {
-            driver.GoToSubjects();
-            driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusName);
-
-            driver.SwitchTo().Frame(0);
-            driver.Wait(By.CssSelector(".mat-row"));
-            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("NewTestTest"));
-            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']"));
-            //driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem}]/mat-cell[3]/mat-icon[contains(.,\'help \')]")).Click();                                                          
-            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']")).Click();
-            driver.Wait(By.XPath("//span[contains(.,\'Добавить вопрос\')]"));
-            driver.FindElement(By.XPath("//span[contains(.,\'Добавить вопрос\')]")).Click();
-            driver.Wait(By.XPath("//textarea[@placeholder=\'Текст вопроса\']"));
-            driver.FindElement(By.XPath("//textarea[@placeholder=\'Текст вопроса\']")).Click();
-            driver.FindElement(By.XPath("//textarea[@placeholder=\'Текст вопроса\']")).SendKeys(textQuestion);
-            driver.FindElement(By.XPath("//input[@placeholder=\'Уровень сложности\']")).Click();
-            driver.FindElement(By.XPath("//input[@placeholder=\'Уровень сложности\']")).SendKeys(Keys.Backspace);
-            driver.FindElement(By.XPath("//input[@placeholder=\'Уровень сложности\']")).SendKeys(Keys.Enter);
-            driver.FindElement(By.XPath("//textarea[@placeholder=\'Текст вопроса\']")).Click();
-            var errorMessage = driver.FindElements(By.XPath("//mat-error[contains(.,\' Введите название вопроса \')]"));
-            Assert.True(errorMessage.Count > 0);
-            errorMessage = driver.FindElements(By.XPath("//mat-error[contains(.,\' Введите сложность \')]"));
-            Assert.True(errorMessage.Count > 0);
-            driver.FindElement(By.XPath("//button[contains(.,\'Сохранить\')]")).Click();
-            var elements = driver.FindElements(By.XPath("//simple-snack-bar[contains(.,\'Вопрос создан\')]"));
-            Assert.True(elements.Count == 0);
-            driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
             driver.SwitchTo().DefaultContent();
             driver.LogOut();
         }

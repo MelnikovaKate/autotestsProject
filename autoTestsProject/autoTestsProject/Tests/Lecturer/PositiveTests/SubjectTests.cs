@@ -16,7 +16,7 @@ using autoTestsProject.Enums;
 namespace autoTestsProject.Tests.Lecturer.PositiveTests
 {
 
-    [TestFixture()]
+    [TestFixture(), Order(1)]
     public class SubjectTests
     {
         private IWebDriver driver;
@@ -44,9 +44,9 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         [TestCase("Тестовый предмет с очень-очень длинным названием тестовый предмет с очень-очень длинным " +
                   "названием тестовый предмет с очень-очень длинным названием тестовый предмет с очень-очень " +
                   "длинным названием тестовый предмет с очень-очень длинным названием тестовый пр", "ТПСООДН202", "0", "0")]
-        [TestCase("Нормальный тестовый предмет", "НТП", "0", "0")]
-        [TestCase("Тестовый предмет для изучения БД", "ТПБД", "0", "0")]
-        public void AddSubjectLecturerWithOnlyNameAndAbbreviation(string fullSubjectName, string shortSubjectName, string countGroups, string countStudents)
+        [TestCase("Нормальный тестовый предмет 2021", "НТП", "0", "0")]
+        [TestCase("Тестовый_предмет Базы данных", "ТПБД", "0", "0")]
+        public void AddSubjectWithOnlyRequaredData(string fullSubjectName, string shortSubjectName, string countGroups, string countStudents)
         {
             driver.GoToSubjects();
             driver.GoToManagementSubject();
@@ -126,7 +126,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
                   "длинным названием новый тестовый предмет с очень-очень", "НТПСООДН21")]
         [TestCase("Нормальный тестовый предмет", "Нормальный измененный тестовый предмет", "НИТП")]
         [TestCase("Тестовый предмет для изучения БД", "Отредактированный тестовый предмет для изучения БД", "ОТПБД")]
-        public void EditSubjectNameAndAbbreviation(string oldFullSubjectName, string newFullSubjectName, string newShortSubjectName)
+        public void EditSubjectWithOnlyRequaredData(string oldFullSubjectName, string newFullSubjectName, string newShortSubjectName)
         {
             driver.GoToSubjects();
             driver.GoToManagementSubject();
@@ -178,7 +178,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
                   "длинным названием новый тестовый предмет с очень-очень", "10701117")]
         [TestCase("Нормальный измененный тестовый предмет", "10701117")]
         [TestCase("Отредактированный тестовый предмет для изучения БД", "10701117")]
-        public void EditSubjectGroup(string fullSubjectName, string newNameGroup)
+        public void EditSubjectAddGroup(string fullSubjectName, string newNameGroup)
         {
             driver.GoToSubjects();
             driver.GoToManagementSubject();
@@ -344,7 +344,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
                   "предмет с группой и дефолтными модулями предмет с группо", "TS11", "Тестовая")]
         [TestCase("Предмет для тестовой группы", "ПСГИДМ2021", "Тестовая")]
         [TestCase("Просто тестовый предмет", "ПТП", "Тестовая")]
-        public void AddSubjectLecturerWithOnlyDefaultModulus(string fullSubjectName, string shortSubjectName, string groupName)
+        public void AddSubjectWithGroup(string fullSubjectName, string shortSubjectName, string groupName)
         {
             driver.GoToSubjects();
             driver.GoToManagementSubject();
@@ -393,12 +393,47 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         }
 
         [Test, Order(9)]
+        [TestCase("М")]
+        [TestCase("Предмет с группой и дефолтными модулями предмет с группой и дефолтными модулями предмет с группой и " +
+                 "дефолтными модулями предмет с группой и дефолтными модулями предмет с группой и дефолтными модулями " +
+                 "предмет с группой и дефолтными модулями предмет с группо")]
+        [TestCase("Предмет для тестовой группы")]
+        [TestCase("Просто тестовый предмет")]
+        public void DeleteSubjectWithGroup(string fullSubjectName)
+        {
+            driver.GoToSubjects();
+            driver.GoToManagementSubject();
+
+            driver.SwitchTo().Frame(0);
+            driver.Wait(By.CssSelector(".mat-row"));
+            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+            var elem = elemsForFind.FirstOrDefault(x => x.Text.StartsWith(fullSubjectName, StringComparison.Ordinal));
+            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+
+            driver.Wait(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Удалить предмет\']"));
+            driver.FindElement(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Удалить предмет\']")).Click();
+            driver.Wait(By.XPath($"//mat-dialog-container[@id='mat-dialog-0']/app-delete-popover/app-popover-dialog/div/div/h2/p[contains(.,\'Вы действительно хотите удалить предмет \"{fullSubjectName}\"?\')]"));
+
+            var message = driver.FindElements(By.XPath($"//mat-dialog-container[@id='mat-dialog-0']/app-delete-popover/app-popover-dialog/div/div/h2/p[contains(.,\'Вы действительно хотите удалить предмет \"{fullSubjectName}\"?\')]"));
+            Assert.True(message.Count > 0);
+            driver.Wait(By.XPath("//button[contains(.,\'Удалить\')]"));
+            driver.FindElement(By.XPath("//button[contains(.,\'Удалить\')]")).Click();
+
+            Thread.Sleep(8000);
+            var els = driver.FindElements(By.XPath($"//td[contains(.,\'{fullSubjectName}\')]"));
+            Assert.True(els.Count == 0);
+
+            driver.SwitchTo().DefaultContent();
+            driver.LogOut();
+        }
+
+        [Test, Order(10)]
         [TestCase("К", "К", "Тестовая", "Лабораторные работы")]
         [TestCase("Очень-очень длинный предмет с модулями очень-очень длинный предмет с модулями очень-очень длинный предмет с модулями " +
                   "очень-очень длинный предмет с модулями очень-очень длинный предмет с модулями очень-очень длинный предмет с модулями " +
                   "очень-очень длинный пр", "ООДПСМ2021", "Тестовая", "Лекции")]
         [TestCase("Новый тестовый предмет НПО", "НТПНПО", "Тестовая", "Тестирование знаний")]
-        public void AddSubjectLecturerWithModulus(string fullSubjectName, string shortSubjectName, string groupName, string modulus)
+        public void AddSubjectWithModulus(string fullSubjectName, string shortSubjectName, string groupName, string modulus)
         {
 
             driver.GoToSubjects();
@@ -460,7 +495,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         }
    
 
-        [Test, Order(10)]
+        [Test, Order(11)]
         [TestCase("К", "Лекции")]
         [TestCase("Очень-очень длинный предмет с модулями очень-очень длинный предмет с модулями очень-очень длинный предмет с модулями " +
                   "очень-очень длинный предмет с модулями очень-очень длинный предмет с модулями очень-очень длинный предмет с модулями " +
@@ -501,40 +536,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.LogOut();
         }
 
-        [Test, Order(11)]
-        [TestCase("М")]
-        [TestCase("Предмет с группой и дефолтными модулями предмет с группой и дефолтными модулями предмет с группой и " +
-                  "дефолтными модулями предмет с группой и дефолтными модулями предмет с группой и дефолтными модулями " +
-                  "предмет с группой и дефолтными модулями предмет с группо")]
-        [TestCase("Предмет для тестовой группы")]
-        [TestCase("Просто тестовый предмет")]
-        public void DeleteSubjectWithOnlyDefaultModulus(string fullSubjectName)
-        {
-            driver.GoToSubjects();
-            driver.GoToManagementSubject();
-
-            driver.SwitchTo().Frame(0);
-            driver.Wait(By.CssSelector(".mat-row"));
-            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.StartsWith(fullSubjectName, StringComparison.Ordinal));
-            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-
-            driver.Wait(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Удалить предмет\']"));
-            driver.FindElement(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Удалить предмет\']")).Click();
-            driver.Wait(By.XPath($"//mat-dialog-container[@id='mat-dialog-0']/app-delete-popover/app-popover-dialog/div/div/h2/p[contains(.,\'Вы действительно хотите удалить предмет \"{fullSubjectName}\"?\')]"));
-
-            var message = driver.FindElements(By.XPath($"//mat-dialog-container[@id='mat-dialog-0']/app-delete-popover/app-popover-dialog/div/div/h2/p[contains(.,\'Вы действительно хотите удалить предмет \"{fullSubjectName}\"?\')]"));
-            Assert.True(message.Count > 0);
-            driver.Wait(By.XPath("//button[contains(.,\'Удалить\')]"));
-            driver.FindElement(By.XPath("//button[contains(.,\'Удалить\')]")).Click();
-
-            Thread.Sleep(8000);
-            var els = driver.FindElements(By.XPath($"//td[contains(.,\'{fullSubjectName}\')]"));
-            Assert.True(els.Count == 0);
-
-            driver.SwitchTo().DefaultContent();
-            driver.LogOut();
-        }
+       
 
         [Test, Order(12)]
         [TestCase("К")]

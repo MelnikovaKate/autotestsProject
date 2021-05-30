@@ -37,7 +37,7 @@ namespace autoTestsProject.Tests.Student.PositiveTests
 
         // tyt
         [Test]
-        public void GoodDownloadFileStudent()
+        public void DownloadFileStudent()
         {
             driver.Navigate().GoToUrl("https://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
             driver.Manage().Window.Size = new System.Drawing.Size(1680, 1050);
