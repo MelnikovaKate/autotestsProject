@@ -11,7 +11,6 @@ namespace autoTestsProject
         public static void Login(this IWebDriver driver, string login, string password)
         {
             driver.Navigate().GoToUrl(Defaults.Url);
-            //driver.Manage().Window.Size = new System.Drawing.Size(1680, 1050);
             driver.Manage().Window.Maximize();
             driver.FindElement(By.Id("mat-input-0")).Click();
             driver.FindElement(By.Id("mat-input-0")).SendKeys(login);
@@ -28,8 +27,6 @@ namespace autoTestsProject
 
             IJavaScriptExecutor executor1 = (IJavaScriptExecutor)driver;
             executor1.ExecuteScript("arguments[0].click()", driver.FindElement(By.XPath("//button/mat-icon[contains(.,\'exit_to_app\')]")));
-
-            //driver.FindElement(By.XPath("//button/mat-icon[contains(.,\'exit_to_app\')]")).Click(); // \'exit_to_appВыйти\'
             driver.Close();
         }
 

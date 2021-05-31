@@ -38,7 +38,11 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         }
 
         [Test, Order(1)]
-        [TestCase("TestTest", " С одним вариантом ", "Как твои дела?", "Хорошо", "Плохо", "Никак")]
+        [TestCase("Простое название для теста 2021", " С одним вариантом ", "Как твои дела?", "Хорошо", "Плохо", "Никак")]
+        [TestCase("Простое название для теста 2021", " С одним вариантом ", "К", "Хорошо", "Плохо", "Никак")]
+        [TestCase("Простое название для теста 2021", " С одним вариантом ", "Очень-очень длинный предлинный даже сверхдлинный " +
+                  "текст для вопроса 2021 очень-очень длинный предлинный даже сверхдлинный текст для вопроса 2021 очень-очень длинный " +
+                  "предлинный даже сверхдлинный текст для вопроса 2021 очень-очень длинный предлинный даже_вот", "Хорошо", "Плохо", "Никак")]
         public void AddQuestionWithOneAnswer(string testName, string typeQuestion, string textQuestion, string firstAnswer, string secondAnswer, string thirdAnswer)
         {
             driver.GoToSubjects();
@@ -85,7 +89,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         }
 
         [Test, Order(2)]
-        [TestCase("TestTest", " С одним вариантом ", "Как твои дела?", "Хорошо", "Плохо", "Никак")]
+        [TestCase("Простое название для теста 2021", " С одним вариантом ", "Как твои дела?", "Хорошо", "Плохо", "Никак")]
         public void CancelAddQuestionWithOneAnswer(string testName, string typeQuestion, string textQuestion, string firstAnswer, string secondAnswer, string thirdAnswer)
         {
             driver.GoToSubjects();
@@ -132,7 +136,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         }
 
         [Test, Order(3)]
-        [TestCase("TestTest", " С несколькими вариантами ", "Что ты любишь больше всего любишь есть?", "Холодник", "Бананы", "Дыня")]
+        [TestCase("Простое название для теста 2021", " С несколькими вариантами ", "Что ты любишь больше всего любишь есть?", "Холодник", "Бананы", "Дыня")]
         public void AddQuestionWithMoreAnswers(string testName, string typeQuestion, string textQuestion, string firstAnswer, string secondAnswer, string thirdAnswer)
         {
             driver.GoToSubjects();
@@ -190,7 +194,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         }
 
         [Test, Order(4)]
-        [TestCase("TestTest", " С несколькими вариантами ", "Что ты любишь больше всего любишь есть?", "Холодник", "Бананы", "Дыня")]
+        [TestCase("Простое название для теста 2021", " С несколькими вариантами ", "Что ты любишь больше всего любишь есть?", "Холодник", "Бананы", "Дыня")]
         public void CancelAddQuestionWithMoreAnswers(string testName, string typeQuestion, string textQuestion, string firstAnswer, string secondAnswer, string thirdAnswer)
         {
             driver.GoToSubjects();
@@ -248,7 +252,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         }
 
         [Test, Order(5)]
-        [TestCase("TestTest", " Ввод с клавиатуры ", "Как называется спутник Земли?", "Луна")]
+        [TestCase("Простое название для теста 2021", " Ввод с клавиатуры ", "Как называется спутник Земли?", "Луна")]
         public void AddQuestionWithEnterAnswer(string testName, string typeQuestion, string textQuestion, string firstAnswer)
         {
             driver.GoToSubjects();
@@ -285,7 +289,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         }
 
         [Test, Order(6)]
-        [TestCase("TestTest", " Ввод с клавиатуры ", "Как называется спутник Земли?", "Луна")]
+        [TestCase("Простое название для теста 2021", " Ввод с клавиатуры ", "Как называется спутник Земли?", "Луна")]
         public void CancelAddQuestionWithEnterAnswer(string testName, string typeQuestion, string textQuestion, string firstAnswer)
         {
             driver.GoToSubjects();
@@ -321,7 +325,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         }
 
         [Test, Order(7)]
-        [TestCase("TestTest", " Последовательность элементов ", "Поставить в порядке убывания...", "1", "2", "3")]
+        [TestCase("Простое название для теста 2021", " Последовательность элементов ", "Поставить в порядке убывания числа, которые приведены ниже...", "1", "2", "3")]
         public void AddQuestionWithOrderedAnswers(string testName, string typeQuestion, string textQuestion, string firstAnswer, string secondAnswer, string thirdAnswer)
         {
             driver.GoToSubjects();
@@ -364,7 +368,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         }     
 
         [Test, Order(8)]
-        [TestCase("TestTest", " Последовательность элементов ", "Поставить в порядке убывания...", "1", "2", "3")]
+        [TestCase("Простое название для теста 2021", " Последовательность элементов ", "Поставить в порядке убывания числа, которые приведены ниже...", "1", "2", "3")]
         public void CancelAddQuestionWithOrderedAnswers(string testName, string typeQuestion, string textQuestion, string firstAnswer, string secondAnswer, string thirdAnswer)
         {
             driver.GoToSubjects();
@@ -405,8 +409,13 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.LogOut();
         }
 
-        [Test, Order(9)]
-        [TestCase("TestTest", "Question", "NewQuestion")]
+        [Test, Order(10)]
+        [TestCase("Простое название для теста 2021", "Очень - очень длинный предлинный даже сверхдлинный " +
+                  "текст для вопроса 2021 очень-очень длинный предлинный даже сверхдлинный текст для вопроса 2021 очень-очень длинный " +
+                  "предлинный даже сверхдлинный текст для вопроса 2021 очень-очень длинный предлинный даже_вот", "Измененный_ длинный предлинный " +
+                  "даже сверхдлинный текст для вопроса 2021 очень-очень длинный предлинный даже сверхдлинный текст для вопроса 2021 очень-очень длинный " +
+                  "предлинный даже сверхдлинный текст для вопроса 2021 очень-очень длинный предлинный даже_вот")]
+        [TestCase("Простое название для теста 2021", "К", "Е")]
         public void EditTextQuestion(string testName, string oldTextQuestion, string newTextQuestion)
         {
             driver.GoToSubjects();
@@ -442,8 +451,13 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.LogOut(); ;
         }
 
-        [Test, Order(10)]
-        [TestCase("TestTest", "Question", "NewQuestion")]
+        [Test, Order(9)]
+        [TestCase("Простое название для теста 2021", "Очень - очень длинный предлинный даже сверхдлинный " +
+                  "текст для вопроса 2021 очень-очень длинный предлинный даже сверхдлинный текст для вопроса 2021 очень-очень длинный " +
+                  "предлинный даже сверхдлинный текст для вопроса 2021 очень-очень длинный предлинный даже_вот", "Измененный_ длинный предлинный " +
+                  "даже сверхдлинный текст для вопроса 2021 очень-очень длинный предлинный даже сверхдлинный текст для вопроса 2021 очень-очень длинный " +
+                  "предлинный даже сверхдлинный текст для вопроса 2021 очень-очень длинный предлинный даже_вот")]
+        [TestCase("Простое название для теста 2021", "К", "Е")]
         public void CancelEditTextQuestion(string testName, string oldTextQuestion, string newTextQuestion)
         {
             driver.GoToSubjects();
@@ -479,7 +493,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
        
 
         [Test, Order(11)]
-        [TestCase("TestTest", "Test", "Вариант для удаления")]
+        [TestCase("Простое название для теста 2021", "Е", "Вариант для удаления")]
         public void DeleteAnswerInQuestion(string testName, string textQuestion, string valueForDelete)
         {
             driver.GoToSubjects();
@@ -526,7 +540,14 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         }
 
         [Test, Order(12)]
-        [TestCase("TestTest","NewQuestion")]
+        [TestCase("Простое название для теста 2021", "Е")]
+        [TestCase("Простое название для теста 2021", "Измененный_ длинный предлинный " +
+                  "даже сверхдлинный текст для вопроса 2021 очень-очень длинный предлинный даже сверхдлинный текст для вопроса 2021 очень-очень длинный " +
+                  "предлинный даже сверхдлинный текст для вопроса 2021 очень-очень длинный предлинный даже_вот")]
+        [TestCase("Простое название для теста 2021", "Что ты любишь больше всего любишь есть?")]
+        [TestCase("Простое название для теста 2021", "Как называется спутник Земли?")]
+        [TestCase("Простое название для теста 2021", "Поставить в порядке убывания числа, которые приведены ниже...")]
+        [TestCase("Простое название для теста 2021", "Как твои дела")]
         public void CancelDeleteQuestion(string testName,string textQuestion)
         {
             driver.GoToSubjects();
@@ -561,7 +582,14 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         }
 
         [Test, Order(13)]
-        [TestCase("TestTest", "NewQuestion")]
+        [TestCase("Простое название для теста 2021", "Е")]
+        [TestCase("Простое название для теста 2021", "Измененный_ длинный предлинный " +
+                  "даже сверхдлинный текст для вопроса 2021 очень-очень длинный предлинный даже сверхдлинный текст для вопроса 2021 очень-очень длинный " +
+                  "предлинный даже сверхдлинный текст для вопроса 2021 очень-очень длинный предлинный даже_вот")]
+        [TestCase("Простое название для теста 2021", "Что ты любишь больше всего любишь есть?")]
+        [TestCase("Простое название для теста 2021", "Как называется спутник Земли?")]
+        [TestCase("Простое название для теста 2021", "Поставить в порядке убывания числа, которые приведены ниже...")]
+        [TestCase("Простое название для теста 2021", "Как твои дела")]
         public void DeleteQuestion(string testName, string textQuestion)
         {
             driver.GoToSubjects();

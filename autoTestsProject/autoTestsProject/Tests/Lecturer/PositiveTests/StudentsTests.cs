@@ -37,7 +37,10 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         }
 
         [Test]
-        [TestCase("Cat")]
+        [TestCase("TestUser2000")]
+        [TestCase("TestLogin")]
+        [TestCase("Tes")]
+        [TestCase("TestUser2000")]
         public void AddNewStudentInSystem(string surnameStudent)
         {
 
@@ -64,7 +67,9 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         }
 
         [Test]
-        [TestCase("Cat")]
+        [TestCase("TestLogin")]
+        [TestCase("Tes")]
+        [TestCase("Some_TestUser")]
         public void CloseAccessStudentInSystem(string surnameStudent)
         {
             driver.FindElement(By.XPath("//mat-icon[contains(.,\' person_add_alt_1\')]")).Click();

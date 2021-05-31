@@ -1,19 +1,14 @@
-﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="autoTestsProject/packages.config">
+﻿<Properties StartupConfiguration="{781C3877-FA1C-419C-8C84-4800E246D0C0}|Модульные тесты">
+  <MonoDevelop.Ide.Workbench ActiveDocument="autoTestsProject/Tests/Student/PositiveTests/AccountTests.cs">
     <Files>
-      <File FileName="autoTestsProject/Defaults.cs" Line="18" Column="6" />
-      <File FileName="autoTestsProject/Tests/Lecturer/NegativeTests/QuestionTests.cs" Line="217" Column="54" />
-      <File FileName="autoTestsProject/Tests/Lecturer/PositiveTests/QuestionTests.cs" Line="174" Column="83" />
-      <File FileName="autoTestsProject/Tests/Lecturer/NegativeTests/TestingTests.cs" Line="1" Column="1" />
-      <File FileName="autoTestsProject/Tests/Lecturer/PositiveTests/TestingTests.cs" Line="40" Column="53" />
-      <File FileName="autoTestsProject/Tests/Lecturer/PositiveTests/SubjectTests.cs" Line="16" Column="1" />
-      <File FileName="autoTestsProject/packages.config" Line="1" Column="1" />
+      <File FileName="autoTestsProject/Tests/Student/PositiveTests/AccountTests.cs" Line="43" Column="153" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="autoTestsProject" expanded="True">
             <Node name="autoTestsProject" expanded="True">
+              <Node name="Enums" expanded="True" />
               <Node name="Tests" expanded="True">
                 <Node name="Lecturer" expanded="True">
                   <Node name="NegativeTests" expanded="True" />
@@ -21,10 +16,11 @@
                 </Node>
                 <Node name="Student" expanded="True">
                   <Node name="NegativeTests" expanded="True" />
-                  <Node name="PositiveTests" expanded="True" />
+                  <Node name="PositiveTests" expanded="True">
+                    <Node name="AccountTests.cs" selected="True" />
+                  </Node>
                 </Node>
               </Node>
-              <Node name="packages.config" selected="True" />
             </Node>
           </Node>
         </State>
@@ -33,15 +29,9 @@
         <State name="__root__">
           <Node name="autoTestsProject" expanded="True">
             <Node name="autoTestsProject" expanded="True">
-              <Node name="autoTestsProject.Tests.Lecturer.NegativeTests" expanded="True">
-                <Node name="QuestionTests" expanded="True" />
-              </Node>
               <Node name="autoTestsProject.Tests.Lecturer.PositiveTests" expanded="True">
-                <Node name="SubjectTests" expanded="True" selected="True">
-                  <Node name="AddSubjectWithOnlyRequaredData" expanded="True" />
-                  <Node name="CloseEditSubject" expanded="True" />
-                  <Node name="EditSubjectAddGroup" expanded="True" />
-                  <Node name="EditSubjectWithOnlyRequaredData" expanded="True" />
+                <Node name="SubjectTests" expanded="True">
+                  <Node name="CloseAddSubject" expanded="True" selected="True" />
                 </Node>
               </Node>
             </Node>
