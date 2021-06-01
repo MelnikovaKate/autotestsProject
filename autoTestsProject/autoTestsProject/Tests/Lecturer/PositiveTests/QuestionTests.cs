@@ -616,9 +616,9 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.ClickJS(By.XPath("//button[contains(.,\'Да\')]"));
 
             // когда будет работать удаление расскомментировать эти строки
-            //driver.Wait(By.XPath($"//mat-cell[contains(.,\'{textQuestion}\')]"));
-            //var deleteQuestion = driver.FindElements(By.XPath($"//mat-cell[contains(.,\'{textQuestion}\')]"));
-            //Assert.True(deleteQuestion.Count == 0);
+            driver.Wait(By.XPath($"//mat-cell[contains(.,\'{textQuestion}\')]"));
+            var deleteQuestion = driver.FindElements(By.XPath($"//mat-cell[contains(.,\'{textQuestion}\')]"));
+            Assert.True(deleteQuestion.Count == 0);
 
             driver.SwitchTo().DefaultContent();
             driver.LogOut();

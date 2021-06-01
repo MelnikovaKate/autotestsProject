@@ -242,7 +242,7 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
             driver.GoToManagementSubject();
 
             driver.SwitchTo().Frame(0);
-            //InitializeData(fullSubjectName, shortSubjectName);
+            //InitializeData(fullSubjectName, shortSubjectName); было
             Thread.Sleep(1000);
             driver.Wait(By.CssSelector(".mat-row"));
             driver.Wait(By.XPath("//button[contains(.,'Добавить предмет')]"));
@@ -267,7 +267,7 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
             var message = driver.FindElements(By.XPath("//mat-error[contains(.,\' Предмет с такой аббревиатурой уже существует \')]"));
             Assert.True(message.Count > 0);
             driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
-            //ClearData();
+            //ClearData(); было
             driver.SwitchTo().DefaultContent();
             driver.LogOut();
         }
@@ -288,7 +288,7 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
 
             driver.Wait(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Редактировать предмет\']"));
             driver.ClickJS(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Редактировать предмет\']"));
-            //driver.FindElement(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Редактировать предмет\']")).Click();
+            //driver.FindElement(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Редактировать предмет\']")).Click(); было
             driver.Wait(By.XPath("//input[@name=\'name\']"));
             driver.FindElement(By.XPath("//input[@name=\'name\']")).Click();
             driver.FindElement(By.XPath("//input[@name=\'name\']")).Clear();

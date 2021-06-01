@@ -43,36 +43,36 @@ namespace autoTestsProject.Tests.Student.PositiveTests
         [TestCase("Some_TestUserForTesting", "TestPassword_1234567", "TestPassword_1234567", "Some_TestUser", "Some_TestUser", "Some_TestUser", "test")]
         public void RegisterUser(string userLogin, string userPassword, string userConfirmPassword, string userSurname, string userFirstname, string userFathername, string userAnswer)
         {
-                driver.Navigate().GoToUrl("http://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
-                driver.Manage().Window.Size = new System.Drawing.Size(1680, 1050);
-                driver.FindElement(By.XPath("//a[contains(.,\'Регистрация\')]")).Click();
-                driver.SwitchTo().Frame(0);
-                driver.Wait(By.Id("mat-input-0"));
-                driver.FindElement(By.Id("mat-input-0")).Click();
-                driver.FindElement(By.Id("mat-input-0")).SendKeys(userLogin); // login
-                driver.FindElement(By.CssSelector(".ng-tns-c5-1 .mat-form-field-infix")).Click();
-                driver.FindElement(By.Id("mat-input-1")).SendKeys(userPassword); // password
-                driver.FindElement(By.Id("mat-input-2")).Click();
-                driver.FindElement(By.Id("mat-input-2")).SendKeys(userConfirmPassword);
-                driver.FindElement(By.Id("mat-input-3")).Click();
-                driver.FindElement(By.Id("mat-input-3")).SendKeys(userSurname); // last n
-                driver.FindElement(By.Id("mat-input-4")).Click();
-                driver.FindElement(By.Id("mat-input-4")).SendKeys(userFirstname); // first n
-                driver.FindElement(By.Id("mat-input-5")).Click();
-                driver.FindElement(By.Id("mat-input-5")).SendKeys(userFathername); // father n
-                driver.FindElement(By.CssSelector(".mat-select-value > .ng-tns-c6-7")).Click();
-                driver.Wait(By.XPath("//mat-option/span[contains(.,\' Тестовая \')]"));
-                Thread.Sleep(3000);
-                driver.FindElement(By.XPath("//mat-option/span[contains(.,\' Тестовая \')]")).Click();
-                driver.Wait(By.CssSelector(".mat-select-placeholder"));
-                driver.FindElement(By.CssSelector(".mat-select-placeholder")).Click();
-                driver.FindElement(By.XPath("//mat-option/span[contains(.,\' Кличка любимого животного? \')]")).Click();
-                driver.FindElement(By.Id("mat-input-6")).Click();
-                driver.FindElement(By.Id("mat-input-6")).SendKeys(userAnswer);
-                driver.FindElement(By.XPath("//button[contains(.,\'Зарегистрироваться\')]")).Click();
-                driver.FindElement(By.XPath("//button[contains(.,\'Зарегистрироваться\')]")).Click();
-            //}
-            driver.Close();
+            driver.Navigate().GoToUrl("http://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
+            driver.Manage().Window.Size = new System.Drawing.Size(1680, 1050);
+            driver.FindElement(By.XPath("//a[contains(.,\'Регистрация\')]")).Click();
+            driver.SwitchTo().Frame(0);
+            driver.Wait(By.Id("mat-input-0"));
+            driver.FindElement(By.Id("mat-input-0")).Click();
+            driver.FindElement(By.Id("mat-input-0")).SendKeys(userLogin); // login
+            driver.FindElement(By.CssSelector(".ng-tns-c5-1 .mat-form-field-infix")).Click();
+            driver.FindElement(By.Id("mat-input-1")).SendKeys(userPassword); // password
+            driver.FindElement(By.Id("mat-input-2")).Click();
+            driver.FindElement(By.Id("mat-input-2")).SendKeys(userConfirmPassword);
+            driver.FindElement(By.Id("mat-input-3")).Click();
+            driver.FindElement(By.Id("mat-input-3")).SendKeys(userSurname); // last n
+            driver.FindElement(By.Id("mat-input-4")).Click();
+            driver.FindElement(By.Id("mat-input-4")).SendKeys(userFirstname); // first n
+            driver.FindElement(By.Id("mat-input-5")).Click();
+            driver.FindElement(By.Id("mat-input-5")).SendKeys(userFathername); // father n
+            driver.FindElement(By.CssSelector(".mat-select-value > .ng-tns-c6-7")).Click();
+            driver.Wait(By.XPath("//mat-option/span[contains(.,\' Тестовая \')]"));
+            Thread.Sleep(3000);
+            driver.FindElement(By.XPath("//mat-option/span[contains(.,\' Тестовая \')]")).Click();
+            driver.Wait(By.CssSelector(".mat-select-placeholder"));
+            driver.FindElement(By.CssSelector(".mat-select-placeholder")).Click();
+            driver.FindElement(By.XPath("//mat-option/span[contains(.,\' Кличка любимого животного? \')]")).Click();
+            driver.FindElement(By.Id("mat-input-6")).Click();
+            driver.FindElement(By.Id("mat-input-6")).SendKeys(userAnswer);
+            driver.FindElement(By.XPath("//button[contains(.,\'Зарегистрироваться\')]")).Click();
+            driver.FindElement(By.XPath("//button[contains(.,\'Зарегистрироваться\')]")).Click();
+        //}
+        driver.Close();
         }
 
         [Test, Order(2)]
@@ -83,25 +83,25 @@ namespace autoTestsProject.Tests.Student.PositiveTests
         [TestCase("Some_TestUserForTesting", "TestPassword_1234567")]
         public void LoginUser(string userLogin, string userPassword)
         {
-                driver.Navigate().GoToUrl("http://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
-                driver.Manage().Window.Size = new System.Drawing.Size(1200, 919);
-                driver.Wait(By.Id("mat-input-0"));
-                driver.FindElement(By.Id("mat-input-0")).Click();
-                driver.FindElement(By.Id("mat-input-0")).SendKeys(userLogin);
+            driver.Navigate().GoToUrl("http://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
+            driver.Manage().Window.Size = new System.Drawing.Size(1200, 919);
+            driver.Wait(By.Id("mat-input-0"));
+            driver.FindElement(By.Id("mat-input-0")).Click();
+            driver.FindElement(By.Id("mat-input-0")).SendKeys(userLogin);
 
-                driver.FindElement(By.Id("mat-input-1")).Click();
-                {
-                    var element = driver.FindElement(By.CssSelector(".loginbtn > .mat-focus-indicator"));
-                    Actions builder = new Actions(driver);
-                    builder.MoveToElement(element).Perform();
-                }
-                driver.FindElement(By.Id("mat-input-1")).SendKeys(userPassword);
-                driver.FindElement(By.XPath("//button[contains(.,\'Войти в систему\')]")).Click();
-                driver.Wait(By.XPath("//a[contains(.,\'Предметы\')]"));
- 
-                var elements = driver.FindElements(By.XPath("//a[contains(.,\'Предметы\')]"));
-                Assert.True(elements.Count > 0);
-                driver.Wait(By.XPath("//mat-icon[contains(.,\'more_vert\')]"));
+            driver.FindElement(By.Id("mat-input-1")).Click();
+            {
+                var element = driver.FindElement(By.CssSelector(".loginbtn > .mat-focus-indicator"));
+                Actions builder = new Actions(driver);
+                builder.MoveToElement(element).Perform();
+            }
+            driver.FindElement(By.Id("mat-input-1")).SendKeys(userPassword);
+            driver.FindElement(By.XPath("//button[contains(.,\'Войти в систему\')]")).Click();
+            driver.Wait(By.XPath("//a[contains(.,\'Предметы\')]"));
+
+            var elements = driver.FindElements(By.XPath("//a[contains(.,\'Предметы\')]"));
+            Assert.True(elements.Count > 0);
+            driver.Wait(By.XPath("//mat-icon[contains(.,\'more_vert\')]"));
             driver.LogOut();
         }     
 
@@ -133,6 +133,7 @@ namespace autoTestsProject.Tests.Student.PositiveTests
             driver.FindElement(By.Id("mat-dialog-1")).Click();
             driver.FindElement(By.Id("mat-dialog-1")).Click();
             driver.FindElement(By.Id("mat-dialog-1")).Click();
+            driver.Close();
         }
     }
 }

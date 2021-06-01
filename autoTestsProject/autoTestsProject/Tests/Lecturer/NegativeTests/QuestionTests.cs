@@ -43,35 +43,6 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
             driver.Quit();
         }
 
-        //[Test]
-        //public void ErrorEditQuestionsWithDifferentTestType(string testName, string questionText)
-        //{
-        //    driver.GoToSubjects();
-        //    driver.GoToChooseSubject();
-        //    driver.GoToChoosenSubject(Defaults.subjectName);
-        //    driver.GoToModulus(Defaults.modulusName);
-
-        //    driver.Wait(By.CssSelector(".mat-row"));
-        //    var elementsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-        //    var element = elementsForFind.FirstOrDefault(x => x.Text.Contains(testName));
-        //    var idRowOfElement = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(element);
-        //    driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElement + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']"));
-        //    driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElement + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']")).Click();
-
-        //    driver.Wait(By.CssSelector(".mat-row"));
-        //    var questionsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-        //    var question = questionsForFind.FirstOrDefault(x => x.Text.Contains(questionText)); // название вопроса
-        //    var idRowOfQuestion = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(question);
-        //    driver.Wait(By.XPath($"//mat-table/mat-row[{idRowOfQuestion + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]"));
-        //    driver.FindElement(By.XPath($"//mat-table/mat-row[{idRowOfQuestion + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]")).Click();
-
-
-
-        //    driver.Wait(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div"));
-        //    driver.FindElement(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div")).Click();
-        //    //driver.Wait(By.XPath($"//span[contains(.,\'{typeQuestion}\')]"));
-        //    //driver.FindElement(By.XPath($"//span[contains(.,\'{typeQuestion}\')]")).Click();
-        //}
 
         [Test, Order(1)]
         [TestCase("")]
@@ -227,6 +198,7 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
             driver.Wait(expectedError);
             var results = driver.FindElements(expectedError);
             Assert.True(results.Any());
+            driver.SwitchTo().DefaultContent();
             driver.LogOut();
         }
 
@@ -279,55 +251,55 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
         [TestCase("11")]
         public void ErrorEditQuestionWithBadComplexityQuestion(string complexityQuestion)
         {
-            driver.GoToSubjects();
-            driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusName);
+        driver.GoToSubjects();
+        driver.GoToChooseSubject();
+        driver.GoToChoosenSubject(Defaults.subjectName);
+        driver.GoToModulus(Defaults.modulusName);
 
-            driver.SwitchTo().Frame(0);
+        driver.SwitchTo().Frame(0);
 
-            driver.Wait(By.CssSelector(".mat-row"));
-            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("NewTestTest"));
-            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']"));
-            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']")).Click();
-            driver.Wait(By.CssSelector(".mat-row"));
-            var questionsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var question = questionsForFind.FirstOrDefault(x => x.Text.Contains("Тест")); // название вопроса
-            var idRowOfQuestion = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(question);
-            driver.Wait(By.XPath($"//mat-table/mat-row[{idRowOfQuestion + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]"));
-            driver.FindElement(By.XPath($"//mat-table/mat-row[{idRowOfQuestion + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]")).Click();
-            driver.Wait(By.XPath("//input[@placeholder=\'Уровень сложности\']"));
-            //driver.FindElement(By.XPath("//input[@placeholder=\'Уровень сложности\']")).Click();
-            //driver.FindElement(By.XPath("//input[@placeholder=\'Уровень сложности\']")).SendKeys(Keys.Backspace);
-            //driver.FindElement(By.XPath("//input[@placeholder=\'Уровень сложности\']")).SendKeys(Keys.Enter);         
-            driver.FindElement(By.XPath("//input[@placeholder=\'Уровень сложности\']")).Click();
-            driver.FindElement(By.XPath("//input[@placeholder=\'Уровень сложности\']")).Clear();
-            driver.FindElement(By.XPath("//input[@placeholder=\'Уровень сложности\']")).SendKeys(complexityQuestion);
-            //driver.Wait(By.XPath("//mat-error[contains(.,\' Введите сложность \')]"));
-            //var errorMessage = driver.FindElements(By.XPath("//mat-error[contains(.,\' Введите сложность \')]"));
-            int errorMessagesCount = 0;
-            if (int.Parse(complexityQuestion) <= 0)
-            {
-                driver.Wait(By.XPath("//mat-error[contains(.,\'Сложность вопроса должна быть больше нуля\')]"));
-                errorMessagesCount = driver.FindElements(By.XPath("//mat-error[contains(.,\'Сложность вопроса должна быть больше нуля\')]")).Count;
-            }
-            else if (int.Parse(complexityQuestion) > 0)
-            {
-                driver.Wait(By.XPath("//mat-error[contains(.,\'Сложность вопроса не может быть больше 10\')]"));
-                errorMessagesCount = driver.FindElements(By.XPath("//mat-error[contains(.,\'Сложность вопроса не может быть больше 10\')]")).Count;
-            }
-
-            Assert.True(errorMessagesCount > 0);
-            driver.FindElement(By.XPath("//button[contains(.,\'Сохранить \')]")).Click();
-            //driver.Wait(By.XPath("//simple-snack-bar[contains(.,\'Вопрос изменен\')]"));
-            var elements = driver.FindElements(By.XPath("//simple-snack-bar[contains(.,\'Вопрос изменен\')]"));
-            Assert.True(elements.Count == 0);
-            driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
-            driver.SwitchTo().DefaultContent();
-            driver.LogOut();
+        driver.Wait(By.CssSelector(".mat-row"));
+        var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+        var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("NewTestTest"));
+        var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+        driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']"));
+        driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Перейти к вопросам\']")).Click();
+        driver.Wait(By.CssSelector(".mat-row"));
+        var questionsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+        var question = questionsForFind.FirstOrDefault(x => x.Text.Contains("Тест")); // название вопроса
+        var idRowOfQuestion = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(question);
+        driver.Wait(By.XPath($"//mat-table/mat-row[{idRowOfQuestion + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]"));
+        driver.FindElement(By.XPath($"//mat-table/mat-row[{idRowOfQuestion + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]")).Click();
+        driver.Wait(By.XPath("//input[@placeholder=\'Уровень сложности\']"));
+        //driver.FindElement(By.XPath("//input[@placeholder=\'Уровень сложности\']")).Click();
+        //driver.FindElement(By.XPath("//input[@placeholder=\'Уровень сложности\']")).SendKeys(Keys.Backspace);
+        //driver.FindElement(By.XPath("//input[@placeholder=\'Уровень сложности\']")).SendKeys(Keys.Enter);         
+        driver.FindElement(By.XPath("//input[@placeholder=\'Уровень сложности\']")).Click();
+        driver.FindElement(By.XPath("//input[@placeholder=\'Уровень сложности\']")).Clear();
+        driver.FindElement(By.XPath("//input[@placeholder=\'Уровень сложности\']")).SendKeys(complexityQuestion);
+        //driver.Wait(By.XPath("//mat-error[contains(.,\' Введите сложность \')]"));
+        //var errorMessage = driver.FindElements(By.XPath("//mat-error[contains(.,\' Введите сложность \')]"));
+        int errorMessagesCount = 0;
+        if (int.Parse(complexityQuestion) <= 0)
+        {
+            driver.Wait(By.XPath("//mat-error[contains(.,\'Сложность вопроса должна быть больше нуля\')]"));
+            errorMessagesCount = driver.FindElements(By.XPath("//mat-error[contains(.,\'Сложность вопроса должна быть больше нуля\')]")).Count;
         }
+        else if (int.Parse(complexityQuestion) > 0)
+        {
+            driver.Wait(By.XPath("//mat-error[contains(.,\'Сложность вопроса не может быть больше 10\')]"));
+            errorMessagesCount = driver.FindElements(By.XPath("//mat-error[contains(.,\'Сложность вопроса не может быть больше 10\')]")).Count;
+        }
+
+        Assert.True(errorMessagesCount > 0);
+        driver.FindElement(By.XPath("//button[contains(.,\'Сохранить \')]")).Click();
+        //driver.Wait(By.XPath("//simple-snack-bar[contains(.,\'Вопрос изменен\')]"));
+        var elements = driver.FindElements(By.XPath("//simple-snack-bar[contains(.,\'Вопрос изменен\')]"));
+        Assert.True(elements.Count == 0);
+        driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
+        driver.SwitchTo().DefaultContent();
+        driver.LogOut();
+    }
 
         [Test, Order(6)]
         public void ErrorDeleteQuestion()
