@@ -47,8 +47,8 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusName);
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);
             driver.Wait(By.CssSelector(".mat-row"));
@@ -94,8 +94,8 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusName);
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);
             driver.Wait(By.CssSelector(".mat-row"));
@@ -141,8 +141,8 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusName);
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);
             driver.Wait(By.CssSelector(".mat-row"));
@@ -199,8 +199,8 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusName);
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);
             driver.Wait(By.CssSelector(".mat-row"));
@@ -257,8 +257,8 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusName);
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);
             driver.Wait(By.CssSelector(".mat-row"));
@@ -294,8 +294,8 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusName);
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);
             driver.Wait(By.CssSelector(".mat-row"));
@@ -330,8 +330,8 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusName);
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);
             driver.Wait(By.CssSelector(".mat-row"));
@@ -373,8 +373,8 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusName);
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);
             driver.Wait(By.CssSelector(".mat-row"));
@@ -409,6 +409,93 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.LogOut();
         }
 
+
+        [Test, Order(9)]// подумать над вопросами
+        [TestCase("Простое название для теста 2021")]
+        public void DoingTest(string testName)
+        {
+            driver.GoToSubjects();
+            driver.GoToChooseSubject();
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusName);
+
+            driver.SwitchTo().Frame(0);
+            //Thread.Sleep(3000);
+            driver.Wait(By.CssSelector(".mat-row"));
+            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(testName)); // название теста
+            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+            //Thread.Sleep(5000);
+            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Редактировать тест\']"));
+            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Редактировать тест\']")).Click();
+            //Thread.Sleep(2000);
+            driver.Wait(By.Id("mat-input-2"));
+            var inputQuestion = driver.FindElement(By.Id("mat-input-2"));
+            var value = inputQuestion.GetAttribute("ng-reflect-value");
+            driver.FindElement(By.XPath("//button[contains(.,\'Закрыть\')]")).Click();
+            //Thread.Sleep(5000);
+            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Пройти тест\']"));
+            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Пройти тест\']")).Click();
+            //Thread.Sleep(2000);
+            driver.Wait(By.XPath("//button[contains(.,\'Далее\')]"));
+            driver.FindElement(By.XPath("//button[contains(.,\'Далее\')]")).Click();
+
+            for (int i = 1; i <= int.Parse(value); i++)
+            {
+                //Thread.Sleep(3000);
+                driver.Wait(By.ClassName("question-answers-block-container"));
+                var questionAnswersBlockContainer = driver.FindElement(By.ClassName("question-answers-block-container"));
+
+                var questionType = DefineQuestionType(questionAnswersBlockContainer);
+
+                switch (questionType)
+                {
+                    case QuestionTypeEnum.Input:
+                        driver.FindElement(By.ClassName("mat-input-element")).SendKeys("test");
+                        break;
+                    case QuestionTypeEnum.DropList:
+                        break;
+                    case QuestionTypeEnum.Checkbox:
+                        driver.FindElement(By.ClassName("mat-checkbox")).Click();
+                        break;
+                    case QuestionTypeEnum.RadioButton:
+                        driver.FindElement(By.ClassName("mat-radio-container")).Click();
+                        break;
+                }
+                driver.FindElement(By.XPath("//button[contains(.,\'done_outline Ответить\')]")).Click();
+            }
+            var str = $"Тест на тему «{testName}» завершен";
+            driver.Wait(By.XPath($"//app-test-result/div/div[contains(.,\'{str}\')]"));
+            Assert.That(driver.FindElement(By.XPath($"//app-test-result/div/div[contains(.,\'{str}\')]")).Text, Is.EqualTo($"Тест на тему «{testName}» завершен"));
+            driver.SwitchTo().DefaultContent();
+            driver.LogOut();
+        }
+
+        public IDictionary<string, QuestionTypeEnum> QuestionTypes = new Dictionary<string, QuestionTypeEnum>()
+        {
+            { "mat-input-element", QuestionTypeEnum.Input },
+            { "cdk-drop-list", QuestionTypeEnum.DropList },
+            { "question-answers-block-container-checkboxes", QuestionTypeEnum.Checkbox },
+            { "mat-radio-group", QuestionTypeEnum.RadioButton },
+        };
+
+        public QuestionTypeEnum DefineQuestionType(IWebElement element)
+        {
+            QuestionTypeEnum questionType = QuestionTypeEnum.NoType;
+
+            foreach (var questionTypePair in QuestionTypes)
+            {
+                var elements = element.FindElements(By.ClassName(questionTypePair.Key));
+
+                if (elements.Count != 0)
+                {
+                    questionType = questionTypePair.Value;
+                }
+            }
+
+            return questionType;
+        }
+
         [Test, Order(10)]
         [TestCase("Простое название для теста 2021", "Очень - очень длинный предлинный даже сверхдлинный " +
                   "текст для вопроса 2021 очень-очень длинный предлинный даже сверхдлинный текст для вопроса 2021 очень-очень длинный " +
@@ -420,8 +507,8 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusName);
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);
             driver.Wait(By.CssSelector(".mat-row"));
@@ -462,8 +549,8 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusName);
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);
             var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
@@ -498,8 +585,8 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusName);
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);
 
@@ -552,8 +639,8 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusName);
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);
 
@@ -586,16 +673,16 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         [TestCase("Простое название для теста 2021", "Измененный_ длинный предлинный " +
                   "даже сверхдлинный текст для вопроса 2021 очень-очень длинный предлинный даже сверхдлинный текст для вопроса 2021 очень-очень длинный " +
                   "предлинный даже сверхдлинный текст для вопроса 2021 очень-очень длинный предлинный даже_вот")]
-        [TestCase("Простое название для теста 2021", "Что ты любишь больше всего любишь есть?")]
-        [TestCase("Простое название для теста 2021", "Как называется спутник Земли?")]
-        [TestCase("Простое название для теста 2021", "Поставить в порядке убывания числа, которые приведены ниже...")]
-        [TestCase("Простое название для теста 2021", "Как твои дела")]
+        //[TestCase("Простое название для теста 2021", "Что ты любишь больше всего любишь есть?")]
+        //[TestCase("Простое название для теста 2021", "Как называется спутник Земли?")]
+        //[TestCase("Простое название для теста 2021", "Поставить в порядке убывания числа, которые приведены ниже...")]
+        //[TestCase("Простое название для теста 2021", "Как твои дела")]
         public void DeleteQuestion(string testName, string textQuestion)
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusName);
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);
 

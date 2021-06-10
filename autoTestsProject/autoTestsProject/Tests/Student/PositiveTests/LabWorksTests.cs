@@ -15,7 +15,7 @@ using autoTestsProject.Enums;
 
 namespace autoTestsProject.Tests.Student.PositiveTests
 {
-    [TestFixture()]
+    [TestFixture(), Order(10)]
     public class LabWorksTests
     {
         private IWebDriver driver;
@@ -41,8 +41,8 @@ namespace autoTestsProject.Tests.Student.PositiveTests
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusLabWorks);
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusLabWorks);
 
             driver.SwitchTo().Frame(0);
             //Thread.Sleep(4000);
@@ -77,8 +77,8 @@ namespace autoTestsProject.Tests.Student.PositiveTests
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusLabWorks);
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusLabWorks);
 
             driver.SwitchTo().Frame(0);
             //Thread.Sleep(4000);
@@ -106,8 +106,8 @@ namespace autoTestsProject.Tests.Student.PositiveTests
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusLabWorks);
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusLabWorks);
 
             driver.SwitchTo().Frame(0);
 

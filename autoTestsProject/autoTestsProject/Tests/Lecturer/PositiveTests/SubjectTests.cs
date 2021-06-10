@@ -47,7 +47,6 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         [TestCase("Нормальный тестовый предмет, у которого очень-очень длинное предлинное название для " +
                   "тестирования создания предмета 2021", "НТП", "0", "0")]
         [TestCase("Тестовый_предмет Базы данных", "ТПБД", "0", "0")]
-        [TestCase("ДП Тестовый предмет", "ДПТП", "0", "0")]
         public void AddSubjectWithOnlyRequaredData(string fullSubjectName, string shortSubjectName, string countGroups, string countStudents)
         {
             driver.GoToSubjects();
@@ -74,7 +73,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             Assert.True(els.Count > 0);
 
             var allSubjects = driver.FindElements(By.CssSelector(".mat-row"));
-            var subject = allSubjects.FirstOrDefault(x => x.Text.Contains(fullSubjectName));
+            var subject = allSubjects.FirstOrDefault(x => x.Text.StartsWith(fullSubjectName));
             var idRowOfSubject = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(subject);
 
             driver.Wait(By.XPath($"//tr[{idRowOfSubject + 1}]/td[@class=\'mat-cell cdk-column-groups mat-column-groups ng-star-inserted\']/span[contains(.,\'{countGroups}\')]"));
@@ -119,7 +118,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         }
 
         [Test, Order(3)]
-        [TestCase("П", "Н", "Н")]
+        [TestCase("П", "Д", "Д")]
         [TestCase("Тестовый предмет с очень-очень длинным названием тестовый предмет с очень-очень длинным " +
                   "названием тестовый предмет с очень-очень длинным названием тестовый предмет с очень-очень " +
                   "длинным названием тестовый предмет с очень-очень длинным названием тестовый пр", "Новый " +
@@ -146,10 +145,6 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
 
             driver.Wait(By.XPath("//input[@name=\'name\']"));
             driver.FindElement(By.XPath("//input[@name=\'name\']")).Click();
-            //{
-            //    string value = driver.FindElement(By.XPath("//input[@name=\'name\']")).GetAttribute("value");
-            //    Assert.That(value, Is.EqualTo(oldFullSubjectName));
-            //}
             driver.Wait(By.XPath("//input[@name=\'name\']"));
             driver.FindElement(By.XPath("//input[@name=\'name\']")).Clear();
             driver.FindElement(By.XPath("//input[@name=\'name\']")).SendKeys(newFullSubjectName);
@@ -176,10 +171,10 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         }
 
         [Test, Order(4)]
-        [TestCase("Н", "10701117")]
+        [TestCase("Д", "10701117")]
         [TestCase("Новый тестовый предмет с очень-очень длинным названием новый тестовый предмет с очень-очень длинным " +
                   "названием новый тестовый предмет с очень-очень длинным названием новый тестовый предмет с очень-очень " +
-                  "длинным названием новый тестовый предмет с очень-очень", "10701117")]
+                  "длинным названием новый тестовый предмет с очень-очен", "10701117")]
         [TestCase("Измененный нормальный тестовый предмет, у которого очень-очень длинное предлинное название для " +
                   "тестирования создания предмета 2021", "10701117")]
         [TestCase("Отредактированный тестовый_предмет для изучения Базы данных", "10701117")]
@@ -229,12 +224,12 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         }
 
         [Test, Order(5)]
-        [TestCase("Н", "У", "Д")]
+        [TestCase("Д", "У", "У")]
         [TestCase("Новый тестовый предмет с очень-очень длинным названием новый тестовый предмет с очень-очень длинным " +
                   "названием новый тестовый предмет с очень-очень длинным названием новый тестовый предмет с очень-очень " +
-                  "длинным названием новый тестовый предмет с очень-очень", "Новый тестовый предмет с очень-очень длинным " +
-                  "названием который необходимо удалить новый тестовый предмет с очень-очень длинным названием который необходимо " +
-                  "удалить новый тестовый предмет с очень-очень длинным названием который необходимо удалить новый тест", "НТПСООДНДУ")]
+                  "длинным названием новый тестовый предмет с очень-очен", "Новый тестовый предмет с очень-очень длинным названием " +
+                  "который необходимо удалить новый тестовый предмет с очень-очень длинным названием который необходимо удалить новый " +
+                  "тестовый предмет с очень-очень длинным названием который необходимо удалить новый тес", "НТПСООДНДУ")]
         [TestCase("Измененный нормальный тестовый предмет, у которого очень-очень длинное предлинное название для " +
                   "тестирования создания предмета 2021", "Нормальный тестовый предмет для удаления", "НТПУ")]
         [TestCase("Отредактированный тестовый_предмет для изучения Базы данных", "Тестовый предмет для изучения БД для удаления", "ТСБДУ")]
@@ -267,17 +262,17 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             var message = driver.FindElements(By.XPath("//div/div/div/div[contains(.,\' Предмет успешно отредактирован \')]"));
             Assert.True(message.Count == 0);
             driver.SwitchTo().Frame(0);
-            var els = driver.FindElements(By.XPath($"//td[contains(.,\'{newFullSubjectName}\')]"));
+            var els = driver.FindElements(By.XPath($"//td[@class=\'mat-cell cdk-column-name mat-column-name ng-star-inserted\'][contains(.,\'{newFullSubjectName}\')]"));
             Assert.True(els.Count == 0);
             driver.SwitchTo().DefaultContent();
             driver.LogOut();
         }
 
         [Test, Order(6)]
-        [TestCase("Н")]
+        [TestCase("Д")]
         [TestCase("Новый тестовый предмет с очень-очень длинным названием новый тестовый предмет с очень-очень длинным " +
-                  "названием новый тестовый предмет с очень-очень длинным названием новый тестовый предмет с очень-очень " +
-                  "длинным названием новый тестовый предмет с очень-очень")]
+                  "названием новый тестовый предмет с очень-очень длинным названием новый тестовый предмет с очень-очень" +
+                  " длинным названием новый тестовый предмет с очень-очен")]
         [TestCase("Измененный нормальный тестовый предмет, у которого очень-очень длинное предлинное название для " +
                   "тестирования создания предмета 2021")]
         [TestCase("Отредактированный тестовый_предмет для изучения Базы данных")]
@@ -294,15 +289,14 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
 
             driver.Wait(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Удалить предмет\']"));
             driver.FindElement(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Удалить предмет\']")).Click();
+            Thread.Sleep(1000);
             driver.Wait(By.XPath($"//mat-dialog-container[@id='mat-dialog-0']/app-delete-popover/app-popover-dialog/div/div/h2/p[contains(.,\'Вы действительно хотите удалить предмет \"{fullSubjectName}\"?\')]"));
 
             var message = driver.FindElements(By.XPath($"//mat-dialog-container[@id='mat-dialog-0']/app-delete-popover/app-popover-dialog/div/div/h2/p[contains(.,\'Вы действительно хотите удалить предмет \"{fullSubjectName}\"?\')]"));
             Assert.True(message.Count > 0);
-            driver.Wait(By.XPath("//button[contains(.,\'Отмена\')]"));
-            driver.FindElement(By.XPath("//button[contains(.,\'Отмена\')]")).Click();
+            driver.ClickJS(By.XPath("//button[contains(.,\'Отмена\')]")); 
 
-            driver.Wait(By.XPath($"//td[contains(.,\'{fullSubjectName}\')]"));
-            var els = driver.FindElements(By.XPath($"//td[contains(.,\'{fullSubjectName}\')]"));
+            var els = driver.FindElements(By.XPath($"//td[@class=\'mat-cell cdk-column-name mat-column-name\'][contains(.,\'{fullSubjectName}\')]"));
             Assert.True(els.Count > 0);
 
             driver.SwitchTo().DefaultContent();
@@ -310,10 +304,10 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         }
 
         [Test, Order(7)]
-        [TestCase("Н")]
+        [TestCase("Д")]
         [TestCase("Новый тестовый предмет с очень-очень длинным названием новый тестовый предмет с очень-очень длинным " +
-                  "названием новый тестовый предмет с очень-очень длинным названием новый тестовый предмет с очень-очень " +
-                  "длинным названием новый тестовый предмет с очень-очень")]
+                  "названием новый тестовый предмет с очень-очень длинным названием новый тестовый предмет с очень-очень" +
+                  " длинным названием новый тестовый предмет с очень-очен")]
         [TestCase("Измененный нормальный тестовый предмет, у которого очень-очень длинное предлинное название для " +
                   "тестирования создания предмета 2021")]
         [TestCase("Отредактированный тестовый_предмет для изучения Базы данных")]
@@ -330,15 +324,15 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
 
             driver.Wait(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Удалить предмет\']"));
             driver.FindElement(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Удалить предмет\']")).Click();
+            Thread.Sleep(1000);
             driver.Wait(By.XPath($"//mat-dialog-container[@id='mat-dialog-0']/app-delete-popover/app-popover-dialog/div/div/h2/p[contains(.,\'Вы действительно хотите удалить предмет \"{fullSubjectName}\"?\')]"));
 
             var message = driver.FindElements(By.XPath($"//mat-dialog-container[@id='mat-dialog-0']/app-delete-popover/app-popover-dialog/div/div/h2/p[contains(.,\'Вы действительно хотите удалить предмет \"{fullSubjectName}\"?\')]"));
             Assert.True(message.Count > 0);
-            driver.Wait(By.XPath("//button[contains(.,\'Удалить\')]"));
-            driver.FindElement(By.XPath("//button[contains(.,\'Удалить\')]")).Click();
+            driver.ClickJS(By.XPath("//button[contains(.,\'Удалить\')]"));
 
             Thread.Sleep(8000);
-            var els = driver.FindElements(By.XPath($"//td[contains(.,\'{fullSubjectName}\')]"));
+            var els = driver.FindElements(By.XPath($"//td[@class=\'mat-cell cdk-column-name mat-column-name ng-star-inserted\'][contains(.,\'{fullSubjectName}\')]"));
             Assert.True(els.Count == 0);
 
             driver.SwitchTo().DefaultContent();
@@ -420,6 +414,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
 
             driver.Wait(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Удалить предмет\']"));
             driver.FindElement(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Удалить предмет\']")).Click();
+            Thread.Sleep(1000);
             driver.Wait(By.XPath($"//mat-dialog-container[@id='mat-dialog-0']/app-delete-popover/app-popover-dialog/div/div/h2/p[contains(.,\'Вы действительно хотите удалить предмет \"{fullSubjectName}\"?\')]"));
 
             var message = driver.FindElements(By.XPath($"//mat-dialog-container[@id='mat-dialog-0']/app-delete-popover/app-popover-dialog/div/div/h2/p[contains(.,\'Вы действительно хотите удалить предмет \"{fullSubjectName}\"?\')]"));
@@ -428,7 +423,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.FindElement(By.XPath("//button[contains(.,\'Удалить\')]")).Click();
 
             Thread.Sleep(8000);
-            var els = driver.FindElements(By.XPath($"//td[contains(.,\'{fullSubjectName}\')]"));
+            var els = driver.FindElements(By.XPath($"//td[@class=\'mat-cell cdk-column-name mat-column-name ng-star-inserted\'][contains(.,\'{fullSubjectName}\')]"));
             Assert.True(els.Count == 0);
 
             driver.SwitchTo().DefaultContent();
@@ -441,6 +436,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
                   "очень-очень длинный предмет с модулями очень-очень длинный предмет с модулями очень-очень длинный предмет с модулями " +
                   "очень-очень длинный пр", "ООДПСМ2021", "Тестовая", "Лекции")]
         [TestCase("Новый тестовый предмет НПО", "НТПНПО", "Тестовая", "Тестирование знаний")]
+        [TestCase("ДП Тестовый предмет", "ДПТП", "Тестовая", "Тестирование знаний")]
         public void AddSubjectWithModulus(string fullSubjectName, string shortSubjectName, string groupName, string modulus)
         {
 
@@ -509,6 +505,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
                   "очень-очень длинный предмет с модулями очень-очень длинный предмет с модулями очень-очень длинный предмет с модулями " +
                   "очень-очень длинный пр", "Лабораторные работы")]
         [TestCase("Новый тестовый предмет НПО", "ЭУМК")]
+        [TestCase("ДП Тестовый предмет", "Лабораторные работы")]
         public void EditSubjectAddNewModulus(string fullSubjectName, string modulus)
         {
 
@@ -565,6 +562,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
 
             driver.Wait(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Удалить предмет\']"));
             driver.FindElement(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Удалить предмет\']")).Click();
+            Thread.Sleep(1000);
             driver.Wait(By.XPath($"//mat-dialog-container[@id='mat-dialog-0']/app-delete-popover/app-popover-dialog/div/div/h2/p[contains(.,\'Вы действительно хотите удалить предмет \"{fullSubjectName}\"?\')]"));
 
             var message = driver.FindElements(By.XPath($"//mat-dialog-container[@id='mat-dialog-0']/app-delete-popover/app-popover-dialog/div/div/h2/p[contains(.,\'Вы действительно хотите удалить предмет \"{fullSubjectName}\"?\')]"));
@@ -573,7 +571,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.FindElement(By.XPath("//button[contains(.,\'Удалить\')]")).Click();
 
             Thread.Sleep(8000);
-            var els = driver.FindElements(By.XPath($"//td[contains(.,\'{fullSubjectName}\')]"));
+            var els = driver.FindElements(By.XPath($"//td[@class=\'mat-cell cdk-column-name mat-column-name ng-star-inserted\'][contains(.,\'{fullSubjectName}\')]"));
             Assert.True(els.Count == 0);
 
             driver.SwitchTo().DefaultContent();
@@ -639,7 +637,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.GoToSubjects();
             driver.GoToChooseSubject();
             driver.GoToChoosenSubject(oldFullSubjectName);
-            driver.GoToModulus(Defaults.modulusSetting);
+            driver.GoToModulus(Defaults.ModulusSetting);
 
             Thread.Sleep(2000);
             driver.SwitchTo().Frame(0);
@@ -684,8 +682,8 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusSetting);
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusSetting);
 
             driver.SwitchTo().Frame(0);
             driver.Wait(By.XPath("//mat-grid-tile/figure/div[contains(.,\'Редактирование предмета\')]"));
@@ -720,8 +718,8 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusSetting);
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusSetting);
 
             driver.SwitchTo().Frame(0);
             driver.Wait(By.XPath("//mat-grid-tile/figure/div[contains(.,\'Редактирование предмета\')]"));

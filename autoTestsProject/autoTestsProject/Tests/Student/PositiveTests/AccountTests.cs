@@ -15,7 +15,7 @@ using autoTestsProject.Enums;
 
 namespace autoTestsProject.Tests.Student.PositiveTests
 {
-    [TestFixture()]
+    [TestFixture(), Order(9)]
     public class AccountTests
     {
         private IWebDriver driver;
@@ -28,7 +28,6 @@ namespace autoTestsProject.Tests.Student.PositiveTests
             driver = new ChromeDriver();
             js = (IJavaScriptExecutor)driver;
             vars = new Dictionary<string, object>();
-            
         }
         [TearDown]
         protected void TearDown()
@@ -101,7 +100,7 @@ namespace autoTestsProject.Tests.Student.PositiveTests
 
             var elements = driver.FindElements(By.XPath("//a[contains(.,\'Предметы\')]"));
             Assert.True(elements.Count > 0);
-            driver.Wait(By.XPath("//mat-icon[contains(.,\'more_vert\')]"));
+            //driver.Wait(By.XPath("//mat-icon[contains(.,\'more_vert\')]"));
             driver.LogOut();
         }     
 

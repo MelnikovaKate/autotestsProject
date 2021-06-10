@@ -15,7 +15,7 @@ using autoTestsProject.Enums;
 
 namespace autoTestsProject.Tests.Student.NegativeTests
 {
-    [TestFixture()]
+    [TestFixture(), Order(15)]
     public class LabWorksTests
     {
         private IWebDriver driver;
@@ -41,17 +41,20 @@ namespace autoTestsProject.Tests.Student.NegativeTests
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusLabWorks);
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusLabWorks);
 
             driver.SwitchTo().Frame(0);
-            Thread.Sleep(4000);
+            //Thread.Sleep(4000);
+            driver.Wait(By.XPath("//button[5]/span[3]"));
             driver.FindElement(By.XPath("//button[5]/span[3]")).Click();
             driver.FindElement(By.XPath("//button[contains(.,\'Добавить работу\')]")).Click();
             driver.FindElement(By.XPath("//span[contains(.,\' \')]")).Click();
-            Thread.Sleep(2000);
+            //Thread.Sleep(2000);
+            driver.Wait(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div"));
             driver.FindElement(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div")).Click();
-            Thread.Sleep(5000);
+            //Thread.Sleep(5000);
+            driver.Wait(By.XPath("//span[contains(.,\'Test lab work\')]"));
             driver.FindElement(By.XPath("//span[contains(.,\'Test lab work\')]")).Click();
             var elements = driver.FindElements(By.XPath("//button[@disabled=\'true\']/span[contains(.,\' Отправить работу \')]"));
             Assert.True(elements.Count > 0);
@@ -61,9 +64,7 @@ namespace autoTestsProject.Tests.Student.NegativeTests
                 elements = driver.FindElements(By.XPath("//div[@id=\'toast-container\']/div/div[contains(.,\' Файл(ы) успешно отправлен(ы) \')]"));
                 Assert.True(elements.Count == 0);
             }
-            driver.FindElement(By.XPath("//mat-icon[contains(.,\'more_vert\')]")).Click();
-            driver.FindElement(By.XPath("//button[contains(.,\'exit_to_appВыйти\')]")).Click();
-            driver.Close();
+            driver.LogOut();
         }
 
         [Test, Order(2)]
@@ -71,26 +72,27 @@ namespace autoTestsProject.Tests.Student.NegativeTests
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusLabWorks);
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusLabWorks);
 
             driver.SwitchTo().Frame(0);
-            Thread.Sleep(4000);
+            //Thread.Sleep(4000);
+            driver.Wait(By.XPath("//button[5]/span[3]"));
             driver.FindElement(By.XPath("//button[5]/span[3]")).Click();
             driver.FindElement(By.XPath("//button[contains(.,\'Добавить работу\')]")).Click();
             driver.FindElement(By.Id("mat-input-0")).Click();
             driver.FindElement(By.Id("mat-input-0")).SendKeys("Test lab");
             driver.FindElement(By.XPath("//span[contains(.,\'Добавить файл\')]")).Click();
             driver.FindElement(By.XPath("//input[@type=\'file\']")).SendKeys("/Users/katekuzmich/Desktop/test.docx");
-            Thread.Sleep(5000);
+            //Thread.Sleep(5000);
+            driver.Wait(By.XPath("//button[contains(.,\'Отправить работу\')]"));
             driver.FindElement(By.XPath("//button[contains(.,\'Отправить работу\')]")).Click();
-            Thread.Sleep(2000);
+            //Thread.Sleep(2000);
             driver.SwitchTo().DefaultContent();
+            driver.Wait(By.XPath("//div[@id=\'toast-container\']/div/div[contains(.,\' Произошла ошибка \')]"));
             var elements = driver.FindElements(By.XPath("//div[@id=\'toast-container\']/div/div[contains(.,\' Произошла ошибка \')]"));
             Assert.True(elements.Count > 0);
-            driver.FindElement(By.XPath("//button[contains(.,\'more_vert\')]")).Click();
-            driver.FindElement(By.XPath("//button[contains(.,\'exit_to_appВыйти\')]")).Click();
-            driver.Close();
+            driver.LogOut();
         }
 
         [Test, Order(3)]
@@ -98,21 +100,26 @@ namespace autoTestsProject.Tests.Student.NegativeTests
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.subjectName);
-            driver.GoToModulus(Defaults.modulusLabWorks);
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusLabWorks);
 
             driver.SwitchTo().Frame(0);
-            Thread.Sleep(4000);
+            //Thread.Sleep(4000);
+            driver.Wait(By.XPath("//button[5]/span[3]"));
             driver.FindElement(By.XPath("//button[5]/span[3]")).Click();
-            Thread.Sleep(2000);
+            //Thread.Sleep(2000);
+            driver.Wait(By.CssSelector(".mat-row"));
             var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
             var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("ЛР2"));
             var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            Thread.Sleep(4000);
+            //Thread.Sleep(4000);
+            driver.Wait(By.XPath("//button[@mattooltip='Редактировать лабораторную работу']"));
             driver.FindElement(By.XPath("//button[@mattooltip='Редактировать лабораторную работу']")).Click();
-            Thread.Sleep(3000);
+            //Thread.Sleep(3000);
+            driver.Wait(By.XPath("//button[@ng-reflect-message=\'Удалить файл\']"));
             driver.FindElement(By.XPath("//button[@ng-reflect-message=\'Удалить файл\']")).Click();
-            Thread.Sleep(3000);
+            //Thread.Sleep(3000);
+            driver.Wait(By.XPath("//button[@disabled=\'true\']/span[contains(.,\' Отправить работу \')]"));
             var elements = driver.FindElements(By.XPath("//button[@disabled=\'true\']/span[contains(.,\' Отправить работу \')]"));
             Assert.True(elements.Count > 0);
             driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
@@ -121,9 +128,7 @@ namespace autoTestsProject.Tests.Student.NegativeTests
                 elements = driver.FindElements(By.XPath("//div[@id=\'toast-container\']/div/div[contains(.,\' Файл(ы) успешно отправлен(ы) \')]"));
                 Assert.True(elements.Count == 0);
             }
-            driver.FindElement(By.XPath("//button[contains(.,\'more_vert\')]")).Click();
-            driver.FindElement(By.XPath("//button[contains(.,\'exit_to_appВыйти\')]")).Click();
-            driver.Close();
+            driver.LogOut();
         }
 
     }

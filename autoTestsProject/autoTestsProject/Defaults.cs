@@ -10,10 +10,10 @@ namespace autoTestsProject
         public static readonly string StudentPassword = "10039396"; // TestPass_123
         public static readonly string LecturerLogin = "testLecturer1";
         public static readonly string LecturerPassword = "testLecturer1";
-        public static readonly string subjectName = "ДП Тестовый предмет"; // SubjectName все поменять на большие буквы TestSubject
-        public static readonly string modulusName = "Тестирование знаний";
-        public static readonly string modulusSetting = "Настройки";
-        public static readonly string modulusLabWorks = "Лабораторные работы";
-        public static readonly string modulusFiles = "Файлы";
+        public static readonly string SubjectName = "ДП Тестовый предмет"; // SubjectName все поменять на большие буквы TestSubject
+        public static readonly string ModulusName = "Тестирование знаний";
+        public static readonly string ModulusSetting = "Настройки";
+        public static readonly string ModulusLabWorks = "Лабораторные работы";
+        public static readonly string ModulusFiles = "Файлы";
     }
 }

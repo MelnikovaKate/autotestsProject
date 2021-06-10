@@ -15,7 +15,7 @@ using autoTestsProject.Enums;
 
 namespace autoTestsProject.Tests.Lecturer.NegativeTests
 {
-    [TestFixture(), Order(4)]
+    [TestFixture(), Order(8)]
     public class StudentsTests
     {
         private IWebDriver driver;
