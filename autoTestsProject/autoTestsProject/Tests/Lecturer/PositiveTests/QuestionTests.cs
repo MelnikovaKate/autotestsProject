@@ -426,16 +426,20 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(testName)); // название теста
             var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
             //Thread.Sleep(5000);
-            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Редактировать тест\']"));
-            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Редактировать тест\']")).Click();
+            //driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Редактировать тест\']"));
+            //driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Редактировать тест\']")).Click();
+            driver.Wait(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Редактировать тест\']"));
+            driver.FindElement(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Редактировать тест\']")).Click();
             //Thread.Sleep(2000);
             driver.Wait(By.Id("mat-input-2"));
             var inputQuestion = driver.FindElement(By.Id("mat-input-2"));
             var value = inputQuestion.GetAttribute("ng-reflect-value");
             driver.FindElement(By.XPath("//button[contains(.,\'Закрыть\')]")).Click();
             //Thread.Sleep(5000);
-            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Пройти тест\']"));
-            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Пройти тест\']")).Click();
+            //driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Пройти тест\']"));
+            //driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Пройти тест\']")).Click();
+            driver.Wait(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Пройти тест\']"));
+            driver.FindElement(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Пройти тест\']")).Click();
             //Thread.Sleep(2000);
             driver.Wait(By.XPath("//button[contains(.,\'Далее\')]"));
             driver.FindElement(By.XPath("//button[contains(.,\'Далее\')]")).Click();
@@ -535,7 +539,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             Assert.True(message.Count > 0);
             Assert.That(driver.FindElement(By.XPath($"//mat-cell[contains(.,\'{newTextQuestion}\')]")).Text, Is.EqualTo(newTextQuestion));
             driver.SwitchTo().DefaultContent();
-            driver.LogOut(); ;
+            driver.LogOut();
         }
 
         [Test, Order(9)]

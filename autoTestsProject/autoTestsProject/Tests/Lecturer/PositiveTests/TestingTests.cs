@@ -38,10 +38,10 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
 
         [Test, Order(1)]
         [TestCase(" Тест для контроля знаний ", "В", "Тесты для контроля знаний", 1)]
-        [TestCase(" Предтест для обучения в ЭУМК ", "Очень-очень длинное предлинное название теста для тестирования длины " +
+        [TestCase(" Тест для самоконтроля ", "Очень-очень длинное предлинное название теста для тестирования длины " +
                   "названия теста очень-очень длинное предлинное название теста для тестирования длины названия теста " +
-                  "очень-очень длинное предлинное название теста для тестирования длины названия тест_2021", "Предтесты для обучения в ЭУМК", 3)]
-        [TestCase(" Тест для самоконтроля ", "Еще одно простое название для теста 2021", "Тесты для самоконтроля", 2)]
+                  "очень-очень длинное предлинное название теста для тестирования длины названия тест_2021", "Тесты для самоконтроля", 2)]
+        [TestCase(" Предтест для обучения в ЭУМК ", "Еще одно простое название для теста 2021", "Предтесты для обучения в ЭУМК", 3)]
         [TestCase(" Тест для обучения в ЭУМК ", "Новый тест 4", "Тесты для обучения в ЭУМК", 4)]
         [TestCase(" Тест для обучения с искусственной нейронной сетью ", "Хорошее название для теста 2021, но немного длинное, чем обычно " +
                   "Хорошее назва-ние для теста 2021, но не-много длинное, чем обычно", "Тесты для обучения с искусстве", 5)]
@@ -125,12 +125,12 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
 
         [Test, Order(3)]
         [TestCase("Тесты для контроля знаний", 1, "В", "И")]
-        [TestCase("Предтесты для обучения в ЭУМК", 3, "Очень-очень длинное предлинное название теста для тестирования длины " +
+        [TestCase("Тесты для самоконтроля", 2, "Очень-очень длинное предлинное название теста для тестирования длины " +
                  "названия теста очень-очень длинное предлинное название теста для тестирования длины названия теста " +
                  "очень-очень длинное предлинное название теста для тестирования длины названия тест_2021", "Измененное очень-очень " +
                  "длинное предлинное название теста для тестирования длины названия теста очень-очень длинное предлинное название теста для " +
                  "тестирования длины названия теста очень-очень длинное предлинное название теста для тестирования длины названи")]
-        [TestCase("Тесты для самоконтроля", 2, "Еще одно простое название для теста 2021", "Простое название для теста 2021")]
+        [TestCase("Предтесты для обучения в ЭУМК", 3, "Еще одно простое название для теста 2021", "Простое название для теста 2021")]
         [TestCase("Тесты для обучения в ЭУМК", 4, "Новый тест 4", "Четвертый новый тест")]
         [TestCase("Тесты для обучения с искусстве", 5, "Хорошее название для теста 2021, но немного длинное, чем обычно " +
                  "Хорошее назва-ние для теста 2021, но не-много длинное, чем обычно", "И последнее хорошее название для теста 2021, но немного длинное, чем обычно " +
@@ -166,12 +166,12 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
 
         [Test, Order(4)]
         [TestCase("Тесты для контроля знаний", 1, "И", "О")]
-        [TestCase("Предтесты для обучения в ЭУМК", 3, "Измененное очень-очень " +
+        [TestCase("Тесты для самоконтроля", 2, "Измененное очень-очень " +
                  "длинное предлинное название теста для тестирования длины названия теста очень-очень длинное предлинное название теста для " +
                  "тестирования длины названия теста очень-очень длинное предлинное название теста для тестирования длины названи", "Измененное очень-очень " +
                  "длинное предлинное название теста для тестирования длины названия теста очень-очень длинное предлинное название теста для " +
                  "тестирования длины названия теста очень-очень длинное предлинное название теста для тестирования длины наз2021")]
-        [TestCase("Тесты для самоконтроля", 2, "Простое название для теста 2021", "Еще одно простое название для теста 2021 для отмены")]
+        [TestCase("Предтесты для обучения в ЭУМК", 3, "Простое название для теста 2021", "Еще одно простое название для теста 2021 для отмены")]
         [TestCase("Тесты для обучения в ЭУМК", 4, "Четвертый новый тест", "Четвертый новый тест для отмены")]
         [TestCase("Тесты для обучения с искусстве", 5, "И последнее хорошее название для теста 2021, но немного длинное, чем обычно " +
                  "хорошее назва-ние для теста 2021, но не-много длинное, чем обычно", "И последнее хорошее название для теста 2021, но немного длинное, чем обычно " +
@@ -207,8 +207,8 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
 
 
         [Test, Order(6)]
-        [TestCase("Тесты для контроля знаний", 1, " Предтест для обучения в ЭУМК ", "И", "Предтесты для обучения в ЭУМК", 3)]
-        [TestCase("Предтесты для обучения в ЭУМК", 3, " Тест для обучения в ЭУМК ", "Измененное очень-очень " +
+        [TestCase("Тесты для контроля знаний", 1, " Тест для самоконтроля ", "И", "Тесты для самоконтроля", 2)] // "Предтесты для обучения в ЭУМК", 3,
+        [TestCase("Тесты для самоконтроля", 2, " Тест для обучения в ЭУМК ", "Измененное очень-очень " +
                  "длинное предлинное название теста для тестирования длины названия теста очень-очень длинное предлинное название теста для " +
                  "тестирования длины названия теста очень-очень длинное предлинное название теста для тестирования длины названи", "Тесты для обучения в ЭУМК", 4)]
         [TestCase("Тесты для обучения в ЭУМК", 4, " Тест для обучения с искусственной нейронной сетью ", "Четвертый новый тест", "Тесты для обучения с искусстве", 5)]
@@ -245,8 +245,8 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.LogOut();
         }
 
-        [Test, Order(5)]
-        [TestCase("Предтесты для обучения в ЭУМК", 3, " Тест для контроля знаний ", "И", "Тесты для контроля знаний", 1)] // нужно И заменить на другую букву во всех тестах, где она есть
+        [Test, Order(5)] 
+        [TestCase("Тесты для самоконтроля", 2, " Тест для обучения с искусственной нейронной сетью ", "И", "Тесты для обучения с искусстве", 5)] 
         [TestCase("Тесты для обучения в ЭУМК", 4, " Предтест для обучения в ЭУМК ", "Измененное очень-очень " +
                  "длинное предлинное название теста для тестирования длины названия теста очень-очень длинное предлинное название теста для " +
                  "тестирования длины названия теста очень-очень длинное предлинное название теста для тестирования длины названи", "Предтесты для обучения в ЭУМК", 3)]
@@ -312,7 +312,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         // проверка на наличие кнопки "Перейти к вопросам"
         [Test, Order(8)]
         [TestCase("Простое название для теста 2021")]
-        [TestCase("пс")]
+        //[TestCase("пс")]
         public void AccessDoingTest(string nameTest)
         {
             driver.GoToSubjects();
@@ -429,43 +429,6 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         //}
 
         [Test, Order(9)]
-        [TestCase("Простое название для теста 2021", " Тестовая ", "Cat")] // tyt поменять тест на контроль знаний, в последнем тесте открыть доступ к этому тесту для этого студента
-        public void AddAccessToStudentInTest(string testName, string groupName, string userName)
-        {
-            driver.GoToSubjects();
-            driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.SubjectName);
-            driver.GoToModulus(Defaults.ModulusName);
-
-            driver.SwitchTo().Frame(0);
-            driver.Wait(By.CssSelector(".mat-row"));
-            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(testName)); // название теста
-            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            driver.Wait(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']"));
-            driver.FindElement(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']")).Click();
-            //driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']"));
-            //driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']")).Click();
-            driver.Wait(By.XPath("//mat-select[@id='mat-select-0']/div/div"));
-            driver.FindElement(By.XPath("//mat-select[@id='mat-select-0']/div/div")).Click();
-            driver.Wait(By.XPath($"//span[contains(.,\'{groupName}\')]"));
-            driver.FindElement(By.XPath($"//span[contains(.,\'{groupName}\')]")).Click();
-            driver.Wait(By.XPath("//div[@class=\'students-table-list\']"));
-            var div = driver.FindElement(By.XPath("//div[@class=\'students-table-list\']"));
-            var userForFind = div.FindElements(By.CssSelector(".mat-row"));
-            var user = userForFind.FirstOrDefault(x => x.Text.StartsWith(userName, StringComparison.Ordinal)); // имя user
-            var idRowOfUser = div.FindElements(By.CssSelector(".mat-row")).IndexOf(user);
-            driver.Wait(By.XPath($"//div/mat-table/mat-row[{idRowOfUser + 1}]/mat-cell[2]/mat-icon[contains(.,\'lock \')]"));
-            driver.FindElement(By.XPath($"//div/mat-table/mat-row[{idRowOfUser + 1}]/mat-cell[2]/mat-icon[contains(.,\'lock \')]")).Click();
-            driver.Wait(By.XPath($"//div/mat-table/mat-row[{idRowOfUser + 1}]/mat-cell/mat-icon[contains(.,\'lock_open \')]"));
-            var openLockBtn = driver.FindElements(By.XPath($"//div/mat-table/mat-row[{idRowOfUser + 1}]/mat-cell/mat-icon[contains(.,\'lock_open \')]"));
-            Assert.True(openLockBtn.Count > 0);
-            driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
-            driver.SwitchTo().DefaultContent();
-            driver.LogOut();
-        }
-
-        [Test, Order(10)]
         [TestCase("Простое название для теста 2021", "Тестовая")]
         public void AddAccessToStudentsInTest(string testName, string groupName)
         {
@@ -475,30 +438,27 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);
-            driver.Wait(By.CssSelector(".mat-row"));
-            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(testName)); // название теста
-            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']"));
-            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']")).Click();
+
+            driver.Wait(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']"));
+            driver.FindElement(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']")).Click();
             driver.Wait(By.XPath("//mat-select[@id='mat-select-0']/div/div"));
             driver.FindElement(By.XPath("//mat-select[@id='mat-select-0']/div/div")).Click();
             driver.Wait(By.XPath($"//span[contains(.,\'{groupName}\')]"));
-            driver.FindElement(By.XPath($"//span[contains(.,\'{groupName}\')]")).Click();
-            driver.Wait(By.ClassName("students-table-buttons-item-add")); //tyt
-            driver.FindElement(By.ClassName("students-table-buttons-item-add")).Click();
+            driver.ClickJS(By.XPath($"//span[contains(.,\'{groupName}\')]"));
+            driver.Wait(By.ClassName("students-table-buttons-item-add")); 
+            driver.ClickJS(By.ClassName("students-table-buttons-item-add"));
             var div = driver.FindElement(By.XPath("//div[@class=\'students-table-list\']"));
             driver.Wait(By.CssSelector(".mat-row"));
             var countUsersForFind = div.FindElements(By.CssSelector(".mat-row")).Count;
             driver.Wait(By.XPath($"//div[@class=\'students-table-list\']/mat-table/mat-row/mat-cell/mat-icon[contains(.,\'lock_open \')]"));
             var countAccessBtn = driver.FindElements(By.XPath($"//div[@class=\'students-table-list\']/mat-table/mat-row/mat-cell/mat-icon[contains(.,\'lock_open \')]")).Count;
             Assert.True(countUsersForFind == countAccessBtn);
-            driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
+            driver.ClickJS(By.XPath("//mat-icon[contains(.,\'close\')]"));
             driver.SwitchTo().DefaultContent();
             driver.LogOut();
         }
 
-        [Test, Order(11)]
+        [Test, Order(10)]
         [TestCase("Простое название для теста 2021", " Тестовая ", "Cat")]
         public void CloseAccessStudentInTest(string testName, string groupName, string userName)
         {
@@ -508,12 +468,9 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);
-            driver.Wait(By.CssSelector(".mat-row"));
-            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(testName)); // название теста
-            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']"));
-            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']")).Click();
+
+            driver.Wait(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']"));
+            driver.FindElement(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']")).Click();
             driver.Wait(By.XPath("//mat-select[@id='mat-select-0']/div/div"));
             driver.FindElement(By.XPath("//mat-select[@id='mat-select-0']/div/div")).Click();
             driver.Wait(By.XPath($"//span[contains(.,\'{groupName}\')]"));
@@ -533,8 +490,8 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.LogOut();
         }
 
-        [Test, Order(12)]
-        [TestCase("Простое название для теста 2021", "Тестовая")]
+        [Test, Order(11)]
+        [TestCase("Простое название для теста 2021", "Тестовая")] // tyt
         public void CloseAccessToStudentsInTest(string testName, string groupName)
         {
             driver.GoToSubjects();
@@ -543,24 +500,54 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);
-            driver.Wait(By.CssSelector(".mat-row"));
-            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(testName)); // название теста
-            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']"));
-            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']")).Click();
+
+            driver.Wait(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']"));
+            driver.FindElement(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']")).Click();
             driver.Wait(By.XPath("//mat-select[@id='mat-select-0']/div/div"));
             driver.FindElement(By.XPath("//mat-select[@id='mat-select-0']/div/div")).Click();
             driver.Wait(By.XPath($"//span[contains(.,\'{groupName}\')]"));
-            driver.FindElement(By.XPath($"//span[contains(.,\'{groupName}\')]")).Click();
-            driver.Wait(By.ClassName("students-table-buttons-item-resources")); //tyt
-            driver.FindElement(By.ClassName("students-table-buttons-item-resources")).Click();
+            driver.ClickJS(By.XPath($"//span[contains(.,\'{groupName}\')]"));
+            driver.Wait(By.ClassName("students-table-buttons-item-resources")); 
+            driver.ClickJS(By.ClassName("students-table-buttons-item-resources"));
             var div = driver.FindElement(By.XPath("//div[@class=\'students-table-list\']"));
             driver.Wait(By.CssSelector(".mat-row"));
             var countUsersForFind = div.FindElements(By.CssSelector(".mat-row")).Count;
             driver.Wait(By.XPath($"//div[@class=\'students-table-list\']/mat-table/mat-row/mat-cell/mat-icon[contains(.,\'lock \')]"));
+            Thread.Sleep(1000);
             var countNotAccessBtn = driver.FindElements(By.XPath($"//div[@class=\'students-table-list\']/mat-table/mat-row/mat-cell/mat-icon[contains(.,\'lock \')]")).Count;
             Assert.True(countUsersForFind == countNotAccessBtn);
+            driver.ClickJS(By.XPath("//mat-icon[contains(.,\'close\')]"));
+            driver.SwitchTo().DefaultContent();
+            driver.LogOut();
+        }
+
+        [Test, Order(12)]
+        [TestCase("Простое название для теста 2021", " Тестовая ", "Cat")] // tyt поменять тест на контроль знаний, в последнем тесте открыть доступ к этому тесту для этого студента
+        public void AddAccessToStudentInTest(string testName, string groupName, string userName)
+        {
+            driver.GoToSubjects();
+            driver.GoToChooseSubject();
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusName);
+
+            driver.SwitchTo().Frame(0);
+
+            driver.Wait(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']"));
+            driver.FindElement(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']")).Click();
+            driver.Wait(By.XPath("//mat-select[@id='mat-select-0']/div/div"));
+            driver.FindElement(By.XPath("//mat-select[@id='mat-select-0']/div/div")).Click();
+            driver.Wait(By.XPath($"//span[contains(.,\'{groupName}\')]"));
+            driver.FindElement(By.XPath($"//span[contains(.,\'{groupName}\')]")).Click();
+            driver.Wait(By.XPath("//div[@class=\'students-table-list\']"));
+            var div = driver.FindElement(By.XPath("//div[@class=\'students-table-list\']"));
+            var userForFind = div.FindElements(By.CssSelector(".mat-row"));
+            var user = userForFind.FirstOrDefault(x => x.Text.StartsWith(userName, StringComparison.Ordinal)); // имя user
+            var idRowOfUser = div.FindElements(By.CssSelector(".mat-row")).IndexOf(user);
+            driver.Wait(By.XPath($"//div/mat-table/mat-row[{idRowOfUser + 1}]/mat-cell[2]/mat-icon[contains(.,\'lock \')]"));
+            driver.FindElement(By.XPath($"//div/mat-table/mat-row[{idRowOfUser + 1}]/mat-cell[2]/mat-icon[contains(.,\'lock \')]")).Click();
+            driver.Wait(By.XPath($"//div/mat-table/mat-row[{idRowOfUser + 1}]/mat-cell/mat-icon[contains(.,\'lock_open \')]"));
+            var openLockBtn = driver.FindElements(By.XPath($"//div/mat-table/mat-row[{idRowOfUser + 1}]/mat-cell/mat-icon[contains(.,\'lock_open \')]"));
+            Assert.True(openLockBtn.Count > 0);
             driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
             driver.SwitchTo().DefaultContent();
             driver.LogOut();
@@ -577,12 +564,9 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);
-            driver.Wait(By.CssSelector(".mat-row"));
-            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(testName)); // название теста
-            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']"));
-            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']")).Click();
+
+            driver.Wait(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']"));
+            driver.FindElement(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']")).Click();
             driver.Wait(By.XPath("//mat-select[@id='mat-select-0']/div/div"));
             driver.FindElement(By.XPath("//mat-select[@id='mat-select-0']/div/div")).Click();
             driver.Wait(By.XPath($"//span[contains(.,\'{groupName}\')]"));
@@ -602,8 +586,8 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         }
 
         [Test, Order(14)]
-        [TestCase(" Тест для самоконтроля ", "Простое название для теста 2021", "Тесты для самоконтроля", 2)]
-        public void CancelDeleteTest(string newTestType, string testName, string newTitleTest, int NewNumberDiv)
+        [TestCase("Простое название для теста 2021", "Предтесты для обучения в ЭУМК", 3)]
+        public void CancelDeleteTest(string testName, string newTitleTest, int NewNumberDiv)
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
@@ -628,7 +612,6 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         }
 
         [Test, Order(15)]
-        //[TestCase(" Тест для самоконтроля ", "Измененный новый тест", "Тесты для самоконтроля", 2)]
         [TestCase(" Тест для самоконтроля ", "И", "Тесты для самоконтроля", 2)]
         public void DeleteTest(string newTestType, string testName, string newTitleTest, int NewNumberDiv)
         {
@@ -646,7 +629,6 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.Wait(By.XPath("//button[contains(.,\'Да\')]"));
             driver.ClickJS(By.XPath("//button[contains(.,\'Да\')]"));
 
-            // когда будет работать удаление расскомментировать эти строки
             driver.Wait(By.XPath($"//div[{NewNumberDiv}]/app-main-table-tests[@ng-reflect-title=\'{newTitleTest}\']/div[2]/mat-table/mat-row/mat-cell[contains(.,\'{testName}\')]"));
             var elements = driver.FindElements(By.XPath($"//div[{NewNumberDiv}]/app-main-table-tests[@ng-reflect-title=\'{newTitleTest}\']/div[2]/mat-table/mat-row/mat-cell[contains(.,\'{testName}\')]"));
             Assert.True(elements.Count == 0);

@@ -70,8 +70,7 @@ namespace autoTestsProject.Tests.Student.PositiveTests
             driver.FindElement(By.Id("mat-input-6")).SendKeys(userAnswer);
             driver.FindElement(By.XPath("//button[contains(.,\'Зарегистрироваться\')]")).Click();
             driver.FindElement(By.XPath("//button[contains(.,\'Зарегистрироваться\')]")).Click();
-        //}
-        driver.Close();
+            driver.Close();
         }
 
         [Test, Order(2)]
@@ -101,8 +100,8 @@ namespace autoTestsProject.Tests.Student.PositiveTests
             var elements = driver.FindElements(By.XPath("//a[contains(.,\'Предметы\')]"));
             Assert.True(elements.Count > 0);
             //driver.Wait(By.XPath("//mat-icon[contains(.,\'more_vert\')]"));
-            driver.LogOut();
-        }     
+            //driver.LogOut();
+        }
 
         [Test, Order(3)]
         [TestCase("TestStudentUser7", "test", "new123N", "new123N")]

@@ -86,8 +86,8 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
         }
 
         [Test, Order(2)]
-        [TestCase("")]
-        public void ErrorEditTestWithEmptyData(string testName)
+        [TestCase("Простое название для теста 2021", "")]
+        public void ErrorEditTestWithEmptyData(string oldTestName, string testName)
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
@@ -95,12 +95,14 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
             driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);
-            driver.Wait(By.CssSelector(".mat-row"));
-            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("NewTestTest"));
-            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]"));
-            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]")).Click();
+            //driver.Wait(By.CssSelector(".mat-row"));
+            //var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+            //var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(oldTestName));
+            //var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+            //driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]"));
+            //driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]")).Click();
+            driver.Wait(By.XPath($"//mat-cell[contains(.,\'{oldTestName}\')]/../mat-cell/mat-icon[contains(.,\'edit \')]"));
+            driver.FindElement(By.XPath($"//mat-cell[contains(.,\'{oldTestName}\')]/../mat-cell/mat-icon[contains(.,\'edit \')]")).Click();
             driver.Wait(By.XPath("//textarea[@placeholder=\'Название теста\']"));
             driver.FindElement(By.XPath("//textarea[@placeholder=\'Название теста\']")).Click();
             driver.FindElement(By.XPath("//textarea[@placeholder=\'Название теста\']")).Clear();
@@ -214,10 +216,10 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
         }
 
         [Test, Order(5)]
-        [TestCase("Плохое название теста плохое название теста плохое название теста плохое название теста плохое " +
+        [TestCase("Простое название для теста 2021","Плохое название теста плохое название теста плохое название теста плохое название теста плохое " +
             "название теста плохое название теста плохое название теста плохое название теста плохое название теста " +
             "плохое название теста плохое название теста плохое название теста", -10, -10)]
-        public void ErrorEditNewTestWithAllBadData(string badTestName, int countQuestion, int badTime)
+        public void ErrorEditNewTestWithAllBadData(string oldNameTest,string badTestName, int countQuestion, int badTime)
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
@@ -225,12 +227,14 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
             driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);
-            driver.Wait(By.CssSelector(".mat-row"));
-            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("NewTestTest"));
-            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]"));
-            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]")).Click();
+            //driver.Wait(By.CssSelector(".mat-row"));
+            //var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+            //var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("NewTestTest"));
+            //var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+            //driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]"));
+            //driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]")).Click();
+            driver.Wait(By.XPath($"//mat-cell[contains(.,\'{oldNameTest}\')]/../mat-cell/mat-icon[contains(.,\'edit \')]"));
+            driver.FindElement(By.XPath($"//mat-cell[contains(.,\'{oldNameTest}\')]/../mat-cell/mat-icon[contains(.,\'edit \')]")).Click();
             driver.Wait(By.XPath("//textarea[@placeholder=\'Название теста\']"));
             driver.FindElement(By.XPath("//textarea[@placeholder=\'Название теста\']")).Click();
             driver.FindElement(By.XPath("//textarea[@placeholder=\'Название теста\']")).SendKeys(badTestName);
@@ -341,12 +345,14 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
             driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);
-            driver.Wait(By.CssSelector(".mat-row"));
-            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(oldTestName));
-            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]"));
-            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]")).Click();
+            //driver.Wait(By.CssSelector(".mat-row"));
+            //var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+            //var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(oldTestName));
+            //var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+            //driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]"));
+            //driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[contains(.,\'edit \')]")).Click();
+            driver.Wait(By.XPath($"//mat-cell[contains(.,\'{oldTestName}\')]/../mat-cell/mat-icon[contains(.,\'edit \')]"));
+            driver.FindElement(By.XPath($"//mat-cell[contains(.,\'{oldTestName}\')]/../mat-cell/mat-icon[contains(.,\'edit \')]")).Click();
             driver.Wait(By.Id("mat-input-0"));
             driver.FindElement(By.Id("mat-input-0")).Click();
             driver.FindElement(By.Id("mat-input-0")).Clear();
@@ -374,12 +380,14 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
             driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);
-            driver.Wait(By.CssSelector(".mat-row"));
-            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(testName)); // название теста
-            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Удалить тест\']"));
-            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Удалить тест\']")).Click();
+            //driver.Wait(By.CssSelector(".mat-row"));
+            //var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+            //var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(testName)); // название теста
+            //var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+            //driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Удалить тест\']"));
+            //driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Удалить тест\']")).Click();
+            driver.Wait(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Удалить тест\']"));
+            driver.FindElement(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Удалить тест\']")).Click();
             driver.FindElement(By.XPath("//button[contains(.,\'Да\')]")).Click();
             driver.Wait(By.XPath("//simple-snack-bar[contains(.,\'Не удалось удалить тест\')]"));
             var elements = driver.FindElements(By.XPath("//simple-snack-bar[contains(.,\'Не удалось удалить тест\')]"));
@@ -399,13 +407,15 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
 
             driver.SwitchTo().Frame(0);
             //Thread.Sleep(3000);
-            driver.Wait(By.CssSelector(".mat-row"));
-            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(testName)); // название теста
-            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+            //driver.Wait(By.CssSelector(".mat-row"));
+            //var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+            //var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(testName)); // название теста
+            //var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
             //Thread.Sleep(5000);
-            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Пройти тест\']"));
-            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Пройти тест\']")).Click();
+            //driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Пройти тест\']"));
+            //driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Пройти тест\']")).Click();
+            driver.Wait(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Пройти тест\']"));
+            driver.FindElement(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Пройти тест\']")).Click();
             //Thread.Sleep(3000);
             driver.Wait(By.XPath("//button[contains(.,\'Далее\')]"));
             driver.FindElement(By.XPath("//button[contains(.,\'Далее\')]")).Click();

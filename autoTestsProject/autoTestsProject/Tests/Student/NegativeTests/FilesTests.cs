@@ -39,21 +39,21 @@ namespace autoTestsProject.Tests.Student.NegativeTests
         [Test]
         public void ErrorDownloadFileStudent()
         {
-            //driver.Navigate().GoToUrl("https://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
-            //driver.Manage().Window.Size = new System.Drawing.Size(1680, 1050);
-            //driver.FindElement(By.Id("mat-input-0")).Click();
-            //driver.FindElement(By.Id("mat-input-0")).SendKeys("kate");
-            //driver.FindElement(By.Id("mat-input-1")).Click();
-            //driver.FindElement(By.Id("mat-input-1")).SendKeys("10039396");
-            //driver.FindElement(By.XPath("//button[contains(.,\'Войти в систему\')]")).Click();
-            //Thread.Sleep(5000);
-            //driver.FindElement(By.XPath("//a[contains(.,\'Предметы\')]")).Click();
-            //Thread.Sleep(5000);
-            //driver.FindElement(By.XPath("//button[contains(.,\'Выберите предмет\')]")).Click();
-            //Thread.Sleep(3000);
-            //driver.FindElement(By.XPath("//a[contains(.,\'TestSubject\')]")).Click();
-            //Thread.Sleep(3500);
-            //driver.FindElement(By.XPath("//a[contains(.,\'Файлы\')]")).Click();
+            driver.Navigate().GoToUrl("https://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
+            driver.Manage().Window.Size = new System.Drawing.Size(1680, 1050);
+            driver.FindElement(By.Id("mat-input-0")).Click();
+            driver.FindElement(By.Id("mat-input-0")).SendKeys("kate");
+            driver.FindElement(By.Id("mat-input-1")).Click();
+            driver.FindElement(By.Id("mat-input-1")).SendKeys("10039396");
+            driver.FindElement(By.XPath("//button[contains(.,\'Войти в систему\')]")).Click();
+            Thread.Sleep(5000);
+            driver.FindElement(By.XPath("//a[contains(.,\'Предметы\')]")).Click();
+            Thread.Sleep(5000);
+            driver.FindElement(By.XPath("//button[contains(.,\'Выберите предмет\')]")).Click();
+            Thread.Sleep(3000);
+            driver.FindElement(By.XPath("//a[contains(.,\'TestSubject\')]")).Click();
+            Thread.Sleep(3500);
+            driver.FindElement(By.XPath("//a[contains(.,\'Файлы\')]")).Click();
 
             driver.GoToSubjects();
             driver.GoToChooseSubject();

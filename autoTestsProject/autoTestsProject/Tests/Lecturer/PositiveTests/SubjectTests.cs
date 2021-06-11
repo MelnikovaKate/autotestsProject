@@ -294,7 +294,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
 
             var message = driver.FindElements(By.XPath($"//mat-dialog-container[@id='mat-dialog-0']/app-delete-popover/app-popover-dialog/div/div/h2/p[contains(.,\'Вы действительно хотите удалить предмет \"{fullSubjectName}\"?\')]"));
             Assert.True(message.Count > 0);
-            driver.ClickJS(By.XPath("//button[contains(.,\'Отмена\')]")); 
+            driver.ClickJS(By.XPath("//button[contains(.,\'Отмена\')]"));
 
             var els = driver.FindElements(By.XPath($"//td[@class=\'mat-cell cdk-column-name mat-column-name\'][contains(.,\'{fullSubjectName}\')]"));
             Assert.True(els.Count > 0);
@@ -493,8 +493,6 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.Wait(By.XPath($"//a[contains(.,\'{modulus}\')]"));
             var findModulus = driver.FindElements(By.XPath($"//a[contains(.,\'{modulus}\')]"));
             Assert.True(findModulus.Count > 0);
-
-
             driver.LogOut();
         }
    

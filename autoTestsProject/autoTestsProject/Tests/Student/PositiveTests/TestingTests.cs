@@ -47,12 +47,14 @@ namespace autoTestsProject.Tests.Student.PositiveTests
             driver.SwitchTo().Frame(0);
             //Thread.Sleep(3000);
             driver.Wait(By.CssSelector(".mat-row"));
-            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("Простое название для теста 2021")); // название теста
-            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+            //var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+            //var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("Простое название для теста 2021")); // название теста
+            //var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
             //Thread.Sleep(5000);
-            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Пройти тест\']"));
-            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Пройти тест\']")).Click();
+            //driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Пройти тест\']"));
+            //driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Пройти тест\']")).Click();
+            driver.Wait(By.XPath($"//mat-cell[contains(.,\'Простое название для теста 2021\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Пройти тест\']"));
+            driver.FindElement(By.XPath($"//mat-cell[contains(.,\'Простое название для теста 2021\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Пройти тест\']")).Click();
             //Thread.Sleep(2000);
             driver.Wait(By.XPath("//button[contains(.,\'Далее\')]"));
 
