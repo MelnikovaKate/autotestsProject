@@ -576,6 +576,42 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.LogOut();
         }
 
+        [Test, Order(13)]
+        public void AddLabWork()
+        {
+            driver.GoToSubjects();
+            driver.GoToChooseSubject();
+            driver.GoToChoosenSubject(Defaults.SubjectName);
+            driver.GoToModulus(Defaults.ModulusLabWorks);
+
+            driver.SwitchTo().Frame(0);
+
+            driver.Wait(By.XPath("//button/span[contains(.,\'Добавить работу\')]"));
+            driver.ClickJS(By.XPath("//button/span[contains(.,\'Добавить работу\')]"));
+
+            driver.Wait(By.XPath("//textarea[@ng-reflect-name=\'theme\']"));
+            driver.FindElement(By.XPath("//textarea[@ng-reflect-name=\'theme\']")).Click();
+            driver.FindElement(By.XPath("//textarea[@ng-reflect-name=\'theme\']")).SendKeys("Лабораторная для теста");
+
+            driver.Wait(By.XPath("//input[@placeholder=\'Количество часов\']"));
+            driver.FindElement(By.XPath("//input[@placeholder=\'Количество часов\']")).Click();
+            driver.FindElement(By.XPath("//input[@placeholder=\'Количество часов\']")).SendKeys("2");
+
+            driver.Wait(By.XPath("//span[contains(.,\'Добавить файл\')]"));
+            driver.FindElement(By.XPath("//span[contains(.,\'Добавить файл\')]")).Click();
+
+            var exePath = AppDomain.CurrentDomain.BaseDirectory; //path to exe file
+            var path = Path.Combine(exePath, "FilesLecturer/test.docx");
+
+            driver.FindElement(By.XPath("//input[@type=\'file\']")).SendKeys(path); 
+
+            Thread.Sleep(1500);
+            driver.Wait(By.XPath("//button/span[contains(.,\'Сохранить\')]"));
+            driver.FindElement(By.XPath("//button/span[contains(.,\'Сохранить\')]")).Click();
+
+            driver.SwitchTo().DefaultContent();
+            driver.LogOut();
+        }
 
         //
         //[Test]

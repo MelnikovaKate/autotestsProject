@@ -37,7 +37,8 @@ namespace autoTestsProject.Tests.Student.NegativeTests
         }
 
         [Test]
-        public void ErrorDoingTestStudent()
+        [TestCase("И")]
+        public void ErrorDoingTestStudent(string testName)
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
@@ -45,30 +46,25 @@ namespace autoTestsProject.Tests.Student.NegativeTests
             driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);
-            //Thread.Sleep(3000);
-            driver.Wait(By.CssSelector(".mat-row"));
-            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("Простое название для теста 2021")); // название теста
-            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            //Thread.Sleep(5000);
-            driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Пройти тест\']"));
-            driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Пройти тест\']")).Click();
-            //Thread.Sleep(3000);
+
+            driver.Wait(By.XPath($"//mat-table/mat-row[contains(.,\'{testName}\')]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Пройти тест\']"));
+            driver.ClickJS(By.XPath($"//mat-table/mat-row[contains(.,\'{testName}\')]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Пройти тест\']"));
             driver.Wait(By.XPath("//button[contains(.,\'Далее\')]"));
             driver.FindElement(By.XPath("//button[contains(.,\'Далее\')]")).Click();
-            //Thread.Sleep(2000);
+
             driver.Wait(By.XPath("//button[contains(.,\'done_outline Ответить\')]"));
             driver.FindElement(By.XPath("//button[contains(.,\'done_outline Ответить\')]")).Click();
-            //Thread.Sleep(1000);
+ 
             driver.Wait(By.XPath("//simple-snack-bar[contains(.,\'Выберите вариант ответа\')]"));
             var elements = driver.FindElements(By.XPath("//simple-snack-bar[contains(.,\'Выберите вариант ответа\')]"));
             Assert.True(elements.Count > 0);
-            //Thread.Sleep(2000);
-            driver.Wait(By.XPath($"//app-test-result/div/div[contains(.,\'Тест на тему «Test» завершен\')]"));
-            var result = driver.FindElements(By.XPath($"//app-test-result/div/div[contains(.,\'Тест на тему «Test» завершен\')]"));
+
+            var result = driver.FindElements(By.XPath($"//app-test-result/div/div[contains(.,\'Тест на тему «{testName}» завершен\')]"));
             Assert.True(result.Count == 0);
             driver.SwitchTo().DefaultContent();
             driver.LogOut();
         }
+
+
     }
 }

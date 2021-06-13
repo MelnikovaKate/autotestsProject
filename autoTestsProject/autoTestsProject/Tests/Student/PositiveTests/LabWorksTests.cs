@@ -37,33 +37,44 @@ namespace autoTestsProject.Tests.Student.PositiveTests
         }
 
         [Test, Order(1)]
-        public void AddLabworkStudent()
+        [TestCase("Ф")]
+        [TestCase("Тестовая лабораторная работа с очень длинным комментарием тестовая лабораторная работа с очень длинным " +
+            "комментарием тестовая лабораторная работа с очень длинным комментарием тестовая лабораторная работа с очень длинным")]
+        [TestCase("Какой-то длинноватый комментарий для лабораторной работы какой-то длинноватый комментарий для лабораторной работы")]
+        public void AddLabworkStudent(string comments)
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
             driver.GoToChoosenSubject(Defaults.SubjectName);
+            Thread.Sleep(1000);
             driver.GoToModulus(Defaults.ModulusLabWorks);
 
             driver.SwitchTo().Frame(0);
-            //Thread.Sleep(4000);
+
             driver.Wait(By.XPath("//button[5]/span[3]"));
-            driver.FindElement(By.XPath("//button[5]/span[3]")).Click(); // разобраться с надписью Защита работ
-            //driver.FindElement(By.XPath("//button/span/span[contains(.,\'Защита работ \')]")).Click();
-            //Thread.Sleep(2000);
+            driver.FindElement(By.XPath("//button[5]/span[3]")).Click();
+
             driver.Wait(By.XPath("//button[contains(.,\'Добавить работу\')]"));
             driver.FindElement(By.XPath("//button[contains(.,\'Добавить работу\')]")).Click();
+
             driver.FindElement(By.XPath("//span[contains(.,\' \')]")).Click();
-            //Thread.Sleep(2000);
             driver.Wait(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div"));
-            driver.FindElement(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div")).Click();
-            //Thread.Sleep(5000);
-            driver.Wait(By.XPath("//span[contains(.,\'Test lab work\')]"));
-            driver.FindElement(By.XPath("//span[contains(.,\'Test lab work\')]")).Click();
+            driver.ClickJS(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div"));
+            driver.Wait(By.XPath("//span[contains(.,\'Лабораторная для теста\')]"));
+            driver.FindElement(By.XPath("//span[contains(.,\'Лабораторная для теста\')]")).Click();
             driver.FindElement(By.Id("mat-input-0")).Click();
-            driver.FindElement(By.Id("mat-input-0")).SendKeys("Test lab");
+            driver.FindElement(By.Id("mat-input-0")).SendKeys(comments);
+
+            driver.Wait(By.XPath("//span[contains(.,\'Добавить файл\')]"));
             driver.FindElement(By.XPath("//span[contains(.,\'Добавить файл\')]")).Click();
-            driver.FindElement(By.XPath("//input[@type=\'file\']")).SendKeys("/Users/katekuzmich/Desktop/test.docx");
-            //Thread.Sleep(5000);
+
+            var exePath = AppDomain.CurrentDomain.BaseDirectory; //path to exe file
+            var path = Path.Combine(exePath, "FilesStudent/test.docx");
+
+            driver.FindElement(By.XPath("//input[@type=\'file\']")).SendKeys(path);
+
+            driver.Wait(By.XPath($"//tr[@class=\'mdc-data-table__row\']/td[contains(.,\'Прикрепленный файл\')]"));
+
             driver.Wait(By.XPath("//button[contains(.,\'Отправить работу\')]"));
             driver.FindElement(By.XPath("//button[contains(.,\'Отправить работу\')]")).Click();
             Thread.Sleep(1000);
@@ -73,27 +84,29 @@ namespace autoTestsProject.Tests.Student.PositiveTests
         }
 
         [Test, Order(2)]
-        public void EditLabworkStudent()
+        [TestCase("Ф", "Отредактированная работа Ф №1")]
+        [TestCase("Тестовая лабораторная работа с очень длинным комментарием тестовая лабораторная работа с очень длинным " +
+            "комментарием тестовая лабораторная работа с очень длинным комментарием тестовая лабораторная работа с очень длинным", "Отредактированная Тестовая лабораторная работа с очень длинным комментарием №2")]
+        [TestCase("Какой-то длинноватый комментарий для лабораторной работы какой-то длинноватый комментарий для лабораторной работы", "Отредактированная Какой-то длинноватый комментарий для лабораторной работы №3")]
+        public void EditLabworkStudent(string comments, string editComment)
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
             driver.GoToChoosenSubject(Defaults.SubjectName);
+            Thread.Sleep(1000);
             driver.GoToModulus(Defaults.ModulusLabWorks);
 
             driver.SwitchTo().Frame(0);
-            //Thread.Sleep(4000);
+
             driver.Wait(By.XPath("//button[5]/span[3]"));
-            driver.FindElement(By.XPath("//button[5]/span[3]")).Click(); // разобраться с надписью Защита работ
-            Thread.Sleep(2000);
-            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("ЛР2"));
-            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            //Thread.Sleep(4000);
-            driver.Wait(By.XPath("//button[@mattooltip='Редактировать лабораторную работу']"));
-            driver.FindElement(By.XPath("//button[@mattooltip='Редактировать лабораторную работу']")).Click();
+            driver.FindElement(By.XPath("//button[5]/span[3]")).Click();
+  
+            driver.Wait(By.XPath($"//td[contains(.,\'{comments}\')]/../td/div/button[@mattooltip='Редактировать лабораторную работу']"));
+            driver.ClickJS(By.XPath($"//td[contains(.,\'{comments}\')]/../td/div/button[@mattooltip='Редактировать лабораторную работу']"));
+
             driver.FindElement(By.Id("mat-input-0")).Click();
             driver.FindElement(By.Id("mat-input-0")).Clear();
-            driver.FindElement(By.Id("mat-input-0")).SendKeys("Edit work");
+            driver.FindElement(By.Id("mat-input-0")).SendKeys(editComment);
             driver.FindElement(By.XPath("//span[contains(.,\'Отправить работу\')]")).Click();
             Thread.Sleep(1000);
             driver.SwitchTo().DefaultContent();
@@ -102,30 +115,34 @@ namespace autoTestsProject.Tests.Student.PositiveTests
         }
 
         [Test, Order(3)]
-        public void DeleteLabworkStudent()
+        [TestCase("Отредактированная работа Ф №1")]
+        [TestCase("Отредактированная Тестовая лабораторная работа с очень длинным комментарием №2")]
+        [TestCase("Отредактированная Какой-то длинноватый комментарий для лабораторной работы №3")]
+        public void DeleteLabworkStudent(string comments)
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
             driver.GoToChoosenSubject(Defaults.SubjectName);
+            Thread.Sleep(1000);
             driver.GoToModulus(Defaults.ModulusLabWorks);
 
             driver.SwitchTo().Frame(0);
 
             driver.Wait(By.XPath("//button[5]/span[3]"));
-            driver.FindElement(By.XPath("//button[5]/span[3]")).Click(); // разобраться с надписью Защита работ
-            driver.Wait(By.CssSelector(".mat-row"));
-            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("ЛР2"));
-            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            //Thread.Sleep(4000);
-            driver.Wait(By.XPath("//button[@mattooltip='Удалить лабораторную работу']"));
-            driver.FindElement(By.XPath("//button[@mattooltip='Удалить лабораторную работу']")).Click();
+            driver.FindElement(By.XPath("//button[5]/span[3]")).Click();
+
+            driver.Wait(By.XPath($"//td[contains(.,\'{comments}\')]/../td/div/button[@mattooltip='Удалить лабораторную работу']"));
+            driver.ClickJS(By.XPath($"//td[contains(.,\'{comments}\')]/../td/div/button[@mattooltip='Удалить лабораторную работу']"));
+
+            driver.Wait(By.XPath($"//mat-dialog-container[contains(.,\'Вы действительно хотите удалить работу?\')]"));
             var message = driver.FindElements(By.XPath($"//mat-dialog-container[contains(.,\'Вы действительно хотите удалить работу?\')]"));
             Assert.True(message.Count > 0);
-            driver.FindElement(By.XPath("//button[contains(.,\'Удалить\')]")).Click();
-            //Thread.Sleep(4000);
-            driver.Wait(By.XPath($"//td[contains(.,\' Edit work\')]"));
-            var els = driver.FindElements(By.XPath($"//td[contains(.,\' Edit work\')]"));
+            driver.Wait(By.XPath("//button[contains(.,\'Удалить\')]"));
+            driver.ClickJS(By.XPath("//button[contains(.,\'Удалить\')]"));
+
+            Thread.Sleep(1000);
+
+            var els = driver.FindElements(By.XPath($"//td[contains(.,\'{comments}\')]"));
             Assert.True(els.Count == 0);
             driver.SwitchTo().DefaultContent();
             driver.LogOut();

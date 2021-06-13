@@ -66,9 +66,6 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
 
         [Test, Order(1)]
         [TestCase("", "")]
-        //[TestCase("Тестовый предмет с очень-очень длинным названием тестовый предмет с очень-очень длинным " +
-        //          "названием тестовый предмет с очень-очень длинным названием тестовый предмет с очень-очень " +
-        //          "длинным названием тестовый предмет с очень-очень длинным названием тестовый пре", "ТПСООДН2021")]
         public void ErrorAddSubjectWithoutRequaredData(string fullsSubjectName, string shortSubjectName)
         {
             driver.GoToSubjects();
@@ -115,7 +112,6 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
 
             driver.Wait(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Редактировать предмет\']"));
             driver.ClickJS(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Редактировать предмет\']"));
-            //driver.FindElement(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Редактировать предмет\']")).Click();
 
             driver.Wait(By.XPath("//input[@name=\'name\']"));
             driver.FindElement(By.XPath("//input[@name=\'name\']")).Click();
@@ -133,7 +129,7 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
             var stateButton = button.GetAttribute("disabled");
             Assert.True(!string.IsNullOrEmpty(stateButton));
             var inputTestname = driver.FindElement(By.XPath("//input[@name=\'name\']")).GetAttribute("aria-invalid");
-            //Assert.True(inputTestname.ToLower());
+
             Assert.AreEqual("true", inputTestname);
             var inputTestabbreviation = driver.FindElement(By.XPath("//input[@name=\'abbreviation\']")).GetAttribute("aria-invalid");
             Assert.AreEqual("true", inputTestabbreviation);
@@ -148,10 +144,6 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
         [Test, Order(3)]
         [TestCase("", "АТП")]
         [TestCase("Тестовый предмет, который не будет создан", "")]
-        //[TestCase("Тестовый предмет с очень-очень длинным названием тестовый предмет с очень-очень длинным " +
-        //          "названием тестовый предмет с очень-очень длинным названием тестовый предмет с очень-очень " +
-        //          "длинным названием тестовый предмет с очень-очень длинным названием тестовый пре", "ТПСООДН")]
-        //[TestCase("Тестовый предмет с некорректной аббревиатурой", "ТПСООДН2021")]
         public void ErrorAddSubjectWithoutOneRequaredData(string fullSubjectName, string shotSubjectName)
         {
             driver.GoToSubjects();
@@ -186,8 +178,6 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
         [Test, Order(4)]
         [TestCase("Новый предмет для ошибки", "", "ES")]
         [TestCase("Новый предмет для ошибки", "ErrorSubjectName", "")]
-        //[TestCase(driver.DuplicateWord("LongNameSubjectT", 16), "LNST")]
-        //[TestCase("ErrorSubject", )]
         public void ErrorEditSubjectWithoutOneRequaredData(string oldFullSubjectName, string newFullSubjectName, string newShotSubjectName)
         {
             driver.GoToSubjects();
@@ -201,7 +191,7 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
 
             driver.Wait(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Редактировать предмет\']"));
             driver.ClickJS(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Редактировать предмет\']"));
-            //driver.FindElement(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Редактировать предмет\']")).Click();
+           
             driver.Wait(By.XPath("//input[@name=\'name\']"));
             driver.FindElement(By.XPath("//input[@name=\'name\']")).Click();
             driver.FindElement(By.XPath("//input[@name=\'name\']")).Clear();
@@ -242,7 +232,7 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
             driver.GoToManagementSubject();
 
             driver.SwitchTo().Frame(0);
-            //InitializeData(fullSubjectName, shortSubjectName); было
+
             Thread.Sleep(1000);
             driver.Wait(By.CssSelector(".mat-row"));
             driver.Wait(By.XPath("//button[contains(.,'Добавить предмет')]"));
@@ -267,7 +257,7 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
             var message = driver.FindElements(By.XPath("//mat-error[contains(.,\' Предмет с такой аббревиатурой уже существует \')]"));
             Assert.True(message.Count > 0);
             driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
-            //ClearData(); было
+       
             driver.SwitchTo().DefaultContent();
             driver.LogOut();
         }
@@ -288,7 +278,7 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
 
             driver.Wait(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Редактировать предмет\']"));
             driver.ClickJS(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Редактировать предмет\']"));
-            //driver.FindElement(By.XPath($"//tr[{idRowOfElem + 1}]/td/button[@ng-reflect-message=\'Редактировать предмет\']")).Click(); было
+          
             driver.Wait(By.XPath("//input[@name=\'name\']"));
             driver.FindElement(By.XPath("//input[@name=\'name\']")).Click();
             driver.FindElement(By.XPath("//input[@name=\'name\']")).Clear();
@@ -311,7 +301,7 @@ namespace autoTestsProject.Tests.Lecturer.NegativeTests
             driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
             Thread.Sleep(1000);
             ClearData(oldSubjectName);
-            Thread.Sleep(1000);
+            Thread.Sleep(3000);
             ClearData(newFullSubjectName);
             driver.SwitchTo().DefaultContent();
             driver.LogOut();

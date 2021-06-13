@@ -36,18 +36,19 @@ namespace autoTestsProject.Tests.Student.PositiveTests
             driver.Quit();
         }
 
-        // tyt
         [Test]
-        public void DownloadFileStudent()
+        [TestCase("test.docx")]
+        public void DownloadFileStudent(string nameFile)
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
             driver.GoToChoosenSubject(Defaults.SubjectName);
+            Thread.Sleep(1000);
             driver.GoToModulus(Defaults.ModulusFiles);
 
             driver.SwitchTo().Frame(0);
 
-            string path = @"files";
+            string path = @"downloadFiles";
             DirectoryInfo dirInfo = new DirectoryInfo(path);
             if (!dirInfo.Exists)
             {
@@ -57,12 +58,12 @@ namespace autoTestsProject.Tests.Student.PositiveTests
             Thread.Sleep(3000);
 
             var downloadLink = driver
-                .FindElement(By.XPath("//a[contains(text(),\'test.docx\')]"))
+                .FindElement(By.XPath($"//a[contains(text(),\'{nameFile}\')]"))
                 .GetAttribute("href");
 
             WebClient webClient = new WebClient();
 
-            string name = driver.FindElement(By.XPath("//a[contains(text(),\'test.docx\')]")).GetAttribute("ng-reflect-message");
+            string name = driver.FindElement(By.XPath($"//a[contains(text(),\'{nameFile}\')]")).GetAttribute("ng-reflect-message");
 
             webClient.DownloadFile(downloadLink, path + "/" + name);
 

@@ -36,10 +36,10 @@ namespace autoTestsProject.Tests.Student.PositiveTests
         }
 
         [Test, Order(1)]
-        [TestCase("TestLoginForTestUserForTesting", "Password-ForTesting12345678910_", "Password-ForTesting12345678910_", "TestLogin", "TestLogin", "TestLogin", "test")]
-        [TestCase("Tes", "Pass1_", "Pass1_", "Tes", "Tes", "Tes", "test")]
+        [TestCase("TestLoginForTestUserForTesti10", "PasswordForTesting12345678910_", "PasswordForTesting12345678910_", "TestLogin", "TestLogin", "TestLogin", "test")]
+        [TestCase("T10", "Pass1_", "Pass1_", "Tes", "Tes", "Tes", "test")]
         [TestCase("TestUser2000", "TestPass_123", "TestPass_123", "TestUser2000", "TestUser2000", "TestUser2000", "test")]
-        [TestCase("Some_TestUserForTesting", "TestPassword_1234567", "TestPassword_1234567", "Some_TestUser", "Some_TestUser", "Some_TestUser", "test")]
+        [TestCase("Some_TestUserForTesting10", "TestPassword_1234567", "TestPassword_1234567", "Some_TestUser", "Some_TestUser", "Some_TestUser", "test")]
         public void RegisterUser(string userLogin, string userPassword, string userConfirmPassword, string userSurname, string userFirstname, string userFathername, string userAnswer)
         {
             driver.Navigate().GoToUrl("http://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
@@ -54,11 +54,11 @@ namespace autoTestsProject.Tests.Student.PositiveTests
             driver.FindElement(By.Id("mat-input-2")).Click();
             driver.FindElement(By.Id("mat-input-2")).SendKeys(userConfirmPassword);
             driver.FindElement(By.Id("mat-input-3")).Click();
-            driver.FindElement(By.Id("mat-input-3")).SendKeys(userSurname); // last n
+            driver.FindElement(By.Id("mat-input-3")).SendKeys(userSurname); // surname
             driver.FindElement(By.Id("mat-input-4")).Click();
-            driver.FindElement(By.Id("mat-input-4")).SendKeys(userFirstname); // first n
+            driver.FindElement(By.Id("mat-input-4")).SendKeys(userFirstname); // firstname
             driver.FindElement(By.Id("mat-input-5")).Click();
-            driver.FindElement(By.Id("mat-input-5")).SendKeys(userFathername); // father n
+            driver.FindElement(By.Id("mat-input-5")).SendKeys(userFathername); // fathername
             driver.FindElement(By.CssSelector(".mat-select-value > .ng-tns-c6-7")).Click();
             driver.Wait(By.XPath("//mat-option/span[contains(.,\' Тестовая \')]"));
             Thread.Sleep(3000);
@@ -75,10 +75,10 @@ namespace autoTestsProject.Tests.Student.PositiveTests
 
         [Test, Order(2)]
         [TestCase("kate", "10039396")]
-        [TestCase("TestLoginForTestUserForTesting", "Password-ForTesting12345678910_")]
-        [TestCase("Tes", "Pass1_")]
+        [TestCase("TestLoginForTestUserForTesti10", "PasswordForTesting12345678910_")]
+        [TestCase("T10", "Pass1_")]
         [TestCase("TestUser2000", "TestPass_123")]
-        [TestCase("Some_TestUserForTesting", "TestPassword_1234567")]
+        [TestCase("Some_TestUserForTesting10", "TestPassword_1234567")]
         public void LoginUser(string userLogin, string userPassword)
         {
             driver.Navigate().GoToUrl("http://educats.by/login?returnUrl=%2Fweb%2Fdashboard");

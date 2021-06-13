@@ -28,6 +28,7 @@ namespace autoTestsProject.Tests.Student.PositiveTests
             driver = new ChromeDriver();
             js = (IJavaScriptExecutor)driver;
             vars = new Dictionary<string, object>();
+            driver.Login(Defaults.StudentLogin, Defaults.StudentPassword);
         }
         [TearDown]
         protected void TearDown()
@@ -35,57 +36,24 @@ namespace autoTestsProject.Tests.Student.PositiveTests
             driver.Quit();
         }
 
-        //подумать на счет количества вопросов
-        [Test]
-        public void DoingTestStudent()
+        [TestCase("И")]
+        public void DoingTest(string testName)
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
             driver.GoToChoosenSubject(Defaults.SubjectName);
+            Thread.Sleep(1000);
             driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);
-            //Thread.Sleep(3000);
-            driver.Wait(By.CssSelector(".mat-row"));
-            //var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
-            //var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains("Простое название для теста 2021")); // название теста
-            //var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            //Thread.Sleep(5000);
-            //driver.Wait(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Пройти тест\']"));
-            //driver.FindElement(By.XPath($"//mat-table[@id=\'cdk-drop-list-0\']/mat-row[{idRowOfElem + 1}]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Пройти тест\']")).Click();
-            driver.Wait(By.XPath($"//mat-cell[contains(.,\'Простое название для теста 2021\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Пройти тест\']"));
-            driver.FindElement(By.XPath($"//mat-cell[contains(.,\'Простое название для теста 2021\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Пройти тест\']")).Click();
-            //Thread.Sleep(2000);
+
+            driver.Wait(By.XPath($"//mat-table/mat-row[contains(.,\'{testName}\')]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Пройти тест\']"));
+            driver.ClickJS(By.XPath($"//mat-table/mat-row[contains(.,\'{testName}\')]/mat-cell[3]/mat-icon[@ng-reflect-message=\'Пройти тест\']"));
             driver.Wait(By.XPath("//button[contains(.,\'Далее\')]"));
-
             driver.FindElement(By.XPath("//button[contains(.,\'Далее\')]")).Click();
-
-            //Dictionary<string, string> questions = new Dictionary<string, string>
-            //{
-            //    {"Сколько будет 3+2?", "5"},
-            //    {"Спутник Земли?", "Луна"},
-            //    {"На какой свет светофора необходимо переходить дорогу?", "Зеленый"},
-            //};
-
-            //for (int i = 1; i <= 3; i++)
-            //{
-            //    //Thread.Sleep(3000);
-            //    driver.Wait(By.ClassName("question-question-text"));
-            //    var divTextQuestion = driver.FindElement(By.ClassName("question-question-text"));
-            //    var textQuestion = divTextQuestion.Text;
-            //    var answer = questions[textQuestion];
-            //    //Thread.Sleep(2000);
-            //    driver.Wait(By.XPath($"//div[@class=\'mat-radio-label-content\'][contains(.,\'{answer}\')]"));
-            //    var div = driver.FindElement(By.XPath($"//div[@class=\'mat-radio-label-content\'][contains(.,\'{answer}\')]"));
-            //    var label = div.FindElement(By.XPath(".."));
-            //    label.FindElement(By.ClassName("mat-radio-label-content")).Click();
-            //    driver.FindElement(By.XPath("//button[contains(.,\'done_outline Ответить\')]")).Click();
-            //}
-            //Thread.Sleep(2000);
 
             for (int i = 1; i <= 6; i++)
             {
-                //Thread.Sleep(3000);
                 driver.Wait(By.ClassName("question-answers-block-container"));
                 var questionAnswersBlockContainer = driver.FindElement(By.ClassName("question-answers-block-container"));
 
@@ -107,9 +75,9 @@ namespace autoTestsProject.Tests.Student.PositiveTests
                 }
                 driver.FindElement(By.XPath("//button[contains(.,\'done_outline Ответить\')]")).Click();
             }
-
-            driver.Wait(By.XPath("//app-test-result/div/div[contains(.,\' Тест на тему «Простое название для теста 2021» завершен \')]"));
-            Assert.That(driver.FindElement(By.XPath("//app-test-result/div/div[contains(.,\' Тест на тему «Простое название для теста 2021» завершен \')]")).Text, Is.EqualTo("Тест на тему «Простое название для теста 2021» завершен"));
+            var str = $"Тест на тему «{testName}» завершен";
+            driver.Wait(By.XPath($"//app-test-result/div/div[contains(.,\'{str}\')]"));
+            Assert.That(driver.FindElement(By.XPath($"//app-test-result/div/div[contains(.,\'{str}\')]")).Text, Is.EqualTo($"Тест на тему «{testName}» завершен"));
             driver.SwitchTo().DefaultContent();
             driver.LogOut();
         }

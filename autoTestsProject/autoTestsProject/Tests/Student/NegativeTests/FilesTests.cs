@@ -37,27 +37,13 @@ namespace autoTestsProject.Tests.Student.NegativeTests
         }
 
         [Test]
-        public void ErrorDownloadFileStudent()
+        [TestCase("test.docx")]
+        public void ErrorDownloadFileStudent(string nameFile)
         {
-            driver.Navigate().GoToUrl("https://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
-            driver.Manage().Window.Size = new System.Drawing.Size(1680, 1050);
-            driver.FindElement(By.Id("mat-input-0")).Click();
-            driver.FindElement(By.Id("mat-input-0")).SendKeys("kate");
-            driver.FindElement(By.Id("mat-input-1")).Click();
-            driver.FindElement(By.Id("mat-input-1")).SendKeys("10039396");
-            driver.FindElement(By.XPath("//button[contains(.,\'Войти в систему\')]")).Click();
-            Thread.Sleep(5000);
-            driver.FindElement(By.XPath("//a[contains(.,\'Предметы\')]")).Click();
-            Thread.Sleep(5000);
-            driver.FindElement(By.XPath("//button[contains(.,\'Выберите предмет\')]")).Click();
-            Thread.Sleep(3000);
-            driver.FindElement(By.XPath("//a[contains(.,\'TestSubject\')]")).Click();
-            Thread.Sleep(3500);
-            driver.FindElement(By.XPath("//a[contains(.,\'Файлы\')]")).Click();
-
             driver.GoToSubjects();
             driver.GoToChooseSubject();
             driver.GoToChoosenSubject(Defaults.SubjectName);
+            Thread.Sleep(1000);
             driver.GoToModulus(Defaults.ModulusFiles);
 
             driver.SwitchTo().Frame(0);
@@ -69,18 +55,17 @@ namespace autoTestsProject.Tests.Student.NegativeTests
                 dirInfo.Create();
             }
 
-            //Thread.Sleep(3000);
-            driver.Wait(By.XPath("//a[contains(text(),\'test.docx\')]"));
+            driver.Wait(By.XPath($"//a[contains(text(),\'{nameFile}\')]"));
 
             var downloadLink = driver
-                .FindElement(By.XPath("//a[contains(text(),\'test.docx\')]"))
+                .FindElement(By.XPath($"//a[contains(text(),\'{nameFile}\')]"))
                 .GetAttribute("href");
 
             var badLink = "/badlink" + downloadLink;
 
             WebClient webClient = new WebClient();
 
-            string name = driver.FindElement(By.XPath("//a[contains(text(),\'test.docx\')]")).GetAttribute("ng-reflect-message");
+            string name = driver.FindElement(By.XPath($"//a[contains(text(),\'{nameFile}\')]")).GetAttribute("ng-reflect-message");
 
             try
             {
@@ -90,7 +75,6 @@ namespace autoTestsProject.Tests.Student.NegativeTests
             {
                 Console.WriteLine(e);
             }
-
 
             string curFile = path + "/" + name;
             Assert.True(!File.Exists(curFile));

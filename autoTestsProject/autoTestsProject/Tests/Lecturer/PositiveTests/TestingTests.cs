@@ -41,10 +41,10 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         [TestCase(" Тест для самоконтроля ", "Очень-очень длинное предлинное название теста для тестирования длины " +
                   "названия теста очень-очень длинное предлинное название теста для тестирования длины названия теста " +
                   "очень-очень длинное предлинное название теста для тестирования длины названия тест_2021", "Тесты для самоконтроля", 2)]
-        [TestCase(" Предтест для обучения в ЭУМК ", "Еще одно простое название для теста 2021", "Предтесты для обучения в ЭУМК", 3)]
+        [TestCase(" Предтест для обучения в ЭУМК ", "Хорошее название для теста 2021, но немного длинное, чем обычно " +
+                  "Хорошее назва-ние для теста 2021, но не-много длинное, чем обычно", "Предтесты для обучения в ЭУМК", 3)]
         [TestCase(" Тест для обучения в ЭУМК ", "Новый тест 4", "Тесты для обучения в ЭУМК", 4)]
-        [TestCase(" Тест для обучения с искусственной нейронной сетью ", "Хорошее название для теста 2021, но немного длинное, чем обычно " +
-                  "Хорошее назва-ние для теста 2021, но не-много длинное, чем обычно", "Тесты для обучения с искусстве", 5)]
+        [TestCase(" Тест для обучения с искусственной нейронной сетью ", "Еще одно простое название для теста 2021", "Тесты для обучения с искусстве", 5)]
         public void AddNewTest(string testType, string testName, string titleTest, int numberDiv)
         {
             driver.GoToSubjects();
@@ -85,10 +85,10 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         [TestCase(" Тест для самоконтроля ", "Очень-очень длинное предлинное название теста для тестирования длины " +
                   "названия теста очень-очень длинное предлинное название теста для тестирования длины названия теста " +
                   "очень-очень длинное предлинное название теста для тестирования длины названия тест_тест", "Тесты для самоконтроля", 2)]
-        [TestCase(" Предтест для обучения в ЭУМК ", "Простое название для теста", "Предтесты для обучения в ЭУМК", 3)]
+        [TestCase(" Предтест для обучения в ЭУМК ", "Хорошее название для теста, но немного длинное, чем обычно " +
+                  "хорошее назва-ние для теста, но не-много длинное, чем обычно", "Предтесты для обучения в ЭУМК", 3)]
         [TestCase(" Тест для обучения в ЭУМК ", "Новый тест 444", "Тесты для обучения в ЭУМК", 4)]
-        [TestCase(" Тест для обучения с искусственной нейронной сетью ", "Хорошее название для теста, но немного длинное, чем обычно " +
-                  "хорошее назва-ние для теста, но не-много длинное, чем обычно", "Тесты для обучения с искусстве", 5)]
+        [TestCase(" Тест для обучения с искусственной нейронной сетью ", "Простое название для теста", "Тесты для обучения с искусстве", 5)]
         public void CancelAddNewTest(string testType, string testName, string titleTest, int numberDiv)
         {
             driver.GoToSubjects();
@@ -130,11 +130,11 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
                  "очень-очень длинное предлинное название теста для тестирования длины названия тест_2021", "Измененное очень-очень " +
                  "длинное предлинное название теста для тестирования длины названия теста очень-очень длинное предлинное название теста для " +
                  "тестирования длины названия теста очень-очень длинное предлинное название теста для тестирования длины названи")]
-        [TestCase("Предтесты для обучения в ЭУМК", 3, "Еще одно простое название для теста 2021", "Простое название для теста 2021")]
-        [TestCase("Тесты для обучения в ЭУМК", 4, "Новый тест 4", "Четвертый новый тест")]
-        [TestCase("Тесты для обучения с искусстве", 5, "Хорошее название для теста 2021, но немного длинное, чем обычно " +
+        [TestCase("Предтесты для обучения в ЭУМК", 3, "Хорошее название для теста 2021, но немного длинное, чем обычно " +
                  "Хорошее назва-ние для теста 2021, но не-много длинное, чем обычно", "И последнее хорошее название для теста 2021, но немного длинное, чем обычно " +
                  "хорошее назва-ние для теста 2021, но не-много длинное, чем обычно")]
+        [TestCase("Тесты для обучения в ЭУМК", 4, "Новый тест 4", "Четвертый новый тест")]
+        [TestCase("Тесты для обучения с искусстве", 5, "Еще одно простое название для теста 2021", "Простое название для теста 2021")]
         public void EditTestName(string titleTest, int numberDiv, string oldTestName, string newTestName)
         {
             driver.GoToSubjects();
@@ -171,11 +171,11 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
                  "тестирования длины названия теста очень-очень длинное предлинное название теста для тестирования длины названи", "Измененное очень-очень " +
                  "длинное предлинное название теста для тестирования длины названия теста очень-очень длинное предлинное название теста для " +
                  "тестирования длины названия теста очень-очень длинное предлинное название теста для тестирования длины наз2021")]
-        [TestCase("Предтесты для обучения в ЭУМК", 3, "Простое название для теста 2021", "Еще одно простое название для теста 2021 для отмены")]
-        [TestCase("Тесты для обучения в ЭУМК", 4, "Четвертый новый тест", "Четвертый новый тест для отмены")]
-        [TestCase("Тесты для обучения с искусстве", 5, "И последнее хорошее название для теста 2021, но немного длинное, чем обычно " +
+        [TestCase("Предтесты для обучения в ЭУМК", 3, "И последнее хорошее название для теста 2021, но немного длинное, чем обычно " +
                  "хорошее назва-ние для теста 2021, но не-много длинное, чем обычно", "И последнее хорошее название для теста 2021, но немного длинное, чем обычно " +
                  "хорошее назва-ние для теста 2021, но не-много длинное, чем обычно для отмены")]
+        [TestCase("Тесты для обучения в ЭУМК", 4, "Четвертый новый тест", "Четвертый новый тест для отмены")]
+        [TestCase("Тесты для обучения с искусстве", 5, "Простое название для теста 2021", "Еще одно простое название для теста 2021 для отмены")]
         public void CancelEditTestName(string titleTest, int numberDiv, string oldTestName, string newTestName)
         {
             driver.GoToSubjects();
@@ -212,8 +212,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
                  "длинное предлинное название теста для тестирования длины названия теста очень-очень длинное предлинное название теста для " +
                  "тестирования длины названия теста очень-очень длинное предлинное название теста для тестирования длины названи", "Тесты для обучения в ЭУМК", 4)]
         [TestCase("Тесты для обучения в ЭУМК", 4, " Тест для обучения с искусственной нейронной сетью ", "Четвертый новый тест", "Тесты для обучения с искусстве", 5)]
-        [TestCase("Тесты для обучения с искусстве", 5, " Тест для контроля знаний ", "И последнее хорошее название для теста 2021, но немного длинное, чем обычно " +
-                 "хорошее назва-ние для теста 2021, но не-много длинное, чем обычно", "Тесты для контроля знаний", 1)]
+        [TestCase("Тесты для обучения с искусстве", 5, " Тест для контроля знаний ", "Простое название для теста 2021", "Тесты для контроля знаний", 1)]
         public void EditTestType(string oldTestType, int oldNumberDiv, string newTestType, string testName, string newTitleTest, int NewNumberDiv)
         {
             driver.GoToSubjects();
@@ -251,8 +250,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
                  "длинное предлинное название теста для тестирования длины названия теста очень-очень длинное предлинное название теста для " +
                  "тестирования длины названия теста очень-очень длинное предлинное название теста для тестирования длины названи", "Предтесты для обучения в ЭУМК", 3)]
         [TestCase("Тесты для обучения с искусстве", 5, " Тест для обучения в ЭУМК ", "Четвертый новый тест", "Тесты для обучения в ЭУМК", 4)]
-        [TestCase("Тесты для контроля знаний", 1, " Тест для обучения с искусственной нейронной сетью ", "И последнее хорошее название для теста 2021, но немного длинное, чем обычно " +
-                 "хорошее назва-ние для теста 2021, но не-много длинное, чем обычно", "Тесты для обучения с искусстве", 5)]
+        [TestCase("Тесты для контроля знаний", 1, " Тест для обучения с искусственной нейронной сетью ", "Простое название для теста 2021", "Тесты для обучения с искусстве", 5)]
         public void CancelEditTestType(string oldTestType, int oldNumberDiv, string newTestType, string testName, string newTitleTest, int NewNumberDiv)
         {
             driver.GoToSubjects();
@@ -521,40 +519,10 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.LogOut();
         }
 
-        [Test, Order(12)]
-        [TestCase("Простое название для теста 2021", " Тестовая ", "Cat")] // tyt поменять тест на контроль знаний, в последнем тесте открыть доступ к этому тесту для этого студента
-        public void AddAccessToStudentInTest(string testName, string groupName, string userName)
-        {
-            driver.GoToSubjects();
-            driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.SubjectName);
-            driver.GoToModulus(Defaults.ModulusName);
-
-            driver.SwitchTo().Frame(0);
-
-            driver.Wait(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']"));
-            driver.FindElement(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']")).Click();
-            driver.Wait(By.XPath("//mat-select[@id='mat-select-0']/div/div"));
-            driver.FindElement(By.XPath("//mat-select[@id='mat-select-0']/div/div")).Click();
-            driver.Wait(By.XPath($"//span[contains(.,\'{groupName}\')]"));
-            driver.FindElement(By.XPath($"//span[contains(.,\'{groupName}\')]")).Click();
-            driver.Wait(By.XPath("//div[@class=\'students-table-list\']"));
-            var div = driver.FindElement(By.XPath("//div[@class=\'students-table-list\']"));
-            var userForFind = div.FindElements(By.CssSelector(".mat-row"));
-            var user = userForFind.FirstOrDefault(x => x.Text.StartsWith(userName, StringComparison.Ordinal)); // имя user
-            var idRowOfUser = div.FindElements(By.CssSelector(".mat-row")).IndexOf(user);
-            driver.Wait(By.XPath($"//div/mat-table/mat-row[{idRowOfUser + 1}]/mat-cell[2]/mat-icon[contains(.,\'lock \')]"));
-            driver.FindElement(By.XPath($"//div/mat-table/mat-row[{idRowOfUser + 1}]/mat-cell[2]/mat-icon[contains(.,\'lock \')]")).Click();
-            driver.Wait(By.XPath($"//div/mat-table/mat-row[{idRowOfUser + 1}]/mat-cell/mat-icon[contains(.,\'lock_open \')]"));
-            var openLockBtn = driver.FindElements(By.XPath($"//div/mat-table/mat-row[{idRowOfUser + 1}]/mat-cell/mat-icon[contains(.,\'lock_open \')]"));
-            Assert.True(openLockBtn.Count > 0);
-            driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
-            driver.SwitchTo().DefaultContent();
-            driver.LogOut();
-        }
+        
 
         // поиск студента в группе в окне Доступность теста
-        [Test, Order(13)]
+        [Test, Order(12)]
         [TestCase("Простое название для теста 2021", " Тестовая ", "Cat")]
         public void SearchStudentInAccessForm(string testName, string groupName, string userName)
         {
@@ -585,8 +553,8 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.LogOut();
         }
 
-        [Test, Order(14)]
-        [TestCase("Простое название для теста 2021", "Предтесты для обучения в ЭУМК", 3)]
+        [Test, Order(13)]
+        [TestCase("Простое название для теста 2021", "Тесты для контроля знаний", 1)]
         public void CancelDeleteTest(string testName, string newTitleTest, int NewNumberDiv)
         {
             driver.GoToSubjects();
@@ -611,7 +579,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.LogOut();
         }
 
-        [Test, Order(15)]
+        [Test, Order(14)]
         [TestCase(" Тест для самоконтроля ", "И", "Тесты для самоконтроля", 2)]
         public void DeleteTest(string newTestType, string testName, string newTitleTest, int NewNumberDiv)
         {
