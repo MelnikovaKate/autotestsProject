@@ -15,7 +15,7 @@ using autoTestsProject.Enums;
 
 namespace autoTestsProject.Tests.Student.PositiveTests
 {
-    [TestFixture(), Order(9)]
+    [TestFixture(), Order(1)]
     public class AccountTests
     {
         private IWebDriver driver;
@@ -36,10 +36,10 @@ namespace autoTestsProject.Tests.Student.PositiveTests
         }
 
         [Test, Order(1)]
-        [TestCase("TestLoginForTestUserForTesti10", "PasswordForTesting12345678910_", "PasswordForTesting12345678910_", "TestLogin", "TestLogin", "TestLogin", "test")]
-        [TestCase("T10", "Pass1_", "Pass1_", "Tes", "Tes", "Tes", "test")]
-        [TestCase("TestUser2000", "TestPass_123", "TestPass_123", "TestUser2000", "TestUser2000", "TestUser2000", "test")]
-        [TestCase("Some_TestUserForTesting10", "TestPassword_1234567", "TestPassword_1234567", "Some_TestUser", "Some_TestUser", "Some_TestUser", "test")]
+        [TestCase("TestLoginForTestUserForTesti11", "PasswordForTesting12345678910_", "PasswordForTesting12345678910_", "TestLogin", "TestLogin", "TestLogin", "test")]
+        [TestCase("T11", "Pass1_", "Pass1_", "Tes", "Tes", "Tes", "test")]
+        [TestCase("TestUser2001", "TestPass_123", "TestPass_123", "TestUser2000", "TestUser2000", "TestUser2000", "test")]
+        [TestCase("Some_TestUserForTesting11", "TestPassword_1234567", "TestPassword_1234567", "Some_TestUser", "Some_TestUser", "Some_TestUser", "test")]
         public void RegisterUser(string userLogin, string userPassword, string userConfirmPassword, string userSurname, string userFirstname, string userFathername, string userAnswer)
         {
             driver.Navigate().GoToUrl("http://educats.by/login?returnUrl=%2Fweb%2Fdashboard");

@@ -1,9 +1,8 @@
-﻿<Properties StartupConfiguration="{781C3877-FA1C-419C-8C84-4800E246D0C0}|Модульные тесты">
-  <MonoDevelop.Ide.Workbench ActiveDocument="autoTestsProject/Tests/Lecturer/PositiveTests/QuestionTests.cs">
+﻿<Properties>
+  <MonoDevelop.Ide.Workbench ActiveDocument="autoTestsProject/Tests/Lecturer/NegativeTests/SubjectTests.cs">
     <Files>
-      <File FileName="autoTestsProject/DriverHelper.cs" Line="74" Column="1" />
-      <File FileName="autoTestsProject/Tests/Lecturer/NegativeTests/QuestionTests.cs" Line="211" Column="35" />
-      <File FileName="autoTestsProject/Tests/Lecturer/PositiveTests/QuestionTests.cs" Line="11" Column="18" />
+      <File FileName="autoTestsProject/Tests/Lecturer/NegativeTests/SubjectTests.cs" Line="31" Column="77" />
+      <File FileName="autoTestsProject/Tests/Lecturer/NegativeTests/StudentsTests.cs" Line="38" Column="2" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -12,9 +11,8 @@
             <Node name="autoTestsProject" expanded="True">
               <Node name="Tests" expanded="True">
                 <Node name="Lecturer" expanded="True">
-                  <Node name="NegativeTests" expanded="True" />
-                  <Node name="PositiveTests" expanded="True">
-                    <Node name="QuestionTests.cs" selected="True" />
+                  <Node name="NegativeTests" expanded="True">
+                    <Node name="SubjectTests.cs" selected="True" />
                   </Node>
                 </Node>
               </Node>
@@ -26,7 +24,9 @@
         <State name="__root__">
           <Node name="autoTestsProject" expanded="True">
             <Node name="autoTestsProject" expanded="True">
-              <Node name="autoTestsProject.Tests.Lecturer.PositiveTests" expanded="True" />
+              <Node name="autoTestsProject.Tests.Lecturer.NegativeTests" expanded="True">
+                <Node name="SubjectTests" expanded="True" selected="True" />
+              </Node>
             </Node>
           </Node>
         </State>
