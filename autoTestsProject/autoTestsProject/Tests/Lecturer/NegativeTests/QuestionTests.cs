@@ -14,7 +14,7 @@ using OfficeOpenXml;
 using autoTestsProject.Enums;
 namespace autoTestsProject.Tests.Lecturer.NegativeTests
 {
-    [TestFixture(), Order(9)]
+    [TestFixture(), Order(3)]
     public class QuestionTests
     {
         private IWebDriver driver;

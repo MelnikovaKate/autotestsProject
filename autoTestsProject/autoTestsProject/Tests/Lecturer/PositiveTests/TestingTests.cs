@@ -15,7 +15,7 @@ using autoTestsProject.Enums;
 
 namespace autoTestsProject.Tests.Lecturer.PositiveTests
 {
-    [TestFixture(), Order(6)]
+    [TestFixture(), Order(2)]
     public class TestingTests
     {
         private IWebDriver driver;

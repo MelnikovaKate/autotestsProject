@@ -21,6 +21,17 @@ namespace autoTestsProject.Tests.Student.PositiveTests
         private IWebDriver driver;
         public IDictionary<string, object> vars { get; private set; }
         private IJavaScriptExecutor js;
+        private IDictionary<string, string> Logins = new Dictionary<string, string>();
+
+        public AccountTests()
+        {
+            Logins.Add(new KeyValuePair<string, string>("UserLoginShort", $"T_{DateTime.Now.Hour}"));
+            Logins.Add(new KeyValuePair<string, string>("UserLoginNormal", $"TestUser_{DateTime.Now.DayOfWeek}"));
+            Logins.Add(new KeyValuePair<string, string>("UserLoginLong", $"TestLoginForTestUserForTest_{DateTime.Now.Day}"));
+            Logins.Add(new KeyValuePair<string, string>("UserSurnameShort", $"N{DateTime.Now.Hour}"));
+            Logins.Add(new KeyValuePair<string, string>("UserSurnameNormal", $"Surname{DateTime.Now.DayOfWeek}"));
+            Logins.Add(new KeyValuePair<string, string>("UserSurnameLong", $"TestSurnameForTest_{DateTime.Now.Day}"));
+        }
 
         [SetUp]
         public void SetUp()
@@ -36,10 +47,9 @@ namespace autoTestsProject.Tests.Student.PositiveTests
         }
 
         [Test, Order(1)]
-        [TestCase("TestLoginForTestUserForTesti11", "PasswordForTesting12345678910_", "PasswordForTesting12345678910_", "TestLogin", "TestLogin", "TestLogin", "test")]
-        [TestCase("T11", "Pass1_", "Pass1_", "Tes", "Tes", "Tes", "test")]
-        [TestCase("TestUser2001", "TestPass_123", "TestPass_123", "TestUser2000", "TestUser2000", "TestUser2000", "test")]
-        [TestCase("Some_TestUserForTesting11", "TestPassword_1234567", "TestPassword_1234567", "Some_TestUser", "Some_TestUser", "Some_TestUser", "test")]
+        [TestCase("UserLoginShort", "Pass1_", "Pass1_", "UserSurnameShort", "Tes", "Tes", "test")]
+        [TestCase("UserLoginNormal", "TestPassword_1234567", "TestPassword_1234567", "UserSurnameNormal", "Some_TestUser", "Some_TestUser", "test")]
+        [TestCase("UserLoginLong", "PasswordForTesting12345678910_", "PasswordForTesting12345678910_", "UserSurnameLong", "TestLogin", "TestLogin", "test")]
         public void RegisterUser(string userLogin, string userPassword, string userConfirmPassword, string userSurname, string userFirstname, string userFathername, string userAnswer)
         {
             driver.Navigate().GoToUrl("http://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
@@ -48,13 +58,13 @@ namespace autoTestsProject.Tests.Student.PositiveTests
             driver.SwitchTo().Frame(0);
             driver.Wait(By.Id("mat-input-0"));
             driver.FindElement(By.Id("mat-input-0")).Click();
-            driver.FindElement(By.Id("mat-input-0")).SendKeys(userLogin); // login
+            driver.FindElement(By.Id("mat-input-0")).SendKeys(Logins[userLogin]); // login
             driver.FindElement(By.CssSelector(".ng-tns-c5-1 .mat-form-field-infix")).Click();
             driver.FindElement(By.Id("mat-input-1")).SendKeys(userPassword); // password
             driver.FindElement(By.Id("mat-input-2")).Click();
             driver.FindElement(By.Id("mat-input-2")).SendKeys(userConfirmPassword);
             driver.FindElement(By.Id("mat-input-3")).Click();
-            driver.FindElement(By.Id("mat-input-3")).SendKeys(userSurname); // surname
+            driver.FindElement(By.Id("mat-input-3")).SendKeys(Logins[userSurname]); // surname
             driver.FindElement(By.Id("mat-input-4")).Click();
             driver.FindElement(By.Id("mat-input-4")).SendKeys(userFirstname); // firstname
             driver.FindElement(By.Id("mat-input-5")).Click();
@@ -74,36 +84,59 @@ namespace autoTestsProject.Tests.Student.PositiveTests
         }
 
         [Test, Order(2)]
-        [TestCase("kate", "10039396")]
-        [TestCase("TestLoginForTestUserForTesti10", "PasswordForTesting12345678910_")]
-        [TestCase("T10", "Pass1_")]
-        [TestCase("TestUser2000", "TestPass_123")]
-        [TestCase("Some_TestUserForTesting10", "TestPassword_1234567")]
+        [TestCase("UserSurnameShort")]
+        [TestCase("UserSurnameNormal")]
+        [TestCase("UserSurnameLong")]
+        public void AddNewStudentInSystem(string surnameStudent)
+        {
+            driver.Login(Defaults.LecturerLogin, Defaults.LecturerPassword);
+
+            driver.Wait(By.XPath("//mat-icon[contains(.,\' person_add_alt_1\')]"));
+            driver.FindElement(By.XPath("//mat-icon[contains(.,\' person_add_alt_1\')]")).Click();
+            driver.SwitchTo().Frame(0);
+            Thread.Sleep(7000);
+            driver.Wait(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div"));
+            driver.ClickJS(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div"));
+            Thread.Sleep(1000);
+            driver.Wait(By.XPath("//span[contains(.,\' Тестовая \')]"));
+            driver.FindElement(By.XPath("//span[contains(.,\' Тестовая \')]")).Click();
+            Thread.Sleep(4000);
+            js.ExecuteScript("window.scrollTo(0,26)");
+            driver.Wait(By.CssSelector(".mat-row"));
+            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(Logins[surnameStudent]));
+            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+            driver.ClickJS(By.XPath($"//tr[{idRowOfElem + 1}]/td[3]/mat-icon"));
+            driver.Wait(By.XPath("//snack-bar-container[contains(.,\'Студент успешно подтвержден\')]"));
+            var message = driver.FindElements(By.XPath("//snack-bar-container[contains(.,\'Студент успешно подтвержден\')]"));
+            Assert.True(message.Count > 0);
+            driver.SwitchTo().DefaultContent();
+            driver.LogOut();
+        }
+
+        [Test, Order(3)]
+        [TestCase("UserLoginShort", "Pass1_")]
+        [TestCase("UserLoginNormal", "TestPassword_1234567")]
+        [TestCase("UserLoginLong", "PasswordForTesting12345678910_")]
         public void LoginUser(string userLogin, string userPassword)
         {
             driver.Navigate().GoToUrl("http://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
             driver.Manage().Window.Size = new System.Drawing.Size(1200, 919);
             driver.Wait(By.Id("mat-input-0"));
             driver.FindElement(By.Id("mat-input-0")).Click();
-            driver.FindElement(By.Id("mat-input-0")).SendKeys(userLogin);
+            driver.FindElement(By.Id("mat-input-0")).SendKeys(Logins[userLogin]);
 
             driver.FindElement(By.Id("mat-input-1")).Click();
-            {
-                var element = driver.FindElement(By.CssSelector(".loginbtn > .mat-focus-indicator"));
-                Actions builder = new Actions(driver);
-                builder.MoveToElement(element).Perform();
-            }
+
             driver.FindElement(By.Id("mat-input-1")).SendKeys(userPassword);
             driver.FindElement(By.XPath("//button[contains(.,\'Войти в систему\')]")).Click();
             driver.Wait(By.XPath("//a[contains(.,\'Предметы\')]"));
 
             var elements = driver.FindElements(By.XPath("//a[contains(.,\'Предметы\')]"));
             Assert.True(elements.Count > 0);
-            //driver.Wait(By.XPath("//mat-icon[contains(.,\'more_vert\')]"));
-            //driver.LogOut();
         }
 
-        [Test, Order(3)]
+        [Test, Order(4)]
         [TestCase("TestStudentUser7", "test", "new123N", "new123N")]
         public void ForgetPassword(string userLogin, string userAnswer, string newPassword, string newConfirmPassword)
         {
