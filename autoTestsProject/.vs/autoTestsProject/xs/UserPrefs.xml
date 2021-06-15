@@ -1,10 +1,5 @@
 ﻿<Properties StartupConfiguration="{781C3877-FA1C-419C-8C84-4800E246D0C0}|Модульные тесты">
-  <MonoDevelop.Ide.Workbench ActiveDocument="autoTestsProject/Tests/Lecturer/PositiveTests/StudentsTests.cs">
-    <Files>
-      <File FileName="autoTestsProject/Tests/Lecturer/NegativeTests/QuestionTests.cs" Line="17" Column="28" />
-      <File FileName="autoTestsProject/Tests/Student/PositiveTests/AccountTests.cs" Line="84" Column="10" />
-      <File FileName="autoTestsProject/Tests/Lecturer/PositiveTests/StudentsTests.cs" Line="99" Column="10" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
@@ -12,14 +7,12 @@
             <Node name="autoTestsProject" expanded="True">
               <Node name="Tests" expanded="True">
                 <Node name="Lecturer" expanded="True">
-                  <Node name="NegativeTests" expanded="True" />
-                  <Node name="PositiveTests" expanded="True">
-                    <Node name="StudentsTests.cs" selected="True" />
+                  <Node name="NegativeTests" expanded="True">
+                    <Node name="SubjectTests.cs" selected="True" />
                   </Node>
                 </Node>
                 <Node name="Student" expanded="True">
                   <Node name="NegativeTests" expanded="True" />
-                  <Node name="PositiveTests" expanded="True" />
                 </Node>
               </Node>
             </Node>
@@ -29,17 +22,7 @@
       <Pad Id="MonoDevelop.UnitTesting.TestPad">
         <State name="__root__">
           <Node name="autoTestsProject" expanded="True">
-            <Node name="autoTestsProject" expanded="True">
-              <Node name="autoTestsProject.Tests.Lecturer.NegativeTests" expanded="True" />
-              <Node name="autoTestsProject.Tests.Lecturer.PositiveTests" expanded="True" />
-              <Node name="autoTestsProject.Tests.Student.NegativeTests" expanded="True" />
-              <Node name="autoTestsProject.Tests.Student.PositiveTests" expanded="True">
-                <Node name="AccountTests" expanded="True" selected="True">
-                  <Node name="AddNewStudentInSystem" expanded="True" />
-                  <Node name="RegisterUser" expanded="True" />
-                </Node>
-              </Node>
-            </Node>
+            <Node name="autoTestsProject" expanded="True" />
           </Node>
         </State>
       </Pad>

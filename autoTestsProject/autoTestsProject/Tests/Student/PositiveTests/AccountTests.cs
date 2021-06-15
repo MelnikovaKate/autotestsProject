@@ -25,12 +25,12 @@ namespace autoTestsProject.Tests.Student.PositiveTests
 
         public AccountTests()
         {
-            Logins.Add(new KeyValuePair<string, string>("UserLoginShort", $"T_{DateTime.Now.Hour}"));
-            Logins.Add(new KeyValuePair<string, string>("UserLoginNormal", $"TestUser_{DateTime.Now.DayOfWeek}"));
-            Logins.Add(new KeyValuePair<string, string>("UserLoginLong", $"TestLoginForTestUserForTest_{DateTime.Now.Day}"));
-            Logins.Add(new KeyValuePair<string, string>("UserSurnameShort", $"N{DateTime.Now.Hour}"));
-            Logins.Add(new KeyValuePair<string, string>("UserSurnameNormal", $"Surname{DateTime.Now.DayOfWeek}"));
-            Logins.Add(new KeyValuePair<string, string>("UserSurnameLong", $"TestSurnameForTest_{DateTime.Now.Day}"));
+            Logins.Add(new KeyValuePair<string, string>("UserLoginShort", $"T_{DateTime.Now.Millisecond}"));
+            Logins.Add(new KeyValuePair<string, string>("UserLoginNormal", $"TestUser_{DateTime.Now.Millisecond}"));
+            Logins.Add(new KeyValuePair<string, string>("UserLoginLong", $"TestLoginForTestUserForTest_{DateTime.Now.Millisecond}"));
+            Logins.Add(new KeyValuePair<string, string>("UserSurnameShort", $"Su{DateTime.Now.Millisecond}"));
+            Logins.Add(new KeyValuePair<string, string>("UserSurnameNormal", $"Surname{DateTime.Now.Millisecond}"));
+            Logins.Add(new KeyValuePair<string, string>("UserSurnameLong", $"TestSurnameForTest_{DateTime.Now.Millisecond}"));
         }
 
         [SetUp]

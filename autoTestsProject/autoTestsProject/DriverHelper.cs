@@ -32,7 +32,7 @@ namespace autoTestsProject
 
         public static void Wait(this IWebDriver driver, By param)
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(50));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(70));
             wait.Until(d => driver.FindElements(param).Count > 0);
         }
 

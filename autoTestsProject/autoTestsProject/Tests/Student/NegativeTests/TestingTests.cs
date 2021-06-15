@@ -13,7 +13,7 @@ using Actions = OpenQA.Selenium.Interactions.Actions;
 using OfficeOpenXml;
 using autoTestsProject.Enums;
 
-namespace autoTestsProject.Tests.Student.NegativeTests
+namespace autoTestsProject.Tests.Student.SNegativeTests
 {
     [TestFixture(), Order(3)]
     public class TestingTests

@@ -25,12 +25,12 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
 
         public StudentsTests()
         {
-            Logins.Add(new KeyValuePair<string, string>("UserLoginShort", $"T_{DateTime.Now.Hour}"));
-            Logins.Add(new KeyValuePair<string, string>("UserLoginNormal", $"TestUser_{DateTime.Now.DayOfWeek}"));
-            Logins.Add(new KeyValuePair<string, string>("UserLoginLong", $"TestLoginForTestUserForTest_{DateTime.Now.Day}"));
-            Logins.Add(new KeyValuePair<string, string>("UserSurnameShort", $"N{DateTime.Now.Hour}"));
-            Logins.Add(new KeyValuePair<string, string>("UserSurnameNormal", $"Surname{DateTime.Now.DayOfWeek}"));
-            Logins.Add(new KeyValuePair<string, string>("UserSurnameLong", $"TestSurnameForTest_{DateTime.Now.Day}"));
+            Logins.Add(new KeyValuePair<string, string>("UserLoginShort", $"T_{DateTime.Now.Millisecond}"));
+            Logins.Add(new KeyValuePair<string, string>("UserLoginNormal", $"TestUser_{DateTime.Now.Millisecond}"));
+            Logins.Add(new KeyValuePair<string, string>("UserLoginLong", $"TestLoginForTestUserForTest_{DateTime.Now.Millisecond}"));
+            Logins.Add(new KeyValuePair<string, string>("UserSurnameShort", $"Su{DateTime.Now.Millisecond}"));
+            Logins.Add(new KeyValuePair<string, string>("UserSurnameNormal", $"Surname{DateTime.Now.Millisecond}"));
+            Logins.Add(new KeyValuePair<string, string>("UserSurnameLong", $"TestSurnameForTest_{DateTime.Now.Millisecond}"));
         }
 
         [SetUp]
@@ -39,7 +39,6 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver = new ChromeDriver();
             js = (IJavaScriptExecutor)driver;
             vars = new Dictionary<string, object>();
-            driver.Login(Defaults.LecturerLogin, Defaults.LecturerPassword);
         }
         [TearDown]
         protected void TearDown()
@@ -103,15 +102,24 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.Wait(By.XPath("//span[contains(.,\' Тестовая \')]"));
             driver.FindElement(By.XPath("//span[contains(.,\' Тестовая \')]")).Click();
             Thread.Sleep(4000);
-            js.ExecuteScript("window.scrollTo(0,26)");
+            
             driver.Wait(By.CssSelector(".mat-row"));
             var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
             var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(Logins[surnameStudent]));
             var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            driver.ClickJS(By.XPath($"//tr[{idRowOfElem + 1}]/td[3]/mat-icon"));
-            driver.Wait(By.XPath("//snack-bar-container[contains(.,\'Студент успешно подтвержден\')]"));
-            var message = driver.FindElements(By.XPath("//snack-bar-container[contains(.,\'Студент успешно подтвержден\')]"));
-            Assert.True(message.Count > 0);
+
+            Actions actions = new Actions(driver);
+            actions.MoveToElement(elem);
+
+            if (driver.FindElements(By.XPath($"//tr[{idRowOfElem + 1}]/td[3]/mat-icon[@ng-reflect-message=\'Открыть доступ\']")).Count > 0)
+            {
+                driver.ClickJS(By.XPath($"//tr[{idRowOfElem + 1}]/td[3]/mat-icon"));
+                Thread.Sleep(1000);
+                driver.Wait(By.XPath("//snack-bar-container[contains(.,\'Студент успешно подтвержден\')]"));
+                var message = driver.FindElements(By.XPath("//snack-bar-container[contains(.,\'Студент успешно подтвержден\')]"));
+                Assert.True(message.Count > 0);
+            }
+            
             driver.SwitchTo().DefaultContent();
             driver.LogOut();
         }
@@ -122,6 +130,8 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         [TestCase("UserSurnameLong")]
         public void CloseAccessStudentInSystem(string surnameStudent)
         {
+            driver.Login(Defaults.LecturerLogin, Defaults.LecturerPassword);
+
             driver.Wait(By.XPath("//mat-icon[contains(.,\' person_add_alt_1\')]"));
             driver.FindElement(By.XPath("//mat-icon[contains(.,\' person_add_alt_1\')]")).Click();
             driver.SwitchTo().Frame(0);
@@ -132,18 +142,22 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.Wait(By.XPath("//span[contains(.,\' Тестовая \')]"));
             driver.FindElement(By.XPath("//span[contains(.,\' Тестовая \')]")).Click();
             Thread.Sleep(4000);
-            js.ExecuteScript("window.scrollTo(0,26)");
+
             driver.Wait(By.CssSelector(".mat-row"));
             var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
             var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(Logins[surnameStudent]));
             var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+
+            Actions actions = new Actions(driver);
+            actions.MoveToElement(elem);
             if (driver.FindElements(By.XPath($"//tr[{idRowOfElem + 1}]/td[3]/mat-icon[@ng-reflect-message=\'Закрыть доступ\']")).Count > 0)
             {
                 driver.ClickJS(By.XPath($"//tr[{idRowOfElem + 1}]/td[3]/mat-icon"));
                 driver.Wait(By.XPath("//snack-bar-container[contains(.,\'Подтверждение отменено\')]"));
                 var message = driver.FindElements(By.XPath("//snack-bar-container[contains(.,\'Подтверждение отменено\')]"));
                 Assert.True(message.Count > 0);
-            }  
+            }
+            
             driver.SwitchTo().DefaultContent();
             driver.LogOut();
         }
