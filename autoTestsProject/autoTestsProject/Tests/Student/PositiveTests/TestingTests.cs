@@ -36,13 +36,13 @@ namespace autoTestsProject.Tests.Student.PositiveTests
             driver.Quit();
         }
 
-        [TestCase("И")]
+        [TestCase("Ф")]
         public void DoingTest(string testName)
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
             driver.GoToChoosenSubject(Defaults.SubjectName);
-            Thread.Sleep(1000);
+            Thread.Sleep(1500);
             driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);

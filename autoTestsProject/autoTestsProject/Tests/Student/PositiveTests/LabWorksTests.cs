@@ -46,7 +46,7 @@ namespace autoTestsProject.Tests.Student.PositiveTests
             driver.GoToSubjects();
             driver.GoToChooseSubject();
             driver.GoToChoosenSubject(Defaults.SubjectName);
-            Thread.Sleep(1000);
+            Thread.Sleep(1500);
             driver.GoToModulus(Defaults.ModulusLabWorks);
 
             driver.SwitchTo().Frame(0);
@@ -93,7 +93,7 @@ namespace autoTestsProject.Tests.Student.PositiveTests
             driver.GoToSubjects();
             driver.GoToChooseSubject();
             driver.GoToChoosenSubject(Defaults.SubjectName);
-            Thread.Sleep(1000);
+            Thread.Sleep(1500);
             driver.GoToModulus(Defaults.ModulusLabWorks);
 
             driver.SwitchTo().Frame(0);
@@ -123,7 +123,7 @@ namespace autoTestsProject.Tests.Student.PositiveTests
             driver.GoToSubjects();
             driver.GoToChooseSubject();
             driver.GoToChoosenSubject(Defaults.SubjectName);
-            Thread.Sleep(1000);
+            Thread.Sleep(1500);
             driver.GoToModulus(Defaults.ModulusLabWorks);
 
             driver.SwitchTo().Frame(0);

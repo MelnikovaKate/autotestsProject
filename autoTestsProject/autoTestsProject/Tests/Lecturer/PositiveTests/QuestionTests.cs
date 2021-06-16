@@ -650,39 +650,7 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         }
 
         [Test, Order(14)]
-        [TestCase("Простое название для теста 2021", " Тестовая ", "Cat")] 
-        public void AddAccessToStudentInTest(string testName, string groupName, string userName)
-        {
-            driver.GoToSubjects();
-            driver.GoToChooseSubject();
-            driver.GoToChoosenSubject(Defaults.SubjectName);
-            driver.GoToModulus(Defaults.ModulusName);
-
-            driver.SwitchTo().Frame(0);
-
-            driver.Wait(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']"));
-            driver.FindElement(By.XPath($"//mat-cell[contains(.,\'{testName}\')]/../mat-cell/mat-icon[@ng-reflect-message=\'Доступность теста\']")).Click();
-            driver.Wait(By.XPath("//mat-select[@id='mat-select-0']/div/div"));
-            driver.FindElement(By.XPath("//mat-select[@id='mat-select-0']/div/div")).Click();
-            driver.Wait(By.XPath($"//span[contains(.,\'{groupName}\')]"));
-            driver.FindElement(By.XPath($"//span[contains(.,\'{groupName}\')]")).Click();
-            driver.Wait(By.XPath("//div[@class=\'students-table-list\']"));
-            var div = driver.FindElement(By.XPath("//div[@class=\'students-table-list\']"));
-            var userForFind = div.FindElements(By.CssSelector(".mat-row"));
-            var user = userForFind.FirstOrDefault(x => x.Text.StartsWith(userName, StringComparison.Ordinal)); // имя user
-            var idRowOfUser = div.FindElements(By.CssSelector(".mat-row")).IndexOf(user);
-            driver.Wait(By.XPath($"//div/mat-table/mat-row[{idRowOfUser + 1}]/mat-cell[2]/mat-icon[contains(.,\'lock \')]"));
-            driver.FindElement(By.XPath($"//div/mat-table/mat-row[{idRowOfUser + 1}]/mat-cell[2]/mat-icon[contains(.,\'lock \')]")).Click();
-            driver.Wait(By.XPath($"//div/mat-table/mat-row[{idRowOfUser + 1}]/mat-cell/mat-icon[contains(.,\'lock_open \')]"));
-            var openLockBtn = driver.FindElements(By.XPath($"//div/mat-table/mat-row[{idRowOfUser + 1}]/mat-cell/mat-icon[contains(.,\'lock_open \')]"));
-            Assert.True(openLockBtn.Count > 0);
-            driver.FindElement(By.XPath("//mat-icon[contains(.,\'close\')]")).Click();
-            driver.SwitchTo().DefaultContent();
-            driver.LogOut();
-        }
-
-        [Test, Order(15)]
-        [TestCase("И", " С одним вариантом ", "Как твои дела?", "Хорошо", "Плохо", "Никак")]
+        [TestCase("Ф", " С одним вариантом ", "Как твои дела?", "Хорошо", "Плохо", "Никак")]
         public void AddQuestionWithOneAnswerInTestForStudents(string testName, string typeQuestion, string textQuestion, string firstAnswer, string secondAnswer, string thirdAnswer)
         {
             driver.GoToSubjects();
@@ -727,8 +695,8 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.LogOut();
         }
 
-        [Test, Order(16)]
-        [TestCase("И", " С несколькими вариантами ", "Что ты любишь больше всего любишь есть?", "Холодник", "Бананы", "Дыня")]
+        [Test, Order(15)]
+        [TestCase("Ф", " С несколькими вариантами ", "Что ты любишь больше всего любишь есть?", "Холодник", "Бананы", "Дыня")]
         public void AddQuestionWithMoreAnswersInTestForStudents(string testName, string typeQuestion, string textQuestion, string firstAnswer, string secondAnswer, string thirdAnswer)
         {
             driver.GoToSubjects();
@@ -784,8 +752,8 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
         }
 
 
-        [Test, Order(17)]
-        [TestCase("И", " Ввод с клавиатуры ", "Как называется спутник Земли?", "Луна")]
+        [Test, Order(16)]
+        [TestCase("Ф", " Ввод с клавиатуры ", "Как называется спутник Земли?", "Луна")]
         public void AddQuestionWithEnterAnswerInTestForStudents(string testName, string typeQuestion, string textQuestion, string firstAnswer)
         {
             driver.GoToSubjects();
@@ -819,8 +787,8 @@ namespace autoTestsProject.Tests.Lecturer.PositiveTests
             driver.LogOut();
         }
 
-        [Test, Order(18)]
-        [TestCase("И", " Последовательность элементов ", "Поставить в порядке убывания числа, которые приведены ниже...", "1", "2", "3")]
+        [Test, Order(17)]
+        [TestCase("Ф", " Последовательность элементов ", "Поставить в порядке убывания числа, которые приведены ниже...", "1", "2", "3")]
         public void AddQuestionWithOrderedAnswersInTestForStudents(string testName, string typeQuestion, string textQuestion, string firstAnswer, string secondAnswer, string thirdAnswer)
         {
             driver.GoToSubjects();

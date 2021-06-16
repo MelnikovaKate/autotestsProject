@@ -42,7 +42,7 @@ namespace autoTestsProject.Tests.Student.SNegativeTests
             driver.GoToSubjects();
             driver.GoToChooseSubject();
             driver.GoToChoosenSubject(Defaults.SubjectName);
-            Thread.Sleep(1000);
+            Thread.Sleep(1500);
             driver.GoToModulus(Defaults.ModulusLabWorks);
 
             driver.SwitchTo().Frame(0);
@@ -77,7 +77,7 @@ namespace autoTestsProject.Tests.Student.SNegativeTests
             driver.GoToSubjects();
             driver.GoToChooseSubject();
             driver.GoToChoosenSubject(Defaults.SubjectName);
-            Thread.Sleep(1000);
+            Thread.Sleep(1500);
             driver.GoToModulus(Defaults.ModulusLabWorks);
 
             driver.SwitchTo().Frame(0);
@@ -112,20 +112,8 @@ namespace autoTestsProject.Tests.Student.SNegativeTests
         }
 
 
-        //[TestCase("Лабораторная работа для удаления")]
         public void AddLabworkStudent(string comments)
         {
-            //driver.GoToSubjects();
-            //driver.GoToChooseSubject();
-            //driver.GoToChoosenSubject(Defaults.SubjectName);
-            //Thread.Sleep(1000);
-            //driver.GoToModulus(Defaults.ModulusLabWorks);
-
-            //driver.SwitchTo().Frame(0);
-
-            //driver.Wait(By.XPath("//button[5]/span[3]"));
-            //driver.FindElement(By.XPath("//button[5]/span[3]")).Click();
-
             Thread.Sleep(1000);
 
             driver.Wait(By.XPath("//button[contains(.,\'Добавить работу\')]"));
@@ -154,8 +142,6 @@ namespace autoTestsProject.Tests.Student.SNegativeTests
             driver.Wait(By.XPath("//button[contains(.,\'Отправить работу\')]"));
             driver.FindElement(By.XPath("//button[contains(.,\'Отправить работу\')]")).Click();
             Thread.Sleep(1000);
-
-            //driver.LogOut();
         }
 
         [Test, Order(4)]
@@ -165,7 +151,7 @@ namespace autoTestsProject.Tests.Student.SNegativeTests
             driver.GoToSubjects();
             driver.GoToChooseSubject();
             driver.GoToChoosenSubject(Defaults.SubjectName);
-            Thread.Sleep(1000);
+            Thread.Sleep(1500);
             driver.GoToModulus(Defaults.ModulusLabWorks);
 
             driver.SwitchTo().Frame(0);
@@ -201,7 +187,7 @@ namespace autoTestsProject.Tests.Student.SNegativeTests
             driver.GoToSubjects();
             driver.GoToChooseSubject();
             driver.GoToChoosenSubject(Defaults.SubjectName);
-            Thread.Sleep(1000);
+            Thread.Sleep(1500);
             driver.GoToModulus(Defaults.ModulusLabWorks);
 
             driver.SwitchTo().Frame(0);
@@ -221,7 +207,6 @@ namespace autoTestsProject.Tests.Student.SNegativeTests
             driver.Wait(By.XPath("//button[@ng-reflect-message=\'Удалить файл\']"));
             driver.ClickJS(By.XPath("//button[@ng-reflect-message=\'Удалить файл\']"));
 
-            //Thread.Sleep(3000);
             driver.Wait(By.XPath("//button[@disabled=\'true\']/span[contains(.,\' Отправить работу \')]"));
             var elements = driver.FindElements(By.XPath("//button[@disabled=\'true\']/span[contains(.,\' Отправить работу \')]"));
             Assert.True(elements.Count > 0);

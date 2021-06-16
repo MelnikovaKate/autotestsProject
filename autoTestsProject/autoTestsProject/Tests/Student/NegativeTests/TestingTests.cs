@@ -37,12 +37,13 @@ namespace autoTestsProject.Tests.Student.SNegativeTests
         }
 
         [Test]
-        [TestCase("И")]
+        [TestCase("Ф")]
         public void ErrorDoingTestStudent(string testName)
         {
             driver.GoToSubjects();
             driver.GoToChooseSubject();
             driver.GoToChoosenSubject(Defaults.SubjectName);
+            Thread.Sleep(1500);
             driver.GoToModulus(Defaults.ModulusName);
 
             driver.SwitchTo().Frame(0);

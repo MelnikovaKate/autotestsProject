@@ -58,7 +58,7 @@ namespace autoTestsProject
         {
             driver.Wait(By.XPath($"//a[contains(.,\'{subjectName}\')]"));
             Thread.Sleep(5000);
-            driver.FindElement(By.XPath($"//a[contains(.,\'{subjectName}\')]")).Click();
+            driver.ClickJS(By.XPath($"//a[contains(.,\'{subjectName}\')]"));
         }
 
         public static void GoToModulus(this IWebDriver driver, string modulusName)

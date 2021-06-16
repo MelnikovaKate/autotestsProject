@@ -394,7 +394,6 @@ namespace autoTestsProject.Tests.Lecturer.SNegativeTests
             var errorMessage = driver.FindElements(By.XPath("//snack-bar-container[contains(.,\'Выберите вариант ответа\')]"));
             Assert.True(errorMessage.Count > 0);
          
-            driver.Wait(By.XPath($"//app-test-result/div/div[contains(.,\'Тест на тему «{testName}» завершен\')]"));
             var result = driver.FindElements(By.XPath($"//app-test-result/div/div[contains(.,\'Тест на тему «{testName}» завершен\')]"));
             Assert.True(result.Count == 0);
             driver.SwitchTo().DefaultContent();

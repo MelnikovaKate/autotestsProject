@@ -43,12 +43,12 @@ namespace autoTestsProject.Tests.Student.SNegativeTests
             driver.GoToSubjects();
             driver.GoToChooseSubject();
             driver.GoToChoosenSubject(Defaults.SubjectName);
-            Thread.Sleep(1000);
+            Thread.Sleep(1500);
             driver.GoToModulus(Defaults.ModulusFiles);
 
             driver.SwitchTo().Frame(0);
 
-            string path = @"files";
+            string path = @"downloadBadFiles";
             DirectoryInfo dirInfo = new DirectoryInfo(path);
             if (!dirInfo.Exists)
             {

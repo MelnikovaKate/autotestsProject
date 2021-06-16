@@ -101,39 +101,102 @@ namespace autoTestsProject.Tests.Student.PositiveTests
             driver.Wait(By.XPath("//span[contains(.,\' Тестовая \')]"));
             driver.FindElement(By.XPath("//span[contains(.,\' Тестовая \')]")).Click();
             Thread.Sleep(4000);
-            js.ExecuteScript("window.scrollTo(0,26)");
+
             driver.Wait(By.CssSelector(".mat-row"));
             var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
             var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(Logins[surnameStudent]));
             var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
-            driver.ClickJS(By.XPath($"//tr[{idRowOfElem + 1}]/td[3]/mat-icon"));
-            driver.Wait(By.XPath("//snack-bar-container[contains(.,\'Студент успешно подтвержден\')]"));
-            var message = driver.FindElements(By.XPath("//snack-bar-container[contains(.,\'Студент успешно подтвержден\')]"));
-            Assert.True(message.Count > 0);
+
+            Actions actions = new Actions(driver);
+            actions.MoveToElement(elem);
+
+            driver.ClickJS(By.XPath($"//tr[{idRowOfElem + 1}]/td[3]/mat-icon[@ng-reflect-message=\'Открыть доступ\']"));
+
+            driver.Navigate().Refresh();
+            driver.Wait(By.XPath("//mat-icon[contains(.,\' person_add_alt_1\')]"));
+            driver.FindElement(By.XPath("//mat-icon[contains(.,\' person_add_alt_1\')]")).Click();
+            driver.SwitchTo().Frame(0);
+            Thread.Sleep(7000);
+            driver.Wait(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div"));
+            driver.ClickJS(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div"));
+
+            Thread.Sleep(1000);
+            driver.Wait(By.XPath("//span[contains(.,\' Тестовая \')]"));
+            driver.FindElement(By.XPath("//span[contains(.,\' Тестовая \')]")).Click();
+            Thread.Sleep(4000);
+
+            driver.Wait(By.CssSelector(".mat-row"));
+            elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+            elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(Logins[surnameStudent]));
+            idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+
+            actions = new Actions(driver);
+            actions.MoveToElement(elem);
+
+            var buttonAccess = driver.FindElement(By.XPath($"//tr[{idRowOfElem + 1}]/td[3]/mat-icon"));
+            var status = buttonAccess.GetAttribute("ng-reflect-message");
+            Assert.AreEqual("Закрыть доступ", status);
+
             driver.SwitchTo().DefaultContent();
             driver.LogOut();
         }
 
         [Test, Order(3)]
-        [TestCase("UserLoginShort", "Pass1_")]
-        [TestCase("UserLoginNormal", "TestPassword_1234567")]
-        [TestCase("UserLoginLong", "PasswordForTesting12345678910_")]
-        public void LoginUser(string userLogin, string userPassword)
+        [TestCase("UserSurnameShort")]
+        [TestCase("UserSurnameNormal")]
+        [TestCase("UserSurnameLong")]
+        public void CloseAccessStudentInSystem(string surnameStudent)
         {
-            driver.Navigate().GoToUrl("http://educats.by/login?returnUrl=%2Fweb%2Fdashboard");
-            driver.Manage().Window.Size = new System.Drawing.Size(1200, 919);
-            driver.Wait(By.Id("mat-input-0"));
-            driver.FindElement(By.Id("mat-input-0")).Click();
-            driver.FindElement(By.Id("mat-input-0")).SendKeys(Logins[userLogin]);
+            driver.Login(Defaults.LecturerLogin, Defaults.LecturerPassword);
 
-            driver.FindElement(By.Id("mat-input-1")).Click();
+            driver.Wait(By.XPath("//mat-icon[contains(.,\' person_add_alt_1\')]"));
+            driver.FindElement(By.XPath("//mat-icon[contains(.,\' person_add_alt_1\')]")).Click();
+            driver.SwitchTo().Frame(0);
+            Thread.Sleep(7000);
+            driver.Wait(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div"));
+            driver.ClickJS(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div"));
+            Thread.Sleep(1000);
+            driver.Wait(By.XPath("//span[contains(.,\' Тестовая \')]"));
+            driver.FindElement(By.XPath("//span[contains(.,\' Тестовая \')]")).Click();
+            Thread.Sleep(4000);
 
-            driver.FindElement(By.Id("mat-input-1")).SendKeys(userPassword);
-            driver.FindElement(By.XPath("//button[contains(.,\'Войти в систему\')]")).Click();
-            driver.Wait(By.XPath("//a[contains(.,\'Предметы\')]"));
+            driver.Wait(By.CssSelector(".mat-row"));
+            var elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+            var elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(Logins[surnameStudent]));
+            var idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
 
-            var elements = driver.FindElements(By.XPath("//a[contains(.,\'Предметы\')]"));
-            Assert.True(elements.Count > 0);
+            Actions actions = new Actions(driver);
+            actions.MoveToElement(elem);
+
+            driver.ClickJS(By.XPath($"//tr[{idRowOfElem + 1}]/td[3]/mat-icon[@ng-reflect-message=\'Закрыть доступ\']"));
+
+            driver.Navigate().Refresh();
+            driver.Wait(By.XPath("//mat-icon[contains(.,\' person_add_alt_1\')]"));
+            driver.FindElement(By.XPath("//mat-icon[contains(.,\' person_add_alt_1\')]")).Click();
+            driver.SwitchTo().Frame(0);
+            Thread.Sleep(7000);
+            driver.Wait(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div"));
+            driver.ClickJS(By.XPath("//mat-select[@id=\'mat-select-0\']/div/div"));
+
+            Thread.Sleep(1000);
+            driver.Wait(By.XPath("//span[contains(.,\' Тестовая \')]"));
+            driver.FindElement(By.XPath("//span[contains(.,\' Тестовая \')]")).Click();
+            Thread.Sleep(4000);
+
+            driver.Wait(By.CssSelector(".mat-row"));
+            elemsForFind = driver.FindElements(By.CssSelector(".mat-row"));
+            elem = elemsForFind.FirstOrDefault(x => x.Text.Contains(Logins[surnameStudent]));
+            idRowOfElem = driver.FindElements(By.CssSelector(".mat-row")).IndexOf(elem);
+
+            actions = new Actions(driver);
+            actions.MoveToElement(elem);
+
+            var buttonAccess = driver.FindElement(By.XPath($"//tr[{idRowOfElem + 1}]/td[3]/mat-icon"));
+            var status = buttonAccess.GetAttribute("ng-reflect-message");
+            Assert.AreEqual("Открыть доступ", status);
+
+            driver.SwitchTo().DefaultContent();
+            driver.LogOut();
         }
 
         [Test, Order(4)]
